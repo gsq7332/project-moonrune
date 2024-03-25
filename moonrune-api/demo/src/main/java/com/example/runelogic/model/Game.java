@@ -13,6 +13,9 @@ public class Game {
         this.numQuestions = numQuestions;
         this.numAnswers = numAnswers;
         this.sessionID = sessionID;
+        correct = "";
+        numCorrect = 0;
+        numAnswered = 0;
     }
 
     public long getSessionID() {

@@ -1,1 +1,6 @@
-<p>game works!</p>
+<li *ngIf="true; else game">
+    <app-game-settings></app-game-settings>
+</li>
+<ng-template #game>
+    <app-multiple-choice></app-multiple-choice>
+</ng-template>
