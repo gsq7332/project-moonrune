@@ -47,9 +47,9 @@ public class gameDAO {
         game.incrementAnswered();
     }
 
-    public int[] getProgress(long sessionID) {
+    public Integer[] getProgress(long sessionID) {
         Game game = ongoingGames.get(sessionID);
-        return new int[]{game.getNumCorrect(), game.getNumAnswered(), game.getNumQuestions()};
+        return new Integer[]{game.getNumCorrect(), game.getNumAnswered(), game.getNumQuestions()};
     }
 
     public void endGame(long sessionID) {
