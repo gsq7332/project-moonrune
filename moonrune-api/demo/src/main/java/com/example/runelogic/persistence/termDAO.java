@@ -9,7 +9,7 @@ import com.example.runelogic.model.Term;
 
 public abstract class termDAO {
 
-    private LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
+    protected LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
 
     public termDAO() throws IOException {}
 
@@ -27,6 +27,7 @@ public abstract class termDAO {
     }
 
     public LinkedHashMap<String, Term> getTerms(String filter) {
+        System.out.println(terms);
         LinkedHashMap<String, Term> results = new LinkedHashMap<>();
         for (String term : terms.keySet()) {
             if (term.startsWith(filter)) {

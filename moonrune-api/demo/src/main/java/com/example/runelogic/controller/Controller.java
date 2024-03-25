@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.runelogic.model.Term;
 import com.example.runelogic.persistence.termDAO;
+import com.example.runelogic.persistence.termFileDAO;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -27,7 +28,7 @@ public class Controller {
     private termDAO termThing;
     private static final Logger LOG = Logger.getLogger(Controller.class.getName());
 
-    public Controller(termDAO termThing) {
+    public Controller(termFileDAO termThing) {
         this.termThing = termThing;
     }
 

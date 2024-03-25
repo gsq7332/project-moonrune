@@ -50,6 +50,7 @@ public class termFileDAO extends termDAO {
         
     }
 
+    @Override
     public void load() {
         try {
             Term[] termsArray;
@@ -71,9 +72,8 @@ public class termFileDAO extends termDAO {
 
             for (Term term : termsArray) {
                 String identifier = term.getTerm();
-                terms.put(identifier, term);
+                super.terms.put(identifier, term);
             }
-            System.out.println(terms);
         } catch (Exception e) {
             return;
         }
