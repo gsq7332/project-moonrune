@@ -1,0 +1,16 @@
+<h2>My Terms</h2>
+<ul class="terms">
+    <li *ngFor="let term of terms">
+    <button type="button" [class.selected]="term === selectedTerm" (click)="onSelect(term)">
+      <li *ngIf="term === selectedTerm; else unselected"> 
+        <span>
+        <app-term-details [term]="selectedTerm"></app-term-details>
+        </span>
+      </li>
+      <ng-template #unselected>
+      <span class="badge">{{term.term}} </span>
+      </ng-template>
+    </button>
+  </li>
+</ul>
+
