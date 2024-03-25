@@ -1,6 +1,6 @@
-package com.example.runelogic.persistence;
+package com.example.runelogic.persistence.term;
 
-import com.example.runelogic.model.Term;
+import com.example.runelogic.model.terms.Term;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;

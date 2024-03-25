@@ -1,11 +1,11 @@
-package com.example.runelogic.persistence;
+package com.example.runelogic.persistence.term;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
-import com.example.runelogic.model.Term;
+import com.example.runelogic.model.terms.Term;
 
 public abstract class termDAO {
 

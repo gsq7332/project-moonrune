@@ -2,15 +2,29 @@ package com.example.runelogic.model;
 
 public class Game {
     
-    private int num_questions;
-    private int num_answers;
-    private long sessionID;
+    private final int numQuestions;
+    private final int numAnswers;
+    private final long sessionID;
     private String correct;
+    private int numCorrect;
+    private int numAnswered;
     
-    public Game(int num_questions, int num_answers, long sessionID) {
-        this.num_questions = num_questions;
-        this.num_answers = num_answers;
+    public Game(int numQuestions, int numAnswers, long sessionID) {
+        this.numQuestions = numQuestions;
+        this.numAnswers = numAnswers;
         this.sessionID = sessionID;
+    }
+
+    public long getSessionID() {
+        return sessionID;
+    }
+
+    public int getNumAnswers() {
+        return numAnswers;
+    }
+
+    public boolean isOver() {
+        return (numQuestions > 0 && numAnswered >= numQuestions);
     }
 
     public boolean getCorrect(String term) {
@@ -21,6 +35,21 @@ public class Game {
         correct = term;
     }
 
+    public void incrementCorrect() {
+        numCorrect++;
+    }
+
+    public void incrementAnswered() {
+        numAnswered++;
+    }
+
+    public int getNumCorrect() {
+        return numCorrect;
+    }
+
+    public int getNumAnswered() {
+        return numAnswered;
+    }
     
 
 }

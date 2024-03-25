@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.runelogic.model.Term;
-import com.example.runelogic.persistence.termDAO;
-import com.example.runelogic.persistence.termFileDAO;
+import com.example.runelogic.model.terms.Term;
+import com.example.runelogic.persistence.term.termDAO;
+import com.example.runelogic.persistence.term.termFileDAO;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
