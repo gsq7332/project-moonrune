@@ -1,0 +1,27 @@
+[
+    { "term": "Α", "lower": ["α"], "name": ["alpha"], "meanings": ["a"]},
+    { "term": "Β", "lower": ["β"], "name": ["beta"], "meanings": ["b"]},
+    { "term": "Γ", "lower": ["γ"], "name": ["gamma"], "meanings": ["g"]},
+    { "term": "Δ", "lower": ["δ"], "name": ["delta"], "meanings": ["d"]},
+    { "term": "Ε", "lower": ["ε"], "name": ["epsilon"], "meanings": ["e"]},
+    { "term": "Ζ", "lower": ["ζ"], "name": ["zeta"], "meanings": ["z"]},
+    { "term": "Η", "lower": ["η"], "name": ["eta"], "meanings": ["ê"]},
+    { "term": "Θ", "lower": ["θ"], "name": ["theta"], "meanings": ["th"]},
+    { "term": "Ι", "lower": ["ι"], "name": ["iota"], "meanings": ["i"]},
+    { "term": "Κ", "lower": ["κ"], "name": ["kappa"], "meanings": ["k"]},
+    { "term": "Λ", "lower": ["λ"], "name": ["lambda"], "meanings": ["l"]},
+    { "term": "Μ", "lower": ["μ"], "name": ["mu"], "meanings": ["m"]},
+    { "term": "Ν", "lower": ["ν"], "name": ["nu"], "meanings": ["n"]},
+    { "term": "Ξ", "lower": ["ξ"], "name": ["xi"], "meanings": ["x","ks"]},
+    { "term": "Ο", "lower": ["ο"], "name": ["omicron"], "meanings": ["o"]},
+    { "term": "Π", "lower": ["π"], "name": ["pi"], "meanings": ["p"]},
+    { "term": "Ρ", "lower": ["ρ"], "name": ["rho"], "meanings": ["r"]},
+    { "term": "Σ", "lower": ["σ","ς"], "name": ["sigma"], "meanings": ["s"]},
+    { "term": "Τ", "lower": ["τ"], "name": ["tau"], "meanings": ["t"]},
+    { "term": "Υ", "lower": ["υ"], "name": ["upsilon"], "meanings": ["u"]},
+    { "term": "Φ", "lower": ["φ"], "name": ["phi"], "meanings": ["f","ph"]},
+    { "term": "Χ", "lower": ["χ"], "name": ["chi"], "meanings": ["ch","kh"]},
+    { "term": "Ψ", "lower": ["ψ"], "name": ["psi"], "meanings": ["ps"]},
+    { "term": "Ω", "lower": ["ω"], "name": ["omega"], "meanings": ["ô"]}
+]
+    
