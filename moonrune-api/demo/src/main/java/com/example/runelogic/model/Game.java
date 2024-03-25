@@ -27,7 +27,7 @@ public class Game {
         return (numQuestions > 0 && numAnswered >= numQuestions);
     }
 
-    public boolean getCorrect(String term) {
+    public boolean isCorrect(String term) {
         return term.equals(correct);
     }
 
@@ -49,6 +49,10 @@ public class Game {
 
     public int getNumAnswered() {
         return numAnswered;
+    }
+
+    public int getNumQuestions() {
+        return numQuestions;
     }
     
 
