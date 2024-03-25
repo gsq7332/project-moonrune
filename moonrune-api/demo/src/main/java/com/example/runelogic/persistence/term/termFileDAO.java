@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 public class termFileDAO extends termDAO {
     private static final Logger LOG = Logger.getLogger(termFileDAO.class.getName());
 
-
     private enum fileType {
         CYRILLIC, 
         GREEK,
