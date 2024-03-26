@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -9,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class MultipleChoiceComponent {
 
+  constructor(private gameService: GameService) {}
+
+  endGame(): void {
+    this.gameService.endGame();
+  }
 }

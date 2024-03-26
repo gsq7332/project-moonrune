@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-game-settings',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './game-settings.component.css'
 })
 export class GameSettingsComponent {
+  constructor(private gameService: GameService) {}
 
+  startGame(): void {
+    this.gameService.startGame();
+  }
 }

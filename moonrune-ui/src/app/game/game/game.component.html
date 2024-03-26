@@ -1,4 +1,5 @@
-<li *ngIf="true; else game">
+
+<li *ngIf="getIfStarted(); else game">
     <app-game-settings></app-game-settings>
 </li>
 <ng-template #game>
