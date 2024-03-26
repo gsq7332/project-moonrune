@@ -18,7 +18,7 @@ export class GameComponent {
   hasStarted = false;
   
   ngOnInit(): void {
-    
+    this.hasStarted = this.getIfStarted();
   }
 
   getIfStarted(): boolean {

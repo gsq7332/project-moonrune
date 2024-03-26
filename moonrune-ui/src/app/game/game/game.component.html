@@ -1,5 +1,5 @@
 
-<li *ngIf="getIfStarted(); else game">
+<li *ngIf="hasStarted; else game">
     <app-game-settings></app-game-settings>
 </li>
 <ng-template #game>

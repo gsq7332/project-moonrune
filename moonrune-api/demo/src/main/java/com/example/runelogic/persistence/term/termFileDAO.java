@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +25,6 @@ public class termFileDAO extends termDAO {
     }
 
     private String filename;
-    private LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
     private ObjectMapper objectMapper;
     
     private fileType type;
