@@ -22,17 +22,15 @@ export class GameComponent {
   }
 
   getIfStarted(): boolean {
-    this.hasStarted = this.gameService.checkStarted();
+    this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
     return this.hasStarted
   }
   
   initializeGame(): void {
-    this.hasStarted = true;
-    this.ngOnInit();
+    this.gameService.startGame().subscribe(hasStarted => this.hasStarted = hasStarted);
   }
 
   endGame(): void {
-    this.hasStarted = false;
-    this.ngOnInit();
+    this.gameService.endGame().subscribe(hasStarted => this.hasStarted = hasStarted);
   }
 }

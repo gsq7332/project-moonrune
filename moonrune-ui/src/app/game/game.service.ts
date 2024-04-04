@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +9,17 @@ export class GameService {
 
   constructor() { }
 
-  checkStarted(): boolean {
-    return this.hasStarted;
+  checkStarted(): Observable<boolean> {
+    return of(this.hasStarted);
   }
   
-  startGame(): boolean {
+  startGame(): Observable<boolean> {
     this.hasStarted = true;
-    return this.hasStarted;
+    return of(this.hasStarted);
   }
 
-  endGame(): boolean {
+  endGame(): Observable<boolean> {
     this.hasStarted = false;
-    return this.hasStarted;
+    return of(this.hasStarted);
   }
 }
