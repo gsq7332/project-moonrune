@@ -1,8 +1,9 @@
 import { NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { GameSettingsComponent } from '../game-settings/game-settings.component';
 import { MultipleChoiceComponent } from '../multiple-choice/multiple-choice.component';
 import { GameService } from '../game.service';
+
 
 @Component({
   selector: 'app-game',
@@ -13,9 +14,12 @@ import { GameService } from '../game.service';
 })
 export class GameComponent {
 
+
   constructor(private gameService: GameService) {}
 
   hasStarted = false;
+  hasEnded = false;
+
   
   ngOnInit(): void {
     this.hasStarted = this.getIfStarted();
@@ -26,7 +30,7 @@ export class GameComponent {
     return this.hasStarted
   }
   
-  initializeGame(): void {
+  initializeGame(event: string): void {
     this.gameService.startGame().subscribe(hasStarted => this.hasStarted = hasStarted);
   }
 

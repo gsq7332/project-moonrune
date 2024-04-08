@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { GameService } from '../game.service';
+import { EventEmitter } from 'node:stream';
 
 @Component({
   selector: 'app-game-settings',
@@ -9,9 +10,13 @@ import { GameService } from '../game.service';
   styleUrl: './game-settings.component.css'
 })
 export class GameSettingsComponent {
+  @Input() type ?: string;
+  @Output() startGameEvent = new EventEmitter();
+
   constructor(private gameService: GameService) {}
 
-  startGame(): void {
-    this.gameService.startGame();
+  startGame() {
+    this.startGameEvent.emit("Starting game");
+    //this.gameService.startGame();
   }
 }
