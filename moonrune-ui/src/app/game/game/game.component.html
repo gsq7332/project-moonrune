@@ -1,6 +1,6 @@
 
 <li *ngIf="!hasStarted; else game">
-    <app-game-settings></app-game-settings>
+    <app-game-settings (startGameEvent)="toggleGame(true)"></app-game-settings>
     <button type = "button" (click)="initializeGame('a')"> Start Game </button>
 </li>
 <ng-template #game>

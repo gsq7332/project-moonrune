@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { GameService } from '../game.service';
-import { EventEmitter } from 'node:stream';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-game-settings',

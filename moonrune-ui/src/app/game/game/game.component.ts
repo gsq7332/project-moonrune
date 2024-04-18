@@ -29,6 +29,10 @@ export class GameComponent {
     this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
     return this.hasStarted
   }
+
+  toggleGame(isStarting: boolean): void {
+    
+  }
   
   initializeGame(event: string): void {
     this.gameService.startGame().subscribe(hasStarted => this.hasStarted = hasStarted);
