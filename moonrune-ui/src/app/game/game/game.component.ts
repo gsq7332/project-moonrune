@@ -34,7 +34,7 @@ export class GameComponent {
     
   }
   
-  initializeGame(event: string): void {
+  initializeGame(): void {
     this.gameService.startGame().subscribe(hasStarted => this.hasStarted = hasStarted);
   }
 
