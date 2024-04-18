@@ -1,1 +1,7 @@
-<p>game works!</p>
+
+<li *ngIf="!hasStarted; else game">
+    <app-game-settings (startGameEvent)="initializeGame()"></app-game-settings>
+</li>
+<ng-template #game>
+    <app-multiple-choice (endGameEvent)="endGame()"></app-multiple-choice>
+</ng-template>

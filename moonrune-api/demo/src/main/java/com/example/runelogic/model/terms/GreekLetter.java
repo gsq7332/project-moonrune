@@ -1,4 +1,4 @@
-package com.example.runelogic.model;
+package com.example.runelogic.model.terms;
 
 import java.util.ArrayList;
 

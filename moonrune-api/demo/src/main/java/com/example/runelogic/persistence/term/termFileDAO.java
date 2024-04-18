@@ -1,14 +1,13 @@
-package com.example.runelogic.persistence;
+package com.example.runelogic.persistence.term;
 
-import com.example.runelogic.model.CyrillicLetter;
-import com.example.runelogic.model.GreekLetter;
-import com.example.runelogic.model.Kanji;
-import com.example.runelogic.model.Term;
+import com.example.runelogic.model.terms.CyrillicLetter;
+import com.example.runelogic.model.terms.GreekLetter;
+import com.example.runelogic.model.terms.Kanji;
+import com.example.runelogic.model.terms.Term;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Component;
 public class termFileDAO extends termDAO {
     private static final Logger LOG = Logger.getLogger(termFileDAO.class.getName());
 
-
     private enum fileType {
         CYRILLIC, 
         GREEK,
@@ -27,7 +25,6 @@ public class termFileDAO extends termDAO {
     }
 
     private String filename;
-    private LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
     private ObjectMapper objectMapper;
     
     private fileType type;

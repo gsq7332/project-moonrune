@@ -70,7 +70,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>com.example.runelogic.Main</mainClass>
+					<mainClass>com.example.runelogic.RuneLogicApplication</mainClass>
 					<arguments></arguments>
 				</configuration>
 			</plugin>
@@ -105,7 +105,7 @@
 						<id>controller</id>
 						<configuration>
 							<footer>Controller Tier</footer>
-							<title>U-Fund API Controller Tier Test Coverage</title>
+							<title>A Coverage</title>
 							<outputDirectory>target/site/jacoco/controller</outputDirectory>
 						</configuration>
 						<goals>
@@ -116,7 +116,7 @@
 						<id>persistence</id>
 						<configuration>
 							<footer>Persistence Tier</footer>
-							<title>U-Fund API Persistence Tier Test Coverage</title>
+							<title>A Coverage</title>
 							<outputDirectory>target/site/jacoco/persistence</outputDirectory>
 						</configuration>
 						<goals>
@@ -127,7 +127,7 @@
 						<id>model</id>
 						<configuration>
 							<footer>Model Tier</footer>
-							<title>U-Fund API Model Tier Test Coverage</title>
+							<title>A Coverage</title>
 							<outputDirectory>target/site/jacoco/model</outputDirectory>
 						</configuration>
 						<goals>
