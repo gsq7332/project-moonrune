@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { GameService } from '../game.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -10,9 +11,11 @@ import { GameService } from '../game.service';
 })
 export class MultipleChoiceComponent {
 
+  @Output() endGameEvent = new EventEmitter();
+
   constructor(private gameService: GameService) {}
 
   endGame(): void {
-    this.gameService.endGame();
+    this.endGameEvent.emit();
   }
 }

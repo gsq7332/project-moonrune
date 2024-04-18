@@ -1,9 +1,7 @@
 
 <li *ngIf="!hasStarted; else game">
     <app-game-settings (startGameEvent)="initializeGame()"></app-game-settings>
-    <button type = "button" (click)="initializeGame()"> Start Game </button>
 </li>
 <ng-template #game>
-    <app-multiple-choice></app-multiple-choice>
-    <button type = "button" (click)="endGame()"> End Game </button>
+    <app-multiple-choice (endGameEvent)="endGame()"></app-multiple-choice>
 </ng-template>
