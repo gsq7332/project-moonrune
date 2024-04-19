@@ -15,6 +15,10 @@ export class GameSettingsComponent {
 
   constructor(private gameService: GameService) {}
 
+  ngOnInit() {
+    
+  }
+
   startGame() {
     this.startGameEvent.emit("Starting game");
     //this.gameService.startGame();
