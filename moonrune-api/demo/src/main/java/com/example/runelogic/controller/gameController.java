@@ -18,8 +18,14 @@ public class gameController {
         this.dao = dao;
     }
 
+    @RequestMapping("session")
+    public ResponseEntity<Integer> getSessionID() {
+        int sessionID = dao.getSessionID();
+        return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
+    }
+
     @RequestMapping("create")
-    public ResponseEntity<Game> createGame(long sessionID, int numQuestions, int numAnswers) {
+    public ResponseEntity<Game> createGame(int sessionID, int numQuestions, int numAnswers) {
         Game game = dao.createGame(numQuestions, numAnswers, sessionID);
         if (game == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(game, HttpStatus.CREATED);

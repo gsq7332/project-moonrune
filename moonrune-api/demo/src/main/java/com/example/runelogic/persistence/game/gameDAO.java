@@ -11,10 +11,18 @@ import com.example.runelogic.model.Game;
 public class gameDAO {
     private static final Logger LOG = Logger.getLogger(gameDAO.class.getName());
     
+    int sessionID = 0;
+
     private HashMap<Long, Game> ongoingGames;
 
     public gameDAO() {
         ongoingGames = new HashMap<>();
+    }
+
+    public int getSessionID() {
+        int currSession = sessionID;
+        sessionID++;
+        return currSession;
     }
 
     public Game createGame(int numQuestions, int numAnswers, long sessionID) {

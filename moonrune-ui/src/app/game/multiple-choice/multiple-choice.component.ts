@@ -2,6 +2,8 @@ import { Component, Output, Input } from '@angular/core';
 import { GameService } from '../game.service';
 import { EventEmitter } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { Term } from '../../terms/term';
+import { TermServiceService } from '../../term-service.service';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -12,10 +14,12 @@ import { NgIf } from '@angular/common';
 })
 export class MultipleChoiceComponent {
   @Input() collection ?: string;
+  @Input() numQuestions: number = 0;
   @Output() endGameEvent = new EventEmitter();
   hasEnded: boolean = false;
+  terms: Term[]|undefined;
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService, private termService: TermServiceService) {}
 
   ngOnInit() {
     
@@ -23,6 +27,8 @@ export class MultipleChoiceComponent {
   }
 
   generateQuestion() {
+    this.termService.getRandomTerms(this.numQuestions).subscribe(terms => this.terms = terms);
+    
     // needed behavior:
     // get requested properties from settings (part of settings thing)
     // get list of allowed terms (i.e. the collection)
