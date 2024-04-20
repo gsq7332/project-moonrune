@@ -30,6 +30,7 @@ export class GameSettingsComponent {
   }
 
   startGame() {
+    
     this.startGameEvent.emit("Starting game");
     //this.gameService.startGame();
   }
