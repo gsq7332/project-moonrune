@@ -2,17 +2,29 @@
     <input  type="checkbox" name="extra" value="extra"> Enable Diacritics
 </div>
 <div class="question">
-    <input type="radio" name="term" value="Term"> Term
-    <input type="radio" name="meaning" value="Meanings"> Meanings
-    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> Lowercase
-    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> English Name
-    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings"> Readings
+    Question:
+    <input type="radio" name="term" value="Term">
+    <label>Term </label>
+    <input type="radio" name="meaning" value="Meanings">
+    <label>Meanings </label>
+    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> 
+    <label *ngIf="currentLevel==2||currentLevel==3">Lowercase </label>
+    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> 
+    <label *ngIf="currentLevel==3">Name </label>
+    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings">
+    <label *ngIf="currentLevel==4">Readings </label>
 </div>
 <div class="answer">
-    <input type="radio" name="term" value="Term"> Term
-    <input type="radio" name="meaning" value="Meanings"> Meanings
-    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> English Name
-    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> Lowercase
-    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings"> Readings
+    Answer: 
+    <input type="radio" name="term" value="Term">
+    <label>Term </label>
+    <input type="radio" name="meaning" value="Meanings">
+    <label>Meanings </label>
+    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> 
+    <label *ngIf="currentLevel==2||currentLevel==3">Lowercase </label>
+    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> 
+    <label *ngIf="currentLevel==3">Name </label>
+    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings">
+    <label *ngIf="currentLevel==4">Readings </label>
 </div>
 <button type = "button" (click)="startGame()"> Start Game </button>

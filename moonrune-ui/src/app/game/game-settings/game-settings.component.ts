@@ -13,7 +13,7 @@ import { NgIf } from '@angular/common';
 export class GameSettingsComponent {
   @Input() type ?: string;
   @Output() startGameEvent = new EventEmitter();
-  currentLevel: number = 0;
+  currentLevel: number = 3;
   /*
   level representations:
   0 - Default/Regular (used for user generated terms + Hangul)
