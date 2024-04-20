@@ -1,14 +1,14 @@
 import { Component, Output, Input } from '@angular/core';
 import { GameService } from '../game.service';
 import { EventEmitter } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Term } from '../../terms/term';
 import { TermServiceService } from '../../term-service.service';
 
 @Component({
   selector: 'app-multiple-choice',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgFor],
   templateUrl: './multiple-choice.component.html',
   styleUrl: './multiple-choice.component.css'
 })

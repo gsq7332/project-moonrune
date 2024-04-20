@@ -11,7 +11,7 @@ import com.example.runelogic.model.Game;
 public class gameDAO {
     private static final Logger LOG = Logger.getLogger(gameDAO.class.getName());
     
-    int sessionID = 0;
+    private int sessionID = 0;
 
     private HashMap<Long, Game> ongoingGames;
 
