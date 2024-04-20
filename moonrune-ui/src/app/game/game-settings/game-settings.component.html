@@ -1,1 +1,18 @@
+<div *ngIf="currentLevel==1" class="extra">
+    <input  type="checkbox" name="extra" value="extra"> Enable Diacritics
+</div>
+<div class="question">
+    <input type="radio" name="term" value="Term"> Term
+    <input type="radio" name="meaning" value="Meanings"> Meanings
+    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> Lowercase
+    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> English Name
+    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings"> Readings
+</div>
+<div class="answer">
+    <input type="radio" name="term" value="Term"> Term
+    <input type="radio" name="meaning" value="Meanings"> Meanings
+    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> English Name
+    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> Lowercase
+    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings"> Readings
+</div>
 <button type = "button" (click)="startGame()"> Start Game </button>
