@@ -1,1 +1,1 @@
-<button type = "button" (click)="endGame()"> End Game </button>
+<button *ngIf="hasEnded" type="button" (click)="endGame()"> End Game </button>
