@@ -5,7 +5,6 @@ import { NgFor, NgIf } from '@angular/common';
 import { Term } from '../../terms/term';
 import { TermServiceService } from '../../term-service.service';
 import { McOptionComponent } from '../mc-option/mc-option.component';
-import { Kanji } from '../../terms/kanji';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -15,16 +14,18 @@ import { Kanji } from '../../terms/kanji';
   styleUrl: './multiple-choice.component.css'
 })
 export class MultipleChoiceComponent {
-  @Input() collection ?: string;
-  @Input() numQuestions: number = 0;
-  @Input() questionType ?: string;
-  @Input() answerType ?: string;
+  //@Input() collection ?: string;
+  //@Input() numQuestions: number = 0;
+  //@Input() questionType ?: string;
+  //@Input() answerType ?: string;
   @Output() endGameEvent = new EventEmitter();
-  hasEnded: boolean = false;
+  hasEnded: boolean = true;
   terms: Term[] = [];
-  termString: string[] = [];
+  termString: string[] = ["a", "b", "c", "d"];
 
   constructor(private gameService: GameService, private termService: TermServiceService) {}
+
+  //constructor() {}
 
   ngOnInit() {
     
@@ -32,7 +33,7 @@ export class MultipleChoiceComponent {
   }
 
   generateQuestion() {
-    this.termService.getRandomTerms(this.numQuestions).subscribe(terms => this.terms = terms);
+    //this.termService.getRandomTerms(this.numQuestions).subscribe(terms => this.terms = terms);
     
   }
 
