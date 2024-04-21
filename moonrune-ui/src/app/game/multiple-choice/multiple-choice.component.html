@@ -2,7 +2,7 @@
     <label>Question</label>
     <ul class="termString">
         <li *ngFor="let term of termString">
-            <app-mc-option [option]="term"></app-mc-option>
+            <app-mc-option [option]="term" (eventSelectOption)="answerQuestion($event)"></app-mc-option>
         </li>
     </ul>
 </div>

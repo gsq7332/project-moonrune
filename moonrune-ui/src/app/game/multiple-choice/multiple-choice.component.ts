@@ -3,7 +3,6 @@ import { GameService } from '../game.service';
 import { EventEmitter } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { Term } from '../../terms/term';
-import { TermServiceService } from '../../term-service.service';
 import { McOptionComponent } from '../mc-option/mc-option.component';
 
 @Component({
@@ -18,28 +17,39 @@ export class MultipleChoiceComponent {
   @Input() numQuestions: number = 0;
   @Input() questionType ?: string;
   @Input() answerType ?: string;
+  @Input() sessionID ?: number;
   @Output() endGameEvent = new EventEmitter();
+  isCorrect: boolean = false;
   hasEnded: boolean = false;
   terms: Term[] = [];
   termString: string[] = ["a", "b", "c", "d"];
 
-  constructor(private gameService: GameService, private termService: TermServiceService) {}
+  constructor(private gameService: GameService) {}
 
   ngOnInit() {
-    //this.generateQuestion();
+    if (this.sessionID != undefined) {
+      this.generateQuestion()
+    } else {
+      this.endGame()
+    }
   }
 
   generateQuestion() {
-    this.termService.getRandomTerms(this.numQuestions).subscribe(terms => this.terms = terms);
-    
+    if (this.sessionID != undefined) {
+      this.gameService.generateQuestion(this.sessionID).subscribe(terms => this.terms = terms);
+    }
   }
 
-  answerQuestion() {
-    // call the service thing
-    // have the api handle behavior
+  answerQuestion(answer: string) {
+    if (this.sessionID != undefined) {
+      this.gameService.checkQuestion(this.sessionID, answer).subscribe(correct => this.isCorrect = correct);
+    }
   }
 
   endGame(): void {
+    if (this.sessionID != null) {
+      this.gameService.endGame(this.sessionID); 
+    }
     this.endGameEvent.emit();
   }
 }
