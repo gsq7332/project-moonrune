@@ -14,26 +14,23 @@ import { McOptionComponent } from '../mc-option/mc-option.component';
   styleUrl: './multiple-choice.component.css'
 })
 export class MultipleChoiceComponent {
-  //@Input() collection ?: string;
-  //@Input() numQuestions: number = 0;
-  //@Input() questionType ?: string;
-  //@Input() answerType ?: string;
+  @Input() collection ?: string;
+  @Input() numQuestions: number = 0;
+  @Input() questionType ?: string;
+  @Input() answerType ?: string;
   @Output() endGameEvent = new EventEmitter();
-  hasEnded: boolean = true;
+  hasEnded: boolean = false;
   terms: Term[] = [];
   termString: string[] = ["a", "b", "c", "d"];
 
   constructor(private gameService: GameService, private termService: TermServiceService) {}
 
-  //constructor() {}
-
   ngOnInit() {
-    
-    this.generateQuestion();
+    //this.generateQuestion();
   }
 
   generateQuestion() {
-    //this.termService.getRandomTerms(this.numQuestions).subscribe(terms => this.terms = terms);
+    this.termService.getRandomTerms(this.numQuestions).subscribe(terms => this.terms = terms);
     
   }
 

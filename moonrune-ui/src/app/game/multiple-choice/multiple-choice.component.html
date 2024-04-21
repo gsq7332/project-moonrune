@@ -1,10 +1,11 @@
-<div *ngIf="!hasEnded">
+<div *ngIf="!hasEnded; else ended">
     <label>Question</label>
     <ul class="termString">
         <li *ngFor="let term of termString">
-            <app-mc-option option="term"></app-mc-option>
+            <app-mc-option [option]="term"></app-mc-option>
         </li>
     </ul>
 </div>
-
-<button *ngIf="hasEnded" type="button" (click)="endGame()"> End Game </button>
+<ng-template #ended> 
+    <button type="button" (click)="endGame()"> End Game </button>
+</ng-template>
