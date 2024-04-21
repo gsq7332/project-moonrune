@@ -4,20 +4,25 @@ import { EventEmitter } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { Term } from '../../terms/term';
 import { TermServiceService } from '../../term-service.service';
+import { McOptionComponent } from '../mc-option/mc-option.component';
+import { Kanji } from '../../terms/kanji';
 
 @Component({
   selector: 'app-multiple-choice',
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, McOptionComponent],
   templateUrl: './multiple-choice.component.html',
   styleUrl: './multiple-choice.component.css'
 })
 export class MultipleChoiceComponent {
   @Input() collection ?: string;
   @Input() numQuestions: number = 0;
+  @Input() questionType ?: string;
+  @Input() answerType ?: string;
   @Output() endGameEvent = new EventEmitter();
   hasEnded: boolean = false;
-  terms: Term[]|undefined;
+  terms: Term[] = [];
+  termString: string[] = [];
 
   constructor(private gameService: GameService, private termService: TermServiceService) {}
 
@@ -29,9 +34,6 @@ export class MultipleChoiceComponent {
   generateQuestion() {
     this.termService.getRandomTerms(this.numQuestions).subscribe(terms => this.terms = terms);
     
-    // needed behavior:
-    // get requested properties from settings (part of settings thing)
-    // get list of allowed terms (i.e. the collection)
   }
 
   answerQuestion() {

@@ -5,9 +5,12 @@ public class Game {
     private final int numQuestions;
     private final int numAnswers;
     private final long sessionID;
+    private final String questionType = "";
+    private final String answerType = "";
     private String correct;
     private int numCorrect;
     private int numAnswered;
+    
     
     public Game(int numQuestions, int numAnswers, long sessionID) {
         this.numQuestions = numQuestions;

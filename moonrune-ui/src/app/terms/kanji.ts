@@ -1,6 +1,6 @@
 import { Term } from "./term";
 
-export interface Cyrillic extends Term {
+export interface Kanji extends Term {
     readings: string[];
     romaji: string[];
     grade: string;

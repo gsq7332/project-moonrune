@@ -1,8 +1,8 @@
 <div *ngIf="!hasEnded">
-<label>Question</label>
-<li *ngFor="let term in terms">
-<app-multiple-choice></app-multiple-choice>
-</li>
+    <label>Question</label>
+    <li *ngFor="let term in termString">
+        <app-mc-option option="term"></app-mc-option>
+    </li>
 </div>
 
 <button *ngIf="hasEnded" type="button" (click)="endGame()"> End Game </button>
