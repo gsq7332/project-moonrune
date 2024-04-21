@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.runelogic.model.Game;
+import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.game.gameDAO;
 
 @RestController
@@ -18,18 +19,21 @@ public class gameController {
         this.dao = dao;
     }
 
-    @RequestMapping("session")
-    public ResponseEntity<Integer> getSessionID() {
-        int sessionID = dao.getSessionID();
-        return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
-    }
-
     @RequestMapping("create")
-    public ResponseEntity<Game> createGame(int sessionID, int numQuestions, int numAnswers) {
-        Game game = dao.createGame(numQuestions, numAnswers, sessionID);
+    public ResponseEntity<Integer> createGame(int numQuestions, int numAnswers, 
+    Term[] legalTerms, String questionType, String answerType) {
+        int sessionID = dao.getSessionID();
+        Game game = dao.createGame(numQuestions, numAnswers, sessionID,
+        legalTerms, questionType, answerType);
         if (game == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(game, HttpStatus.CREATED);
+        return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
     } 
+
+    @RequestMapping("generate")
+    public ResponseEntity<String[]> generateQuestion(long sessionID) {
+
+    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
     @RequestMapping("")
     public ResponseEntity<Integer[]> getProgress(long sessionID) {

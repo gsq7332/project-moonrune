@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 
 import com.example.runelogic.model.Game;
+import com.example.runelogic.model.terms.Term;
 
 @Component
 public class gameDAO {
@@ -25,10 +26,17 @@ public class gameDAO {
         return currSession;
     }
 
-    public Game createGame(int numQuestions, int numAnswers, long sessionID) {
-        Game game = new Game(numQuestions, numAnswers, sessionID);
+    public Game createGame(int numQuestions, int numAnswers, long sessionID, 
+    Term[] legalTerms, String questionType, String answerType) {
+        Game game = new Game(numQuestions, numAnswers, sessionID,
+        legalTerms, questionType, answerType);
         ongoingGames.put(sessionID, game);
         return game;
+    }
+
+    public String[] generateAnswers(long sessionID) {
+        Game game = ongoingGames.get(sessionID);
+        return game.generateTerms();
     }
 
     public void setAnswer(long sessionID, String answer) {
