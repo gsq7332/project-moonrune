@@ -19,6 +19,7 @@ export class GameComponent {
 
   hasStarted = false;
   hasEnded = false;
+  sessionID: number = -1;
 
   
   ngOnInit(): void {
@@ -29,16 +30,13 @@ export class GameComponent {
     this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
     return this.hasStarted
   }
-
-  toggleGame(isStarting: boolean): void {
-    
-  }
   
   initializeGame(): void {
-    this.gameService.startGame().subscribe(hasStarted => this.hasStarted = hasStarted);
+    this.gameService.startGame(10, 4, "term", "meanings").subscribe(id => this.sessionID = id);
+    this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting);
   }
 
   endGame(): void {
-    this.gameService.endGame().subscribe(hasStarted => this.hasStarted = hasStarted);
+    this.gameService.endGame(this.sessionID).subscribe(hasStarted => this.hasStarted = hasStarted);
   }
 }

@@ -17,9 +17,10 @@ export class GameService {
     return of(this.hasStarted);
   }
   
-  startGame(): Observable<boolean> {
+  startGame(numQuestions: number, numAnswers: number, questionType: string, answerType: string): Observable<number> {
     this.hasStarted = true;
-    return of(this.hasStarted);
+    let currUrl = this.url + "/create";
+    return this.http.post<number>(currUrl, HttpHeaders).pipe(catchError(this.handleError<number>('generateQuestion')));
   }
 
   generateQuestion(id: number): Observable<Term[]> {
@@ -37,8 +38,10 @@ export class GameService {
     return this.http.get<boolean>(currUrl).pipe(catchError(this.handleError<boolean>('checkQuestion')));
   }
 
-  endGame(): Observable<boolean> {
+  endGame(sessionID: number): Observable<boolean> {
     this.hasStarted = false;
+    let currUrl = this.url + "/end";
+    this.http.delete<void>(currUrl).pipe(catchError(this.handleError<boolean>('checkQuestion')));
     return of(this.hasStarted);
   }
 

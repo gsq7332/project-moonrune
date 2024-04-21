@@ -1,7 +1,12 @@
 package com.example.runelogic.controller;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +24,7 @@ public class gameController {
         this.dao = dao;
     }
 
-    @RequestMapping("create")
+    @PostMapping("create")
     public ResponseEntity<Integer> createGame(int numQuestions, int numAnswers, 
     Term[] legalTerms, String questionType, String answerType) {
         int sessionID = dao.getSessionID();
@@ -29,33 +34,33 @@ public class gameController {
         return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
     } 
 
-    @RequestMapping("generate")
+    @GetMapping("generate")
     public ResponseEntity<String[]> generateQuestion(long sessionID) {
 
     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping("")
+    @GetMapping("")
     public ResponseEntity<Integer[]> getProgress(long sessionID) {
         Integer[] progress = dao.getProgress(sessionID);
         if (progress == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(progress, HttpStatus.OK);
     }
 
-    @RequestMapping("progress")
+    @GetMapping("progress")
     public ResponseEntity<Boolean> progressGame(long sessionID, String answer) {
         boolean isCorrect = dao.checkAnswer(sessionID, answer);
         dao.increment(sessionID, isCorrect);
         return new ResponseEntity<>(isCorrect, HttpStatus.OK);
     }
 
-    @RequestMapping("active")
+    @GetMapping("active")
     public ResponseEntity<Boolean> isActive(long sessionID) {
         boolean isOver = dao.isActive(sessionID);
         return new ResponseEntity<>(isOver, HttpStatus.OK);
     }
 
-    @RequestMapping("end")
+    @DeleteMapping("end")
     public ResponseEntity<Void> endGame(long sessionID) {
         dao.endGame(sessionID);
         return new ResponseEntity<>(HttpStatus.OK);
