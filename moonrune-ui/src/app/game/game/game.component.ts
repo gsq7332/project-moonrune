@@ -19,7 +19,7 @@ export class GameComponent {
 
   hasStarted = false;
   hasEnded = false;
-  sessionID: number = -1;
+  sessionID: number = 0;
   isValid: boolean = false;
   collectionName: string = "";
 
