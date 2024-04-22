@@ -12,14 +12,13 @@ public class Game {
     
     private final int numQuestions;
     private final int numAnswers;
-    private final long sessionID;
-    private String question;
+    private final int sessionID;
     private String correct;
     private int numCorrect;
     private int numAnswered;
-    private final Term[] legalTerms;
-    private final String questionType;
-    private final String answerType;
+    private Term[] legalTerms;
+    private String questionType = "";
+    private String answerType = "";
     /*
      * Legal types for question/answer type:
      * term
@@ -29,18 +28,24 @@ public class Game {
      * kanji
      */
     
-    public Game(int numQuestions, int numAnswers, long sessionID, 
-    Term[] legalTerms, String questionType, String answerType) {
+    public Game(int numQuestions, int numAnswers, int sessionID) {
         this.numQuestions = numQuestions;
         this.numAnswers = numAnswers;
         this.sessionID = sessionID;
-        this.legalTerms = legalTerms;
-        this.questionType = questionType;
-        this.answerType = answerType;
         correct = "";
-        question = "";
         numCorrect = 0;
         numAnswered = 0;
+    }
+
+    public boolean setQuestionAnswer(String questionType, String answerType) {
+        this.questionType = questionType;
+        this.answerType = answerType;
+        return questionType.equals(answerType);
+    }
+
+    public boolean setLegalTerms(Term[] legalTerms) {
+        this.legalTerms = legalTerms;
+        return legalTerms.length >= numAnswers;
     }
 
     public String[] generateTerms() {

@@ -14,7 +14,7 @@ public class gameDAO {
     
     private int sessionID = 0;
 
-    private HashMap<Long, Game> ongoingGames;
+    private HashMap<Integer, Game> ongoingGames;
 
     public gameDAO() {
         ongoingGames = new HashMap<>();
@@ -26,36 +26,44 @@ public class gameDAO {
         return currSession;
     }
 
-    public Game createGame(int numQuestions, int numAnswers, long sessionID, 
-    Term[] legalTerms, String questionType, String answerType) {
-        Game game = new Game(numQuestions, numAnswers, sessionID,
-        legalTerms, questionType, answerType);
+    public Game createGame(int numQuestions, int numAnswers, int sessionID) {
+        Game game = new Game(numQuestions, numAnswers, sessionID);
         ongoingGames.put(sessionID, game);
         return game;
     }
 
-    public String[] generateAnswers(long sessionID) {
+    public boolean setQuestionAnswer(int sessionID, String questionType, String answerType) {
+        Game game = ongoingGames.get(sessionID);
+        return game.setQuestionAnswer(questionType, answerType);
+    }
+
+    public boolean setLegalTerms(int sessionID, Term[] legalTerms) {
+        Game game = ongoingGames.get(sessionID);
+        return game.setLegalTerms(legalTerms);
+    }
+
+    public String[] generateAnswers(int sessionID) {
         Game game = ongoingGames.get(sessionID);
         return game.generateTerms();
     }
 
-    public void setAnswer(long sessionID, String answer) {
+    public void setAnswer(int sessionID, String answer) {
         Game game = ongoingGames.get(sessionID);
         game.setCorrect(answer);
     }
 
-    public boolean checkAnswer(long sessionID, String answer) {
+    public boolean checkAnswer(int sessionID, String answer) {
         Game game = ongoingGames.get(sessionID);
         if (game == null) return false;
         return game.isCorrect(answer);
     }
 
-    public boolean isActive(long sessionID) {
+    public boolean isActive(int sessionID) {
         Game game = ongoingGames.get(sessionID);
         return game.isOver();
     }
 
-    public void increment(long sessionID, boolean isCorrect) {
+    public void increment(int sessionID, boolean isCorrect) {
         Game game = ongoingGames.get(sessionID);
         if (isCorrect) {
             game.incrementCorrect();
@@ -63,12 +71,12 @@ public class gameDAO {
         game.incrementAnswered();
     }
 
-    public Integer[] getProgress(long sessionID) {
+    public Integer[] getProgress(int sessionID) {
         Game game = ongoingGames.get(sessionID);
         return new Integer[]{game.getNumCorrect(), game.getNumAnswered(), game.getNumQuestions()};
     }
 
-    public void endGame(long sessionID) {
+    public void endGame(int sessionID) {
         ongoingGames.remove(sessionID);
     }
 }
