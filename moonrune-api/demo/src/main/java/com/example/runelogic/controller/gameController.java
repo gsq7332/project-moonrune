@@ -36,8 +36,9 @@ public class gameController {
 
     @GetMapping("generate")
     public ResponseEntity<String[]> generateQuestion(long sessionID) {
-
-    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        String[] terms = dao.generateAnswers(sessionID);
+        if (terms == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(terms, HttpStatus.OK);
     }
 
     @GetMapping("")
