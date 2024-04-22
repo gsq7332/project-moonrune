@@ -41,14 +41,14 @@ public class gameController {
         return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
     } 
 
-    @PutMapping("create/{sessionID}/{questionType}/{answerType}")
+    @PutMapping("question/{sessionID}/{questionType}/{answerType}")
     public ResponseEntity<Boolean> setQuestionType(@PathVariable int sessionID, @PathVariable String questionType, 
     @PathVariable String answerType) {
         boolean hasWorked = dao.setQuestionAnswer(sessionID, questionType, answerType);
         return new ResponseEntity<>(hasWorked, HttpStatus.OK);
     }
 
-    @PutMapping("create/{sessionID}/{collection}")
+    @PutMapping("term/{sessionID}/{collection}")
     public ResponseEntity<Boolean> setLegalTerms(@PathVariable int sessionID, @PathVariable String collection) {
         LinkedHashMap<String, Term> terms = tDao.getTerms("");
         Term[] legalTerms = new Term[terms.size()];
