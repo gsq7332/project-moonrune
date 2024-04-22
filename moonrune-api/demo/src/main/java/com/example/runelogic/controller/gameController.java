@@ -79,8 +79,8 @@ public class gameController {
     }
 
     @GetMapping("active/{sessionID}")
-    public ResponseEntity<Boolean> isActive(@PathVariable int sessionID) {
-        boolean isOver = dao.isActive(sessionID);
+    public ResponseEntity<Boolean> isOver(@PathVariable int sessionID) {
+        boolean isOver = dao.isOver(sessionID);
         return new ResponseEntity<>(isOver, HttpStatus.OK);
     }
 

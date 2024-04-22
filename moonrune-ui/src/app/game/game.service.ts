@@ -49,6 +49,11 @@ export class GameService {
     return this.http.get<boolean>(currUrl).pipe(catchError(this.handleError<boolean>('checkQuestion')));
   }
 
+  checkActivity(id: number): Observable<boolean> {
+    let currUrl = this.url + "/active/{$id}"
+    return this.http.get<boolean>(currUrl).pipe(catchError(this.handleError<boolean>('checkQuestion')));
+  }
+
   endGame(sessionID: number): Observable<boolean> {
     this.hasStarted = false;
     let currUrl = this.url + "/end/{$id}";

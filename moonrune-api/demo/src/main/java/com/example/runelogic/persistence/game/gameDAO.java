@@ -58,7 +58,7 @@ public class gameDAO {
         return game.isCorrect(answer);
     }
 
-    public boolean isActive(int sessionID) {
+    public boolean isOver(int sessionID) {
         Game game = ongoingGames.get(sessionID);
         return game.isOver();
     }

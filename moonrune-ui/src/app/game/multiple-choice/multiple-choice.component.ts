@@ -4,6 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { Term } from '../../terms/term';
 import { McOptionComponent } from '../mc-option/mc-option.component';
+import { concatMap, timer } from 'rxjs';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -21,20 +22,23 @@ export class MultipleChoiceComponent {
   @Output() endGameEvent = new EventEmitter();
   isCorrect: boolean = false;
   hasEnded: boolean = false;
+  hasAnswered: boolean = false;
   terms: string[] = [];
   question: string = "";
+
+  TIME = 1000
 
   constructor(private gameService: GameService) {}
 
   ngOnInit() {
     if (this.sessionID != undefined) {
-      this.generateQuestion()
+      this.generateQuestion(false)
     } else {
       this.endGame()
     }
   }
 
-  generateQuestion() {
+  generateQuestion(delay: boolean) {
     if (this.sessionID != undefined) {
       this.gameService.generateQuestion(this.sessionID).subscribe(terms => this.terms = terms);
       this.question = this.terms[this.terms.length-1]
@@ -42,8 +46,14 @@ export class MultipleChoiceComponent {
   }
 
   answerQuestion(answer: string) {
-    if (this.sessionID != undefined) {
-      this.gameService.checkQuestion(this.sessionID, answer).subscribe(correct => this.isCorrect = correct);
+    if (this.sessionID == undefined) return;
+    this.hasAnswered = true;
+    this.gameService.checkQuestion(this.sessionID, answer).subscribe(correct => this.isCorrect = correct);
+    const activityObs = this.gameService.checkActivity(this.sessionID);
+    timer(this.TIME).pipe(concatMap(() => activityObs)).subscribe(ended => this.hasEnded = ended);
+    this.hasAnswered = false;
+    if (!this.hasEnded) {
+      this.generateQuestion(true);
     }
   }
 

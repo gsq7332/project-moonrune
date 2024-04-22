@@ -1,11 +1,22 @@
-<div *ngIf="!hasEnded; else ended">
-    <label>{{this.question}}?</label>
-    <ul class="termString">
-        <li *ngFor="let term of terms">
-            <app-mc-option [option]="term" (eventSelectOption)="answerQuestion(term)"></app-mc-option>
-        </li>
-    </ul>
+<div *ngIf="!hasAnswered; else mainScreen">
+    <div *ngIf="isCorrect; else failScreen">
+        Correct
+    </div>
+    <ng-template #failScreen>
+        Incorrect
+    </ng-template>
 </div>
-<ng-template #ended> 
-    <button type="button" (click)="endGame()"> End Game </button>
+
+<ng-template #mainScreen>
+    <div *ngIf="!hasEnded; else ended">
+        <label>{{this.question}}?</label>
+        <ul class="termString">
+            <li *ngFor="let term of terms">
+                <app-mc-option [option]="term" (eventSelectOption)="answerQuestion(term)"></app-mc-option>
+            </li>
+        </ul>
+    </div>
+    <ng-template #ended> 
+        <button type="button" (click)="endGame()"> End Game </button>
+    </ng-template>
 </ng-template>
