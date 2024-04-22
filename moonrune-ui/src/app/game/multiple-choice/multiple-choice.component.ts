@@ -21,8 +21,8 @@ export class MultipleChoiceComponent {
   @Output() endGameEvent = new EventEmitter();
   isCorrect: boolean = false;
   hasEnded: boolean = false;
-  terms: Term[] = [];
-  termString: string[] = ["a", "b", "c", "d"];
+  terms: string[] = [];
+  question: string = "";
 
   constructor(private gameService: GameService) {}
 
@@ -37,6 +37,7 @@ export class MultipleChoiceComponent {
   generateQuestion() {
     if (this.sessionID != undefined) {
       this.gameService.generateQuestion(this.sessionID).subscribe(terms => this.terms = terms);
+      this.question = this.terms[this.terms.length-1]
     }
   }
 

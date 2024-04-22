@@ -1,8 +1,8 @@
 <div *ngIf="!hasEnded; else ended">
-    <label>Question</label>
+    <label>{{this.question}}?</label>
     <ul class="termString">
-        <li *ngFor="let term of termString">
-            <app-mc-option [option]="term" (eventSelectOption)="answerQuestion($event)"></app-mc-option>
+        <li *ngFor="let term of terms">
+            <app-mc-option [option]="term" (eventSelectOption)="answerQuestion(term)"></app-mc-option>
         </li>
     </ul>
 </div>

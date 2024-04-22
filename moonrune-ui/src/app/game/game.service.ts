@@ -33,9 +33,9 @@ export class GameService {
     return this.http.put<boolean>(currUrl, HttpHeaders).pipe(catchError(this.handleError<boolean>('generateQuestion')));
   }
 
-  generateQuestion(id: number): Observable<Term[]> {
+  generateQuestion(id: number): Observable<string[]> {
     let currUrl = this.url + "/generate/{$id}";
-    return this.http.get<Term[]>(currUrl).pipe(catchError(this.handleError<Term[]>('generateQuestion', [])));
+    return this.http.get<string[]>(currUrl).pipe(catchError(this.handleError<string[]>('generateQuestion', [])));
   }
 
   getProgress(id: number): Observable<number[]> {
