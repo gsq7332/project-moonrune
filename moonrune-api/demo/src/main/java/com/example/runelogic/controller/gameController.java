@@ -33,11 +33,9 @@ public class gameController {
     }
 
     @PostMapping("create/{numQuestions}/{numAnswers}")
-    public ResponseEntity<Integer> createGame(@PathVariable int numQuestions, @PathVariable int numAnswers, 
-    Term[] legalTerms, String questionType, String answerType) {
-        int sessionID = dao.getSessionID();
-        Game game = dao.createGame(numQuestions, numAnswers, sessionID);
-        if (game == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<Integer> createGame(@PathVariable int numQuestions, @PathVariable int numAnswers) {
+        int sessionID = dao.createGame(numQuestions, numAnswers);
+        //if (sessionID ==) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
     } 
 

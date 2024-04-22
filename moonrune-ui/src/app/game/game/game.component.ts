@@ -29,17 +29,29 @@ export class GameComponent {
   }
 
   getIfStarted(): boolean {
-    this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
+    this.gameService.endGame(-1).subscribe(hasStarted => this.hasStarted = hasStarted);
+    //this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
     return this.hasStarted
   }
   
   initializeGame(): void {
-    this.gameService.startGame(10, 4).subscribe(id => this.sessionID = id);
-    this.gameService.setQuestion(this.sessionID, "term", "meanings").subscribe(valid => this.isValid = valid)
+    this.startGame()
+    this.setQuestion()
     if (!this.isValid) return;
+    this.setTerms()
+    this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting); 
+  }
+
+  startGame() {
+    this.gameService.startGame(10, 4).subscribe(id => this.sessionID = id);
+  }
+
+  setQuestion() {
+    this.gameService.setQuestion(this.sessionID, "term", "meanings").subscribe(valid => this.isValid = valid)
+  }
+
+  setTerms() {
     this.gameService.setTerms(this.sessionID, this.collectionName)
-    this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting);
-    
   }
 
   endGame(): void {

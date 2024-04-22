@@ -26,10 +26,11 @@ public class gameDAO {
         return currSession;
     }
 
-    public Game createGame(int numQuestions, int numAnswers, int sessionID) {
+    public int createGame(int numQuestions, int numAnswers) {
+        int sessionID = getSessionID();
         Game game = new Game(numQuestions, numAnswers, sessionID);
         ongoingGames.put(sessionID, game);
-        return game;
+        return sessionID;
     }
 
     public boolean setQuestionAnswer(int sessionID, String questionType, String answerType) {
