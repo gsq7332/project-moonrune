@@ -21,7 +21,7 @@ export class GameComponent {
   hasEnded = false;
   sessionID: number = 0;
   isValid: boolean = false;
-  collectionName: string = "";
+  collectionName: string = "a";
 
   
   ngOnInit(): void {
@@ -36,18 +36,25 @@ export class GameComponent {
   
   initializeGame(): void {
     this.startGame()
-    this.setQuestion()
-    if (!this.isValid) return;
-    this.setTerms()
     //this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting); 
   }
 
   startGame() {
-    this.gameService.startGame(10, 4).subscribe(id => this.sessionID = id);
+    this.gameService.startGame(10, 4).subscribe(id => {
+      this.sessionID = id
+      this.setQuestion()
+    });
+    //this.setQuestion()
   }
 
   setQuestion() {
-    this.gameService.setQuestion(this.sessionID, "term", "meanings").subscribe(valid => this.isValid = valid)
+    this.gameService.setQuestion(this.sessionID, "term", "meanings").subscribe(valid => {
+      this.isValid = valid
+      if (!this.isValid) return;
+      this.setTerms()
+    })
+    //if (!this.isValid) return;
+    //this.setTerms()
   }
 
   setTerms() {

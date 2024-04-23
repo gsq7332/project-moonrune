@@ -40,7 +40,7 @@ public class Game {
     public boolean setQuestionAnswer(String questionType, String answerType) {
         this.questionType = questionType;
         this.answerType = answerType;
-        return questionType.equals(answerType);
+        return !questionType.equals(answerType);
     }
 
     public boolean setLegalTerms(Term[] legalTerms) {

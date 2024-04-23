@@ -30,12 +30,12 @@ public class gameDAO {
         int sessionID = getSessionID();
         Game game = new Game(numQuestions, numAnswers, sessionID);
         ongoingGames.put(sessionID, game);
-        System.out.println(ongoingGames);
         return sessionID;
     }
 
     public boolean setQuestionAnswer(int id, String questionType, String answerType) {
         Game game = ongoingGames.get(id);
+        System.out.println(ongoingGames);
         return game.setQuestionAnswer(questionType, answerType);
     }
 
