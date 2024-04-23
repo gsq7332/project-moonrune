@@ -102,6 +102,14 @@ public class Game {
                     returnString = readings.get(randNum);
                 }
             }
+            case "romaji" -> {
+                if (term instanceof Kanji) {
+                    ArrayList<String> readings = ((Kanji) term).getRomaji();
+                    Random random = new Random();
+                    int randNum = random.nextInt(readings.size());
+                    returnString = readings.get(randNum);
+                }
+            }
             case "name" -> {
                 if (term instanceof GreekLetter) { 
                     returnString = ((GreekLetter) term).getName();
@@ -145,6 +153,15 @@ public class Game {
                 if (term1 instanceof Kanji && term2 instanceof Kanji) {
                     for (String reading1: ((Kanji) term1).getReadings()) {
                         for (String reading2: ((Kanji) term2).getReadings()) {
+                            if (reading1.equals(reading2)) doesOverlap = true;
+                        }
+                    }
+                }
+            }
+            case "romaji" -> {
+                if (term1 instanceof Kanji && term2 instanceof Kanji) {
+                    for (String reading1: ((Kanji) term1).getRomaji()) {
+                        for (String reading2: ((Kanji) term2).getRomaji()) {
                             if (reading1.equals(reading2)) doesOverlap = true;
                         }
                     }
