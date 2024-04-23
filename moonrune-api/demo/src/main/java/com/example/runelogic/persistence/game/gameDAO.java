@@ -35,12 +35,12 @@ public class gameDAO {
 
     public boolean setQuestionAnswer(int id, String questionType, String answerType) {
         Game game = ongoingGames.get(id);
-        System.out.println(ongoingGames);
         return game.setQuestionAnswer(questionType, answerType);
     }
 
     public boolean setLegalTerms(int id, Term[] legalTerms) {
         Game game = ongoingGames.get(id);
+        System.out.println(ongoingGames);
         return game.setLegalTerms(legalTerms);
     }
 

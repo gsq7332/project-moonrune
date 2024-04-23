@@ -56,6 +56,7 @@ public class gameController {
         Term[] legalTerms = new Term[terms.size()];
         legalTerms = terms.values().toArray(legalTerms);
         boolean hasWorked = dao.setLegalTerms(sessionID, legalTerms);
+        System.out.println(hasWorked);
         return new ResponseEntity<>(hasWorked, HttpStatus.OK);
     }
 
