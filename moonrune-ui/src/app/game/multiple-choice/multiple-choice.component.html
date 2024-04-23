@@ -1,4 +1,4 @@
-<div *ngIf="!hasAnswered; else mainScreen">
+<div *ngIf="hasAnswered; else mainScreen">
     <div *ngIf="isCorrect; else failScreen">
         Correct
     </div>
