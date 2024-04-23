@@ -39,7 +39,7 @@ export class GameComponent {
     this.setQuestion()
     if (!this.isValid) return;
     this.setTerms()
-    this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting); 
+    //this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting); 
   }
 
   startGame() {
@@ -51,7 +51,7 @@ export class GameComponent {
   }
 
   setTerms() {
-    this.gameService.setTerms(this.sessionID, this.collectionName)
+    this.gameService.setTerms(this.sessionID, this.collectionName).subscribe(valid => this.hasStarted = valid)
   }
 
   endGame(): void {

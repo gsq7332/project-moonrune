@@ -20,17 +20,17 @@ export class GameService {
   startGame(numQuestions: number, numAnswers: number): Observable<number> {
     this.hasStarted = true;
     let currUrl = this.url + "/create/" + numQuestions + "/" + numAnswers;
-    return this.http.post<number>(currUrl, HttpHeaders).pipe(catchError(this.handleError<number>('generateQuestion')));
+    return this.http.post<number>(currUrl, this.httpOptions).pipe(catchError(this.handleError<number>('generateQuestion')));
   }
 
   setQuestion(id: number, questionType: string, answerType: string): Observable<boolean> {
     let currUrl = this.url + "/question/" + id + "/" + questionType + "/" + answerType;
-    return this.http.put<boolean>(currUrl, HttpHeaders).pipe(catchError(this.handleError<boolean>('generateQuestion')));
+    return this.http.put<boolean>(currUrl, this.httpOptions).pipe(catchError(this.handleError<boolean>('generateQuestion')));
   }
 
   setTerms(id: number, collection: string): Observable<boolean> {
     let currUrl = this.url + "/term/" + id + "/" + collection;
-    return this.http.put<boolean>(currUrl, HttpHeaders).pipe(catchError(this.handleError<boolean>('generateQuestion')));
+    return this.http.put<boolean>(currUrl, this.httpOptions).pipe(catchError(this.handleError<boolean>('generateQuestion')));
   }
 
   generateQuestion(id: number): Observable<string[]> {

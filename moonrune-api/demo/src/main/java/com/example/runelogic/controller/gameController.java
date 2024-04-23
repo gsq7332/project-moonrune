@@ -20,12 +20,15 @@ import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.game.gameDAO;
 import com.example.runelogic.persistence.term.termDAO;
 
+import java.util.logging.Logger;
+
 @RestController
 @RequestMapping("game")
 public class gameController {
 
     gameDAO dao;
     termDAO tDao;
+    private static final Logger LOG = Logger.getLogger(gameController.class.getName());
 
     public gameController(gameDAO dao, termDAO tDao) {
         this.dao = dao;
@@ -34,20 +37,21 @@ public class gameController {
 
     @PostMapping("create/{numQuestions}/{numAnswers}")
     public ResponseEntity<Integer> createGame(@PathVariable int numQuestions, @PathVariable int numAnswers) {
+        LOG.info("POST /create/" + numQuestions + "/" + numAnswers);
         int sessionID = dao.createGame(numQuestions, numAnswers);
-        //if (sessionID ==) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
     } 
 
     @PutMapping("question/{sessionID}/{questionType}/{answerType}")
-    public ResponseEntity<Boolean> setQuestionType(@PathVariable int sessionID, @PathVariable String questionType, 
-    @PathVariable String answerType) {
+    public ResponseEntity<Boolean> setQuestionType(@PathVariable int sessionID, @PathVariable String questionType, @PathVariable String answerType) {
+        LOG.info("PUT /question/" + sessionID + "/" + questionType + "/" + answerType);
         boolean hasWorked = dao.setQuestionAnswer(sessionID, questionType, answerType);
         return new ResponseEntity<>(hasWorked, HttpStatus.OK);
     }
 
     @PutMapping("term/{sessionID}/{collection}")
     public ResponseEntity<Boolean> setLegalTerms(@PathVariable int sessionID, @PathVariable String collection) {
+        LOG.info("PUT /term/" + sessionID + "/" + collection);
         LinkedHashMap<String, Term> terms = tDao.getTerms("");
         Term[] legalTerms = new Term[terms.size()];
         legalTerms = terms.values().toArray(legalTerms);
@@ -57,6 +61,7 @@ public class gameController {
 
     @GetMapping("generate/{sessionID}")
     public ResponseEntity<String[]> generateQuestion(@PathVariable int sessionID) {
+        LOG.info("GET /generate/" + sessionID);
         String[] terms = dao.generateAnswers(sessionID);
         if (terms == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(terms, HttpStatus.OK);
@@ -64,6 +69,7 @@ public class gameController {
 
     @GetMapping("/{sessionID}")
     public ResponseEntity<Integer[]> getProgress(@PathVariable int sessionID) {
+        LOG.info("GET /" + sessionID);
         Integer[] progress = dao.getProgress(sessionID);
         if (progress == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(progress, HttpStatus.OK);
@@ -71,6 +77,7 @@ public class gameController {
 
     @GetMapping("progress/{sessionID}")
     public ResponseEntity<Boolean> progressGame(@PathVariable int sessionID, @PathVariable String answer) {
+        LOG.info("GET /progress/" + sessionID);
         boolean isCorrect = dao.checkAnswer(sessionID, answer);
         dao.increment(sessionID, isCorrect);
         return new ResponseEntity<>(isCorrect, HttpStatus.OK);
@@ -78,12 +85,14 @@ public class gameController {
 
     @GetMapping("active/{sessionID}")
     public ResponseEntity<Boolean> isOver(@PathVariable int sessionID) {
+        LOG.info("GET /active/" + sessionID);
         boolean isOver = dao.isOver(sessionID);
         return new ResponseEntity<>(isOver, HttpStatus.OK);
     }
 
     @DeleteMapping("end/{sessionID}")
     public ResponseEntity<Void> endGame(@PathVariable int sessionID) {
+        LOG.info("DELETE /end/" + sessionID);
         dao.endGame(sessionID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
