@@ -1,6 +1,7 @@
 import { Component, Output, Input } from '@angular/core';
 import { GameService } from '../game.service';
 import { EventEmitter } from '@angular/core';
+import { log } from 'console';
 import { NgFor, NgIf } from '@angular/common';
 import { McOptionComponent } from '../mc-option/mc-option.component';
 import { concatMap, timer } from 'rxjs';
