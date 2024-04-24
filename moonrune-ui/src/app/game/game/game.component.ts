@@ -19,6 +19,9 @@ export class GameComponent {
 
   hasStarted = false;
   hasEnded = false;
+  sessionID: number = 0;
+  isValid: boolean = false;
+  collectionName: string = "a";
 
   
   ngOnInit(): void {
@@ -26,19 +29,39 @@ export class GameComponent {
   }
 
   getIfStarted(): boolean {
-    this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
+    this.gameService.endGame(-1).subscribe(hasStarted => this.hasStarted = hasStarted);
+    //this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
     return this.hasStarted
-  }
-
-  toggleGame(isStarting: boolean): void {
-    
   }
   
   initializeGame(): void {
-    this.gameService.startGame().subscribe(hasStarted => this.hasStarted = hasStarted);
+    this.startGame()
+    //this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting); 
+  }
+
+  startGame() {
+    this.gameService.startGame(10, 4).subscribe(id => {
+      this.sessionID = id
+      this.setQuestion()
+    });
+    //this.setQuestion()
+  }
+
+  setQuestion() {
+    this.gameService.setQuestion(this.sessionID, "meanings", "term").subscribe(valid => {
+      this.isValid = valid
+      if (!this.isValid) return;
+      this.setTerms()
+    })
+    //if (!this.isValid) return;
+    //this.setTerms()
+  }
+
+  setTerms() {
+    this.gameService.setTerms(this.sessionID, this.collectionName).subscribe(valid => this.hasStarted = valid)
   }
 
   endGame(): void {
-    this.gameService.endGame().subscribe(hasStarted => this.hasStarted = hasStarted);
+    this.gameService.endGame(this.sessionID).subscribe(hasStarted => this.hasStarted = hasStarted);
   }
 }

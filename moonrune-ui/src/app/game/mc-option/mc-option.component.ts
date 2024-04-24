@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-mc-option',
@@ -8,5 +9,14 @@ import { Component } from '@angular/core';
   styleUrl: './mc-option.component.css'
 })
 export class McOptionComponent {
+  @Input() option ?: string;
+  @Output() eventSelectOption = new EventEmitter();
 
+  selectOption() {
+    if (this.option == undefined) {
+      this.eventSelectOption.emit("")
+      return
+    }
+    this.eventSelectOption.emit(this.option)
+  }
 }
