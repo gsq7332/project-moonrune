@@ -57,6 +57,7 @@ public class Game {
             Term currTerm = legalTerms[answerIdx];
             boolean skip = false;
             for (Term term: inUse) {
+                if (term == null) continue;
                 if (currTerm.equals(term)) {
                     skip = true;
                 }
@@ -68,7 +69,7 @@ public class Game {
                 i--;
                 continue;
             }
-            inUse[answerIdx] = currTerm;
+            inUse[i] = currTerm;
             // last thing in returned string of term answers is the question
             if (i == 0) terms[numAnswers] = getNeededTerm(currTerm, true);
             terms[i] = getNeededTerm(currTerm, false);

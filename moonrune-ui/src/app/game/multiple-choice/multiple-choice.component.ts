@@ -14,10 +14,6 @@ import { concatMap, timer } from 'rxjs';
   styleUrl: './multiple-choice.component.css'
 })
 export class MultipleChoiceComponent {
-  @Input() collection ?: string;
-  @Input() numQuestions: number = 0;
-  @Input() questionType ?: string;
-  @Input() answerType ?: string;
   @Input() sessionID ?: number;
   @Output() endGameEvent = new EventEmitter();
   isCorrect: boolean = false;
@@ -40,8 +36,10 @@ export class MultipleChoiceComponent {
 
   generateQuestion(delay: boolean) {
     if (this.sessionID != undefined) {
-      this.gameService.generateQuestion(this.sessionID).subscribe(terms => this.terms = terms);
-      this.question = this.terms[this.terms.length-1]
+      this.gameService.generateQuestion(this.sessionID).subscribe(terms => {
+        this.terms = terms
+        this.question = this.terms[this.terms.length-1]
+      });
     }
   }
 
