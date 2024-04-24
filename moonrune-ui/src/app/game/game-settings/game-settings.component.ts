@@ -11,9 +11,9 @@ import { NgIf } from '@angular/common';
   styleUrl: './game-settings.component.css'
 })
 export class GameSettingsComponent {
-  @Input() type ?: string;
+  @Input() collection ?: string;
   @Output() startGameEvent = new EventEmitter();
-  currentLevel: number = 3;
+  currentLevel: number = 1;
   /*
   level representations:
   0 - Default/Regular (used for user generated terms + Hangul)

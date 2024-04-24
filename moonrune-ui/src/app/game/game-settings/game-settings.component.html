@@ -1,30 +1,42 @@
 <div *ngIf="currentLevel==1" class="extra">
     <input  type="checkbox" name="extra" value="extra"> Enable Diacritics
 </div>
+<div>
+    Number of Questions: 
+
+</div>
 <div class="question">
     Question:
     <input type="radio" name="term" value="Term" checked>
     <label>Term </label>
-    <input type="radio" name="meaning" value="Meanings">
+    <input type="radio" name="meanings" value="Meanings">
     <label>Meanings </label>
     <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> 
     <label *ngIf="currentLevel==2||currentLevel==3">Lowercase </label>
     <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> 
     <label *ngIf="currentLevel==3">Name </label>
-    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings">
+    <input *ngIf="currentLevel==4"type="radio" name="readings" value="Readings">
     <label *ngIf="currentLevel==4">Readings </label>
+    <input *ngIf="currentLevel==4"type="radio" name="romaji" value="Readings">
+    <label *ngIf="currentLevel==4">Romaji </label>
+</div>
+<div>
+    Number of Answers (1 for open-ended): 
+
 </div>
 <div class="answer">
     Answer: 
     <input type="radio" name="term" value="Term" checked>
     <label>Term </label>
-    <input type="radio" name="meaning" value="Meanings">
+    <input type="radio" name="meanings" value="Meanings">
     <label>Meanings </label>
     <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> 
     <label *ngIf="currentLevel==2||currentLevel==3">Lowercase </label>
     <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> 
     <label *ngIf="currentLevel==3">Name </label>
-    <input *ngIf="currentLevel==4"type="radio" name="reading" value="Readings">
+    <input *ngIf="currentLevel==4"type="radio" name="readings" value="Readings">
     <label *ngIf="currentLevel==4">Readings </label>
+    <input *ngIf="currentLevel==4"type="radio" name="romaji" value="Readings">
+    <label *ngIf="currentLevel==4">Romaji </label>
 </div>
 <button type = "button" (click)="startGame()"> Start Game </button>
