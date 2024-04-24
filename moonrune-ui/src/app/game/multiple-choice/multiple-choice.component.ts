@@ -56,6 +56,8 @@ export class MultipleChoiceComponent {
     if (this.sessionID == undefined) return;
     this.gameService.checkQuestion(this.sessionID, answer).subscribe(correct => {
       this.isCorrect = correct
+      if (this.sessionID == undefined) return;
+      this.gameService.getProgress(this.sessionID).subscribe(progress => this.progress = progress)
       this.hasAnswered = true;
   });
     const activityObs = this.gameService.checkActivity(this.sessionID);
@@ -66,9 +68,6 @@ export class MultipleChoiceComponent {
     } else {
       this.hasAnswered = false;
     }
-    if (this.sessionID == undefined) return;
-      this.gameService.getProgress(this.sessionID).subscribe(progress => this.progress = progress)
-
   }); 
   }
 
