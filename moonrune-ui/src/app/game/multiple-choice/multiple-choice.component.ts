@@ -5,6 +5,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { Term } from '../../terms/term';
 import { McOptionComponent } from '../mc-option/mc-option.component';
 import { concatMap, timer } from 'rxjs';
+import { randomInt } from 'node:crypto';
 
 @Component({
   selector: 'app-multiple-choice',
@@ -21,6 +22,7 @@ export class MultipleChoiceComponent {
   hasAnswered: boolean = false;
   terms: string[] = [];
   question: string = "";
+  progress: number[] = [0, 0]
 
   TIME = 1000
 
@@ -28,17 +30,23 @@ export class MultipleChoiceComponent {
 
   ngOnInit() {
     if (this.sessionID != undefined) {
-      this.generateQuestion(false)
+      this.generateQuestion()
     } else {
       this.endGame()
     }
   }
 
-  generateQuestion(delay: boolean) {
+  generateQuestion() {
     if (this.sessionID != undefined) {
       this.gameService.generateQuestion(this.sessionID).subscribe(terms => {
-        this.terms = terms
-        this.question = this.terms[this.terms.length-1]
+        this.terms = terms.slice(0, -1)
+        let currentIdx = this.terms.length
+        while (currentIdx != 0) {
+          let randomIdx = Math.floor(Math.random() * currentIdx)
+          currentIdx--;
+          [this.terms[currentIdx], this.terms[randomIdx]] = [this.terms[randomIdx], this.terms[currentIdx]]
+        }
+        this.question = terms[terms.length-1]
       });
     }
   }
@@ -48,11 +56,16 @@ export class MultipleChoiceComponent {
     this.hasAnswered = true;
     this.gameService.checkQuestion(this.sessionID, answer).subscribe(correct => this.isCorrect = correct);
     const activityObs = this.gameService.checkActivity(this.sessionID);
-    timer(this.TIME).pipe(concatMap(() => activityObs)).subscribe(ended => this.hasEnded = ended);
-    this.hasAnswered = false;
+    timer(this.TIME).pipe(concatMap(() => activityObs)).subscribe(ended => {
+      this.hasEnded = ended
+      this.hasAnswered = false;
+      if (this.sessionID == undefined) return;
+      this.gameService.getProgress(this.sessionID)
     if (!this.hasEnded) {
-      this.generateQuestion(true);
+      this.generateQuestion();
     }
+
+  }); 
   }
 
   endGame(): void {

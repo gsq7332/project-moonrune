@@ -76,7 +76,7 @@ public class gameController {
         return new ResponseEntity<>(progress, HttpStatus.OK);
     }
 
-    @GetMapping("progress/{sessionID}")
+    @GetMapping("check/{sessionID}/{answer}")
     public ResponseEntity<Boolean> progressGame(@PathVariable int sessionID, @PathVariable String answer) {
         LOG.info("GET /progress/" + sessionID);
         boolean isCorrect = dao.checkAnswer(sessionID, answer);

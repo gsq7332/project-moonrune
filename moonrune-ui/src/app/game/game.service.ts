@@ -55,11 +55,11 @@ export class GameService {
   }
 
   endGame(id: number): Observable<boolean> {
-    this.hasStarted = false;
     if (id > -1) {
       let currUrl = this.url + "/end/" + id;
       this.http.delete<void>(currUrl).pipe(catchError(this.handleError<boolean>('checkQuestion')));
     }
+    this.hasStarted = false;
     return of(this.hasStarted);
   }
 
