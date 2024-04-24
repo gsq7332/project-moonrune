@@ -78,7 +78,7 @@ public class gameDAO {
         return new Integer[]{game.getNumCorrect(), game.getNumAnswered(), game.getNumQuestions()};
     }
 
-    public void endGame(int id) {
+    public static void endGame(int id) {
         ongoingGames.remove(id);
     }
 }

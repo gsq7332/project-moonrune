@@ -72,9 +72,6 @@ export class MultipleChoiceComponent {
   }
 
   endGame(): void {
-    if (this.sessionID != null) {
-      this.gameService.endGame(this.sessionID); 
-    }
     this.endGameEvent.emit();
   }
 }

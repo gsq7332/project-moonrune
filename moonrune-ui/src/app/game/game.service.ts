@@ -51,13 +51,13 @@ export class GameService {
 
   checkActivity(id: number): Observable<boolean> {
     let currUrl = this.url + "/active/" + id
-    return this.http.get<boolean>(currUrl).pipe(catchError(this.handleError<boolean>('checkQuestion')));
+    return this.http.get<boolean>(currUrl).pipe(catchError(this.handleError<boolean>('checkActivity')));
   }
 
   endGame(id: number): Observable<boolean> {
     if (id > -1) {
       let currUrl = this.url + "/end/" + id;
-      this.http.delete<void>(currUrl).pipe(catchError(this.handleError<boolean>('checkQuestion')));
+      this.http.delete<void>(currUrl).pipe(catchError(this.handleError<void>('endGame')));
     }
     this.hasStarted = false;
     return of(this.hasStarted);

@@ -93,6 +93,7 @@ public class gameController {
 
     @DeleteMapping("end/{sessionID}")
     public ResponseEntity<Void> endGame(@PathVariable int sessionID) {
+        System.out.println("test");
         LOG.info("DELETE /end/" + sessionID);
         dao.endGame(sessionID);
         return new ResponseEntity<>(HttpStatus.OK);
