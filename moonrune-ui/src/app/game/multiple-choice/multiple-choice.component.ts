@@ -47,23 +47,27 @@ export class MultipleChoiceComponent {
           [this.terms[currentIdx], this.terms[randomIdx]] = [this.terms[randomIdx], this.terms[currentIdx]]
         }
         this.question = terms[terms.length-1]
+        this.hasAnswered = false;
       });
     }
   }
 
   answerQuestion(answer: string) {
     if (this.sessionID == undefined) return;
-    this.hasAnswered = true;
-    this.gameService.checkQuestion(this.sessionID, answer).subscribe(correct => this.isCorrect = correct);
+    this.gameService.checkQuestion(this.sessionID, answer).subscribe(correct => {
+      this.isCorrect = correct
+      this.hasAnswered = true;
+  });
     const activityObs = this.gameService.checkActivity(this.sessionID);
     timer(this.TIME).pipe(concatMap(() => activityObs)).subscribe(ended => {
       this.hasEnded = ended
-      this.hasAnswered = false;
-      if (this.sessionID == undefined) return;
-      this.gameService.getProgress(this.sessionID)
     if (!this.hasEnded) {
       this.generateQuestion();
+    } else {
+      this.hasAnswered = false;
     }
+    if (this.sessionID == undefined) return;
+      this.gameService.getProgress(this.sessionID).subscribe(progress => this.progress = progress)
 
   }); 
   }

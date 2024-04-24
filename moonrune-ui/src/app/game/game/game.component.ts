@@ -48,7 +48,7 @@ export class GameComponent {
   }
 
   setQuestion() {
-    this.gameService.setQuestion(this.sessionID, "term", "meanings").subscribe(valid => {
+    this.gameService.setQuestion(this.sessionID, "meanings", "term").subscribe(valid => {
       this.isValid = valid
       if (!this.isValid) return;
       this.setTerms()

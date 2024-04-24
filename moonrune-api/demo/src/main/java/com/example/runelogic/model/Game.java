@@ -70,9 +70,13 @@ public class Game {
                 continue;
             }
             inUse[i] = currTerm;
+            String possibleAnswer = getNeededTerm(currTerm, false);
             // last thing in returned string of term answers is the question
-            if (i == 0) terms[numAnswers] = getNeededTerm(currTerm, true);
-            terms[i] = getNeededTerm(currTerm, false);
+            if (i == 0) {
+                terms[numAnswers] = getNeededTerm(currTerm, true);
+                correct = possibleAnswer;
+            }
+            terms[i] = possibleAnswer;
         }
         return terms;
     }

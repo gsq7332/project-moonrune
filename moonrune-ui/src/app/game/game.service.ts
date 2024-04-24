@@ -40,7 +40,7 @@ export class GameService {
 
   getProgress(id: number): Observable<number[]> {
     let currUrl = this.url + "/" + id;
-    return this.http.get<number[]>(this.url)
+    return this.http.get<number[]>(currUrl)
     .pipe(catchError(this.handleError<number[]>('getProgress', [])));
   }
 
