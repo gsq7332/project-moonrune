@@ -12,6 +12,9 @@ import { NgIf } from '@angular/common';
 })
 export class GameSettingsComponent {
   @Input() collection ?: string;
+  @Input() questions: number = 10
+  @Input() answers: number = 4
+  
   @Output() startGameEvent = new EventEmitter();
   currentLevel: number = 1;
   /*

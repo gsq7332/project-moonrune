@@ -22,8 +22,8 @@ export class GameComponent {
   sessionID: number = 0;
   isValid: boolean = false;
   collectionName: string = "a";
-  questionType: string = ""
-  answerType: string = ""
+  questionType: string = "term"
+  answerType: string = "meanings"
   EMPTY = -1
 
   

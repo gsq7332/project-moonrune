@@ -1,11 +1,13 @@
-<div *ngIf="currentLevel==1" class="extra">
+<form *ngIf="currentLevel==1" class="extra">
     <input  type="checkbox" name="extra" value="extra"> Enable Diacritics
-</div>
+</form>
 <div>
     Number of Questions: 
-
+    <form>
+        <input type="number" name="questions" value="[(questions)]"> 
+    </form>
 </div>
-<div class="question">
+<form class="question">
     Question:
     <input type="radio" name="term" value="Term" checked>
     <label>Term </label>
@@ -19,12 +21,14 @@
     <label *ngIf="currentLevel==4">Readings </label>
     <input *ngIf="currentLevel==4"type="radio" name="romaji" value="Readings">
     <label *ngIf="currentLevel==4">Romaji </label>
-</div>
+</form>
 <div>
     Number of Answers (1 for open-ended): 
-
+    <form>
+        <input type="number" name="answers" value="[(questions)]"> 
+    </form>
 </div>
-<div class="answer">
+<form class="answer">
     Answer: 
     <input type="radio" name="term" value="Term" checked>
     <label>Term </label>
@@ -38,5 +42,5 @@
     <label *ngIf="currentLevel==4">Readings </label>
     <input *ngIf="currentLevel==4"type="radio" name="romaji" value="Readings">
     <label *ngIf="currentLevel==4">Romaji </label>
-</div>
+</form>
 <button type = "button" (click)="startGame()"> Start Game </button>
