@@ -2,10 +2,8 @@ import { Component, Output, Input } from '@angular/core';
 import { GameService } from '../game.service';
 import { EventEmitter } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import { Term } from '../../terms/term';
 import { McOptionComponent } from '../mc-option/mc-option.component';
 import { concatMap, timer } from 'rxjs';
-import { randomInt } from 'node:crypto';
 
 @Component({
   selector: 'app-multiple-choice',
