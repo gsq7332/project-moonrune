@@ -12,11 +12,16 @@ import { NgIf } from '@angular/common';
 })
 export class GameSettingsComponent {
   @Input() collection ?: string;
-  @Input() questions: number = 10
-  @Input() answers: number = 4
-  
+  @Input() numQuestions: number = 10
+  @Input() numAnswers: number = 4
+  @Input() isDiacritic ?: boolean;
+  @Input() questionType ?: string;
+  @Input() answerType ?: string;
+  @Output() questionTypeChange = new EventEmitter<string>()
+  @Output() answerTypeChange = new EventEmitter<string>()
+
   @Output() startGameEvent = new EventEmitter();
-  currentLevel: number = 1;
+  @Input() currentLevel ?: number;
   /*
   level representations:
   0 - Default/Regular (used for user generated terms + Hangul)
@@ -30,6 +35,16 @@ export class GameSettingsComponent {
 
   ngOnInit() {
 
+  }
+
+  changeQuestionType() {
+    if (this.questionType == undefined) return
+    this.questionTypeChange.emit(this.questionType)
+  }
+
+  changeAnswerType() {
+    if (this.answerType == undefined) return
+    this.answerTypeChange.emit(this.answerType)
   }
 
   startGame() {

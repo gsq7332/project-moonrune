@@ -24,7 +24,11 @@ export class GameComponent {
   collectionName: string = "a";
   questionType: string = "term"
   answerType: string = "meanings"
+  isDiacritic: boolean = false
+  numQuestions = 10
+  numAnswers = 4
   EMPTY = -1
+  settingLevel = 0
 
   
   ngOnInit(): void {
@@ -41,7 +45,7 @@ export class GameComponent {
   }
 
   startGame() {
-    this.gameService.startGame(10, 4).subscribe(id => {
+    this.gameService.startGame(this.numQuestions, this.numAnswers).subscribe(id => {
       this.sessionID = id
       this.setQuestion()
     });
