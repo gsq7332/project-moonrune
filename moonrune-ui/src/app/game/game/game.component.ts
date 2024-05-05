@@ -22,39 +22,41 @@ export class GameComponent {
   sessionID: number = 0;
   isValid: boolean = false;
   collectionName: string = "a";
+  questionType: string = "meanings"
+  answerType: string = "term"
+  isDiacritic: boolean = false
+  numQuestions = 10
+  numAnswers = 4
+  EMPTY = -1
+  settingLevel = 0
 
   
   ngOnInit(): void {
-    this.hasStarted = this.getIfStarted();
+    this.hasStarted = this.setToSettings();
   }
 
-  getIfStarted(): boolean {
-    this.gameService.endGame(-1).subscribe(hasStarted => this.hasStarted = hasStarted);
-    //this.gameService.checkStarted().subscribe(hasStarted => this.hasStarted = hasStarted);
+  setToSettings(): boolean {
+    this.gameService.endGame(this.EMPTY).subscribe(hasStarted => this.hasStarted = hasStarted);
     return this.hasStarted
   }
   
   initializeGame(): void {
     this.startGame()
-    //this.gameService.checkStarted().subscribe(isStarting => this.hasStarted = isStarting); 
   }
 
   startGame() {
-    this.gameService.startGame(10, 4).subscribe(id => {
+    this.gameService.startGame(this.numQuestions, this.numAnswers).subscribe(id => {
       this.sessionID = id
       this.setQuestion()
     });
-    //this.setQuestion()
   }
 
   setQuestion() {
-    this.gameService.setQuestion(this.sessionID, "meanings", "term").subscribe(valid => {
+    this.gameService.setQuestion(this.sessionID, this.questionType, this.answerType).subscribe(valid => {
       this.isValid = valid
       if (!this.isValid) return;
       this.setTerms()
     })
-    //if (!this.isValid) return;
-    //this.setTerms()
   }
 
   setTerms() {
