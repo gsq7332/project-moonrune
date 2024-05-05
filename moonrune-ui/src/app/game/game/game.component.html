@@ -7,10 +7,6 @@
     [(questionType)]="questionType"
     [(answerType)]="answerType"
     [currentLevel]="settingLevel"></app-game-settings>
-    Number of Questions: {{numQuestions}}, 
-    Number of Answers: {{numAnswers}},
-    Question Type: {{questionType}},
-    Answer Type: {{answerType}}
 </li>
 <ng-template #game>
     <app-multiple-choice [sessionID]="sessionID" (endGameEvent)="endGame()"></app-multiple-choice>
