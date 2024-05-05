@@ -1,46 +1,46 @@
 <form *ngIf="currentLevel==1" class="extra">
-    <input  type="checkbox" name="extra" value="extra"> Enable Diacritics
+    <input  type="checkbox" name="extra" value="extra" [(ngModel)]="isDiacritic"> Enable Diacritics
 </form>
 <div>
     Number of Questions: 
     <form>
-        <input type="number" name="questions" value="[(questions)]"> 
+        <input type="number" name="questions" [(ngModel)]="numQuestions"> 
     </form>
 </div>
 <form class="question">
     Question:
-    <input type="radio" name="term" value="Term" checked>
+    <input type="radio" name="term" value="term" [(ngModel)]="questionType">
     <label>Term </label>
-    <input type="radio" name="meanings" value="Meanings">
+    <input type="radio" name="meanings" value="meanings" [(ngModel)]="questionType">
     <label>Meanings </label>
-    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> 
+    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="lower" [(ngModel)]="questionType"> 
     <label *ngIf="currentLevel==2||currentLevel==3">Lowercase </label>
-    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> 
+    <input *ngIf="currentLevel==3"type="radio" name="name" value="name" [(ngModel)]="questionType"> 
     <label *ngIf="currentLevel==3">Name </label>
-    <input *ngIf="currentLevel==4"type="radio" name="readings" value="Readings">
+    <input *ngIf="currentLevel==4"type="radio" name="readings" value="readings" [(ngModel)]="questionType">
     <label *ngIf="currentLevel==4">Readings </label>
-    <input *ngIf="currentLevel==4"type="radio" name="romaji" value="Readings">
+    <input *ngIf="currentLevel==4"type="radio" name="romaji" value="romaji" [(ngModel)]="questionType">
     <label *ngIf="currentLevel==4">Romaji </label>
 </form>
 <div>
     Number of Answers (1 for open-ended): 
     <form>
-        <input type="number" name="answers" value="[(questions)]"> 
+        <input type="number" name="answers" [(ngModel)]="numAnswers"> 
     </form>
 </div>
 <form class="answer">
     Answer: 
-    <input type="radio" name="term" value="Term" checked>
+    <input type="radio" name="term" value="term" [(ngModel)]="answerType">
     <label>Term </label>
-    <input type="radio" name="meanings" value="Meanings">
+    <input type="radio" name="meanings" value="meanings" [(ngModel)]="answerType">
     <label>Meanings </label>
-    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="Lower"> 
+    <input *ngIf="currentLevel==2||currentLevel==3" type="radio" name="lower" value="lower" [(ngModel)]="answerType"> 
     <label *ngIf="currentLevel==2||currentLevel==3">Lowercase </label>
-    <input *ngIf="currentLevel==3"type="radio" name="name" value="Name"> 
+    <input *ngIf="currentLevel==3"type="radio" name="name" value="name" [(ngModel)]="answerType"> 
     <label *ngIf="currentLevel==3">Name </label>
-    <input *ngIf="currentLevel==4"type="radio" name="readings" value="Readings">
+    <input *ngIf="currentLevel==4"type="radio" name="readings" value="readings" [(ngModel)]="answerType">
     <label *ngIf="currentLevel==4">Readings </label>
-    <input *ngIf="currentLevel==4"type="radio" name="romaji" value="Readings">
+    <input *ngIf="currentLevel==4"type="radio" name="romaji" value="romaji" [(ngModel)]="answerType">
     <label *ngIf="currentLevel==4">Romaji </label>
 </form>
 <button type = "button" (click)="startGame()"> Start Game </button>

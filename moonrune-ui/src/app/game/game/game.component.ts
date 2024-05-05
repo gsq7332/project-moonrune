@@ -22,8 +22,8 @@ export class GameComponent {
   sessionID: number = 0;
   isValid: boolean = false;
   collectionName: string = "a";
-  questionType: string = "term"
-  answerType: string = "meanings"
+  questionType: string = "meanings"
+  answerType: string = "term"
   isDiacritic: boolean = false
   numQuestions = 10
   numAnswers = 4

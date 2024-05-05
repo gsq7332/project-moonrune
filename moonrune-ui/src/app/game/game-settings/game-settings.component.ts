@@ -2,11 +2,12 @@ import { Component, Input, Output } from '@angular/core';
 import { GameService } from '../game.service';
 import { EventEmitter } from '@angular/core';
 import { NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-game-settings',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, FormsModule],
   templateUrl: './game-settings.component.html',
   styleUrl: './game-settings.component.css'
 })
@@ -19,6 +20,9 @@ export class GameSettingsComponent {
   @Input() answerType ?: string;
   @Output() questionTypeChange = new EventEmitter<string>()
   @Output() answerTypeChange = new EventEmitter<string>()
+  @Output() isDiacriticChange = new EventEmitter<string>()
+  @Output() numQuestionsChange = new EventEmitter<string>()
+  @Output() numAnswersChange = new EventEmitter<string>()
 
   @Output() startGameEvent = new EventEmitter();
   @Input() currentLevel ?: number;
