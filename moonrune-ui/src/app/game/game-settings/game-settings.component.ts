@@ -13,16 +13,16 @@ import { FormsModule } from '@angular/forms';
 })
 export class GameSettingsComponent {
   @Input() collection ?: string;
-  @Input() numQuestions: number = 10
-  @Input() numAnswers: number = 4
+  @Input() numQuestions ?: number;
+  @Input() numAnswers ?: number;
   @Input() isDiacritic ?: boolean;
   @Input() questionType ?: string;
   @Input() answerType ?: string;
   @Output() questionTypeChange = new EventEmitter<string>()
   @Output() answerTypeChange = new EventEmitter<string>()
-  @Output() isDiacriticChange = new EventEmitter<string>()
-  @Output() numQuestionsChange = new EventEmitter<string>()
-  @Output() numAnswersChange = new EventEmitter<string>()
+  @Output() isDiacriticChange = new EventEmitter<boolean>()
+  @Output() numQuestionsChange = new EventEmitter<number>()
+  @Output() numAnswersChange = new EventEmitter<number>()
 
   @Output() startGameEvent = new EventEmitter();
   @Input() currentLevel ?: number;
@@ -41,13 +41,25 @@ export class GameSettingsComponent {
 
   }
 
+  changeNumQuestions() {
+    this.numQuestionsChange.emit(this.numQuestions)
+  }
+
+  changeNumAnswers() {
+    this.numAnswersChange.emit(this.numAnswers)
+  }
+
+  changeIsDiacritic() {
+    this.isDiacriticChange.emit(this.isDiacritic)
+  }
+
   changeQuestionType() {
-    if (this.questionType == undefined) return
+    //if (this.questionType == undefined) return
     this.questionTypeChange.emit(this.questionType)
   }
 
   changeAnswerType() {
-    if (this.answerType == undefined) return
+    //if (this.answerType == undefined) return
     this.answerTypeChange.emit(this.answerType)
   }
 
