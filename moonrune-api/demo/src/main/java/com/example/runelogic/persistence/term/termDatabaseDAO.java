@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class termDatabaseDAO extends termDAO {
 
-    public termDatabaseDAO(@Value("${terms.file}") String filename, ObjectMapper objectMapper) throws IOException {
+    public termDatabaseDAO(@Value("${terms.database}") String database, ObjectMapper objectMapper) throws IOException {
         super();
     }
 
