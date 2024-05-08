@@ -8,9 +8,12 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+@Component
 public class termDatabaseDAO extends termDAO {
 
     private final String userPath = "src/input/user-pass.txt";
@@ -47,7 +50,7 @@ public class termDatabaseDAO extends termDAO {
         try {
             connection = DriverManager.getConnection(databasePath, username, password);
         } catch (Exception exception) {
-            
+            System.out.println("thing not working :( )");
         }
     }
 }

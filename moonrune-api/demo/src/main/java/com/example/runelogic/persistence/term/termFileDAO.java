@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 public class termFileDAO extends termDAO {
     private static final Logger LOG = Logger.getLogger(termFileDAO.class.getName());
 
