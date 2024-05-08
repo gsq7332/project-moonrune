@@ -35,8 +35,8 @@ public class termDatabaseDAO extends termDAO {
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader reader = new BufferedReader(isr);
         ) {
-            username = reader.readLine();
-            password = reader.readLine();
+            username = reader.readLine().strip();
+            password = reader.readLine().strip();
         } catch (Exception exception) {
 
         }
@@ -47,8 +47,9 @@ public class termDatabaseDAO extends termDAO {
     }
 
     public void load() {
-        try {
-            connection = DriverManager.getConnection(databasePath, username, password);
+        try(Connection conn = DriverManager.getConnection(databasePath, username, password);) {
+            connection = conn;
+            System.out.println("thing works :) )");
         } catch (Exception exception) {
             System.out.println("thing not working :( )");
         }
