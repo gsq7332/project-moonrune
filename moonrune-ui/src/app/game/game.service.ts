@@ -28,7 +28,7 @@ export class GameService {
     return this.http.put<boolean>(currUrl, this.httpOptions).pipe(catchError(this.handleError<boolean>('generateQuestion')));
   }
 
-  setTerms(id: number, collection: string): Observable<boolean> {
+  setTerms(id: number, collection: number): Observable<boolean> {
     let currUrl = this.url + "/term/" + id + "/" + collection;
     return this.http.put<boolean>(currUrl, this.httpOptions).pipe(catchError(this.handleError<boolean>('generateQuestion')));
   }

@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("terms")
 public class TermController {
-    private termDAO termThing;
+    private termDatabaseDAO termThing;
     private static final Logger LOG = Logger.getLogger(TermController.class.getName());
 
     public TermController(termDatabaseDAO termThing) {

@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { GameSettingsComponent } from '../game-settings/game-settings.component';
 import { MultipleChoiceComponent } from '../multiple-choice/multiple-choice.component';
 import { GameService } from '../game.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -15,13 +16,13 @@ import { GameService } from '../game.service';
 export class GameComponent {
 
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService, private route: ActivatedRoute) {}
 
   hasStarted = false;
   hasEnded = false;
   sessionID: number = 0;
   isValid: boolean = false;
-  collectionName: string = "a";
+  collectionID: number = Number(this.route.snapshot.paramMap.get('id'))
   questionType: string = "meanings"
   answerType: string = "term"
   isDiacritic: boolean = false
@@ -63,7 +64,7 @@ export class GameComponent {
   }
 
   setTerms() {
-    this.gameService.setTerms(this.sessionID, this.collectionName).subscribe(valid => this.hasStarted = valid)
+    this.gameService.setTerms(this.sessionID, this.collectionID).subscribe(valid => this.hasStarted = valid)
   }
 
   endGame(): void {

@@ -58,15 +58,15 @@ public class termDatabaseDAO extends termDAO {
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select * from collection
-                    where owner like "%s"
+                    where collectionOwner like "%s"
                 """
             , owner));
             
             while (resultSet.next()) {
                 int id = resultSet.getInt("CollectionID");
-                String name = resultSet.getString("name");
-                String colOwner = resultSet.getString("owner"); // here in case something somehow goes wrong
-                int privacyLevel = resultSet.getInt("privacyLevel");
+                String name = resultSet.getString("CollectionName");
+                String colOwner = resultSet.getString("CollectionOwner"); // here in case something somehow goes wrong
+                int privacyLevel = resultSet.getInt("PrivacyLevel");
                 String description = resultSet.getString("description");
                 ownedCollections.add(new TermCollection(id, name, colOwner, privacyLevel, description));
             }
