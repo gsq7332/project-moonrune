@@ -49,7 +49,7 @@ public class termDatabaseDAO extends termDAO {
     }
 
     @Override
-    public LinkedHashMap<String, Term> getTerms(String filter) {
+    public LinkedHashMap<String, Term> getTerms(String collectionName, String owner, String filter) {
         LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
         try {
             Connection conn = DriverManager.getConnection(databasePath, username, password);

@@ -28,7 +28,7 @@ export class TermsListComponent {
   }
 
   getTerms(): void {
-    this.termsService.getTerms().subscribe(terms => this.terms = terms);
+    this.termsService.getTerms("a", "a").subscribe(terms => this.terms = terms);
   }
   
 }

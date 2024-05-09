@@ -49,11 +49,11 @@ public class TermController {
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity<Term[]> getTerms() {
+    @GetMapping("get/{collectionName}/{owner}")
+    public ResponseEntity<Term[]> getTerms(@PathVariable String collectionName, @PathVariable String owner) {
         LOG.info("GET /terms");
         try {
-            LinkedHashMap<String, Term> terms = termThing.getTerms("");
+            LinkedHashMap<String, Term> terms = termThing.getTerms(collectionName, owner, "");
             Term[] returnTerms = new Term[terms.size()];
             returnTerms = terms.values().toArray(returnTerms);
             if (!terms.isEmpty()) 
@@ -64,11 +64,11 @@ public class TermController {
         }
     }
 
-    @GetMapping("/")
-    public ResponseEntity<Term[]> getTerms(@RequestParam String filter) {
+    @GetMapping("get/{collectionName}/{owner}/{filter}")
+    public ResponseEntity<Term[]> getTerms(@PathVariable String collectionName, @PathVariable String owner, @PathVariable String filter) {
         LOG.info("GET /terms/?name="+filter);
         try {
-            LinkedHashMap<String, Term> terms = termThing.getTerms(filter);
+            LinkedHashMap<String, Term> terms = termThing.getTerms(collectionName, owner, filter);
             Term[] returnTerms = new Term[terms.size()];
             returnTerms = terms.values().toArray(returnTerms);
             if (!terms.isEmpty()) 
