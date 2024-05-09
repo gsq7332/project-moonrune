@@ -17,7 +17,7 @@ public abstract class termDAO {
         return terms.get(name);
     }
     
-    public LinkedHashMap<String, Term> getTerms(String collectionName, String owner, String filter) {
+    public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
         LinkedHashMap<String, Term> results = new LinkedHashMap<>();
         for (String term : terms.keySet()) {
             if (term.startsWith(filter)) {

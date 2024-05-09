@@ -14,8 +14,8 @@ export class TermServiceService {
   //httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
   constructor(private http: HttpClient) { }
 
-  getTerms(collectionName: string, owner: string): Observable<Term[]> {
-    let currUrl = this.url + "/get/" + collectionName + "/" + owner;
+  getTerms(collectionID: number): Observable<Term[]> {
+    let currUrl = this.url + "/get/" + collectionID;
     return this.http.get<Term[]>(currUrl)
     .pipe(catchError(this.handleError<Term[]>('getTerms', [])));
     //*/

@@ -49,12 +49,12 @@ public class termDatabaseDAO extends termDAO {
     }
 
     @Override
-    public LinkedHashMap<String, Term> getTerms(String collectionName, String owner, String filter) {
+    public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
         LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
         try {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(
+            ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select terms.name, hasMeaning.meaning
                     from terms inner join hasmeaning
@@ -62,13 +62,12 @@ public class termDatabaseDAO extends termDAO {
                     and terms.TermID in (
                         select inCollection.TermID
                         from inCollection
-                        where CollectionID = 1)
+                        where CollectionID = %d)
                     and terms.TermID not in (
                         select * from isDiacritic
                     )
                 """
-            );
-            System.out.println("a");
+            , collectionID));
             
             while (resultSet.next()) {
                 String term = resultSet.getString("name");
@@ -84,7 +83,6 @@ public class termDatabaseDAO extends termDAO {
                     terms.put(term, new Term(term, meanings));
                 }
             }
-            System.out.println("b");
         } catch (Exception exception) {
             System.err.println(exception);
             System.out.println("thing imploded");

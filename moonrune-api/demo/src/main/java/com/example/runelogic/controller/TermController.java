@@ -49,11 +49,11 @@ public class TermController {
         }
     }
 
-    @GetMapping("get/{collectionName}/{owner}")
-    public ResponseEntity<Term[]> getTerms(@PathVariable String collectionName, @PathVariable String owner) {
+    @GetMapping("get/{collectionID}")
+    public ResponseEntity<Term[]> getTerms(@PathVariable int collectionID) {
         LOG.info("GET /terms");
         try {
-            LinkedHashMap<String, Term> terms = termThing.getTerms(collectionName, owner, "");
+            LinkedHashMap<String, Term> terms = termThing.getTerms(collectionID, "");
             Term[] returnTerms = new Term[terms.size()];
             returnTerms = terms.values().toArray(returnTerms);
             if (!terms.isEmpty()) 
@@ -64,11 +64,11 @@ public class TermController {
         }
     }
 
-    @GetMapping("get/{collectionName}/{owner}/{filter}")
-    public ResponseEntity<Term[]> getTerms(@PathVariable String collectionName, @PathVariable String owner, @PathVariable String filter) {
+    @GetMapping("get/{collectionID}/{filter}")
+    public ResponseEntity<Term[]> getTerms(@PathVariable int collectionID, @PathVariable String filter) {
         LOG.info("GET /terms/?name="+filter);
         try {
-            LinkedHashMap<String, Term> terms = termThing.getTerms(collectionName, owner, filter);
+            LinkedHashMap<String, Term> terms = termThing.getTerms(collectionID, filter);
             Term[] returnTerms = new Term[terms.size()];
             returnTerms = terms.values().toArray(returnTerms);
             if (!terms.isEmpty()) 
