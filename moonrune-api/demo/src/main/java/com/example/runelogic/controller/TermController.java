@@ -49,32 +49,6 @@ public class TermController {
         }
     }
 
-    @GetMapping("/random")
-    public ResponseEntity<Term[]> getRandomTerms(int numTerms) {
-        LOG.info("GET /terms/random");
-        try {
-            Term[] terms = new Term[numTerms];
-            for (int i = 0; i < numTerms; i++) {
-                Term newTerm = termThing.getRandomTerm();
-                boolean dup = false;
-                for (Term existingTerm : terms) {
-                    if (existingTerm.equals(newTerm)) {
-                        i--;
-                        dup = true;
-                    }
-                }
-                if (dup) continue;
-                terms[i] = newTerm;
-            }
-            return new ResponseEntity<Term[]>(terms,HttpStatus.OK);
-            
-            //    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @GetMapping("")
     public ResponseEntity<Term[]> getTerms() {
         LOG.info("GET /terms");

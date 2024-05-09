@@ -46,17 +46,6 @@ public class termDatabaseDAO extends termDAO {
         }
     }
 
-    public void getQuery() {
-
-    }
-
-    @Override
-    public Term getRandomTerm() {
-        // get terms here
-        getQuery();
-        return super.getRandomTerm();
-    }
-
     @Override
     public LinkedHashMap<String, Term> getTerms(String filter) {
         return null;
