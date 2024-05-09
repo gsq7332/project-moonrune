@@ -16,18 +16,8 @@ public abstract class termDAO {
     public Term getTerm(String name) {
         return terms.get(name);
     }
-
-    public Term getRandomTerm() {
-        ArrayList<String> termKeys = new ArrayList<String>(terms.keySet());
-        int length = termKeys.size();
-        if (length == 0) return null;
-        Random random = new Random();
-        int randomInt = random.nextInt(length);
-        return getTerm(termKeys.get(randomInt));
-    }
-
+    
     public LinkedHashMap<String, Term> getTerms(String filter) {
-        System.out.println(terms);
         LinkedHashMap<String, Term> results = new LinkedHashMap<>();
         for (String term : terms.keySet()) {
             if (term.startsWith(filter)) {

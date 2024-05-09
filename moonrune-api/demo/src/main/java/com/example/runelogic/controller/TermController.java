@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.term.termDAO;
-import com.example.runelogic.persistence.term.termFileDAO;
+import com.example.runelogic.persistence.term.termDatabaseDAO;
+// import com.example.runelogic.persistence.term.termFileDAO;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -28,7 +29,7 @@ public class TermController {
     private termDAO termThing;
     private static final Logger LOG = Logger.getLogger(TermController.class.getName());
 
-    public TermController(termFileDAO termThing) {
+    public TermController(termDatabaseDAO termThing) {
         this.termThing = termThing;
     }
 
@@ -43,32 +44,6 @@ public class TermController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch(Exception e) {
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/random")
-    public ResponseEntity<Term[]> getRandomTerms(int numTerms) {
-        LOG.info("GET /terms/random");
-        try {
-            Term[] terms = new Term[numTerms];
-            for (int i = 0; i < numTerms; i++) {
-                Term newTerm = termThing.getRandomTerm();
-                boolean dup = false;
-                for (Term existingTerm : terms) {
-                    if (existingTerm.equals(newTerm)) {
-                        i--;
-                        dup = true;
-                    }
-                }
-                if (dup) continue;
-                terms[i] = newTerm;
-            }
-            return new ResponseEntity<Term[]>(terms,HttpStatus.OK);
-            
-            //    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

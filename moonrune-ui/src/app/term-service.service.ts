@@ -22,12 +22,6 @@ export class TermServiceService {
     //*/
   }
 
-  getRandomTerms(numTerms: number): Observable<Term[]> {
-    let currUrl = this.url + "/terms/random";
-    return this.http.get<Term[]>(currUrl)
-    .pipe(catchError(this.handleError<Term[]>('getRandomTerms', [])));
-  }
-
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
