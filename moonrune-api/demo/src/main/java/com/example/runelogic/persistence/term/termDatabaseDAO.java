@@ -13,9 +13,11 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.Random;
 
 @Component
 public class termDatabaseDAO extends termDAO {
@@ -48,7 +50,46 @@ public class termDatabaseDAO extends termDAO {
 
     @Override
     public LinkedHashMap<String, Term> getTerms(String filter) {
-        return null;
+        LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
+        try {
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(
+                """
+                    select terms.name, hasMeaning.meaning
+                    from terms inner join hasmeaning
+                    where terms.TermID = hasmeaning.TermID
+                    and terms.TermID in (
+                        select inCollection.TermID
+                        from inCollection
+                        where CollectionID = 1)
+                    and terms.TermID not in (
+                        select * from isDiacritic
+                    )
+                """
+            );
+            System.out.println("a");
+            
+            while (resultSet.next()) {
+                String term = resultSet.getString("name");
+                String meaning = resultSet.getString("meaning");
+                if (terms.keySet().contains(term)) {
+                    Term existing = terms.get(term);
+                    HashSet<String> meanings = new HashSet<>();
+                    meanings.add(meaning);
+                    existing.addMeanings(meanings);
+                } else {
+                    ArrayList<String> meanings = new ArrayList<>();
+                    meanings.add(meaning);
+                    terms.put(term, new Term(term, meanings));
+                }
+            }
+            System.out.println("b");
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+        return terms;
     }
 
     @Override
