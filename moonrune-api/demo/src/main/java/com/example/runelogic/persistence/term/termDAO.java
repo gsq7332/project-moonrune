@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
+import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.Term;
 
 public abstract class termDAO {
@@ -57,5 +58,7 @@ public abstract class termDAO {
     public abstract void save();
 
     public abstract void load();
+
+    public abstract TermCollection[] getCollectionsByOwner(String owner);
     
 } 

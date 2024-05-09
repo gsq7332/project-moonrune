@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.term.termDAO;
 import com.example.runelogic.persistence.term.termDatabaseDAO;
@@ -74,6 +75,18 @@ public class TermController {
             if (!terms.isEmpty()) 
                 return new ResponseEntity<>(returnTerms,HttpStatus.OK);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("collections/{owner}")
+    public ResponseEntity<TermCollection[]> getCollectionsByOwner(@PathVariable String owner) {
+        try {
+            TermCollection[] collection = termThing.getCollectionsByOwner(owner);
+            TermCollection[] emptyCollection = new TermCollection[]{};
+            if (collection.equals(emptyCollection)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(collection, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
