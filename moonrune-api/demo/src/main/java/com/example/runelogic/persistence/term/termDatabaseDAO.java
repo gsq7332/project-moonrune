@@ -32,7 +32,7 @@ public class termDatabaseDAO extends termDAO {
         super();
         databasePath = database;
         getUsernamePassword();
-        load();
+        //load();
     }
 
     private void getUsernamePassword() {
