@@ -1,11 +1,12 @@
 <h1> {{title}} </h1>
 
 <nav>
-    <ul>
+    <ul *ngIf="presetCollections">
       <a routerLink="/mainpage" routerLinkActive="active" ariaCurrentWhenActive="page">Main</a>
-        <a *ngFor="let collection of presetCollections" 
-        routerLink="/dictionary/{{collection.id}}">
-          {{collection.name}}
+        <a *ngFor="let termCollection of presetCollections" 
+        routerLink="/dictionary/{{termCollection.collectionID}}" 
+        routerLinkActive="active" ariaCurrentWhenActive="page">
+          {{termCollection.name}}
         </a>
       
     </ul>

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TermServiceService } from './term-service.service';
-import { TermCollection } from './general/collection';
-import { NgFor } from '@angular/common';
+import { TermCollection } from './terms/termcollection';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, NgFor],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, NgFor, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

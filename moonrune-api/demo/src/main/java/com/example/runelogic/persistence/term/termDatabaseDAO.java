@@ -68,7 +68,8 @@ public class termDatabaseDAO extends termDAO {
                 String colOwner = resultSet.getString("CollectionOwner"); // here in case something somehow goes wrong
                 int privacyLevel = resultSet.getInt("PrivacyLevel");
                 String description = resultSet.getString("description");
-                ownedCollections.add(new TermCollection(id, name, colOwner, privacyLevel, description));
+                TermCollection collection = new TermCollection(id, name, colOwner, privacyLevel, description);
+                ownedCollections.add(collection);
             }
         } catch (Exception exception) {
             System.err.println(exception);

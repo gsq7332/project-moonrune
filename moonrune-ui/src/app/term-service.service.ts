@@ -3,7 +3,7 @@ import { TERMS } from './terms/mock-term';
 import { Observable, catchError, of } from 'rxjs';
 import { Term } from './terms/term';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { TermCollection } from './general/collection';
+import { TermCollection } from './terms/termcollection';
 
 @Injectable({
   providedIn: 'root'
