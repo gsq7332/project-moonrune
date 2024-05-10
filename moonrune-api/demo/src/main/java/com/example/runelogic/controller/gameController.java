@@ -49,7 +49,7 @@ public class gameController {
         return new ResponseEntity<>(hasWorked, HttpStatus.OK);
     }
 
-    @PutMapping("term/{sessionID}/{collection}")
+    @PutMapping("term/{sessionID}/{collectionID}")
     public ResponseEntity<Boolean> setLegalTerms(@PathVariable int sessionID, @PathVariable int collectionID) {
         LOG.info("PUT /term/" + sessionID + "/" + collectionID);
         LinkedHashMap<String, Term> terms = tDao.getTerms(collectionID, "");

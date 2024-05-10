@@ -17,10 +17,10 @@ export class DictionaryComponent {
 
   /*
   ngOnInit() {
-    const routingId: number = Number(this.route.snapshot.paramMap.get('id'))
-    //if (routingId == undefined) window.location.replace("http://localhost:4200/mainpage")
-    this.id = routingId
+    this.route.paramMap.pipe(switchMap(params => {
+      this.id = parseInt(params.get('id')!, 10)
+    }))
   }
-  */
+  //*/
   
 }
