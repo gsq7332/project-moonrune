@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ListEntryComponent } from '../list-entry/list-entry.component';
 import { TermServiceService } from '../../../term-service.service';
 import { Term } from '../../../terms/term';
@@ -16,6 +16,7 @@ export class TermsListComponent {
   constructor(private termsService: TermServiceService){}
 
   selectedTerm?: Term;
+  @Input() id ?: number
 
   terms: Term[] = [];
 
@@ -28,7 +29,8 @@ export class TermsListComponent {
   }
 
   getTerms(): void {
-    this.termsService.getTerms().subscribe(terms => this.terms = terms);
+    if (this.id == undefined) return;
+    this.termsService.getTerms(this.id).subscribe(terms => this.terms = terms);
   }
   
 }

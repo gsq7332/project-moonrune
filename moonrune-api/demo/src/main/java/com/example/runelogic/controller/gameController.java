@@ -49,10 +49,10 @@ public class gameController {
         return new ResponseEntity<>(hasWorked, HttpStatus.OK);
     }
 
-    @PutMapping("term/{sessionID}/{collection}")
-    public ResponseEntity<Boolean> setLegalTerms(@PathVariable int sessionID, @PathVariable String collection) {
-        LOG.info("PUT /term/" + sessionID + "/" + collection);
-        LinkedHashMap<String, Term> terms = tDao.getTerms("");
+    @PutMapping("term/{sessionID}/{collectionID}")
+    public ResponseEntity<Boolean> setLegalTerms(@PathVariable int sessionID, @PathVariable int collectionID) {
+        LOG.info("PUT /term/" + sessionID + "/" + collectionID);
+        LinkedHashMap<String, Term> terms = tDao.getTerms(collectionID, "");
         Term[] legalTerms = new Term[terms.size()];
         legalTerms = terms.values().toArray(legalTerms);
         boolean hasWorked = dao.setLegalTerms(sessionID, legalTerms);

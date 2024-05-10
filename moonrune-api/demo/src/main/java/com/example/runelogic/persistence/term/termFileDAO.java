@@ -1,5 +1,6 @@
 package com.example.runelogic.persistence.term;
 
+import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.CyrillicLetter;
 import com.example.runelogic.model.terms.GreekLetter;
 import com.example.runelogic.model.terms.Kanji;
@@ -74,5 +75,9 @@ public class termFileDAO extends termDAO {
         } catch (Exception e) {
             return;
         }
+    }
+
+    public TermCollection[] getCollectionsByOwner(String owner) {
+        return null;
     }
 }

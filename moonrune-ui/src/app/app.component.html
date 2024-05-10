@@ -1,10 +1,14 @@
 <h1> {{title}} </h1>
 
 <nav>
-    <ul>
-      <li><a routerLink="/mainpage" routerLinkActive="active" ariaCurrentWhenActive="page">Main</a></li>
-      <li><a routerLink="/dictionary" routerLinkActive="active" ariaCurrentWhenActive="page">Dictionary</a></li>
-      <li><a routerLink="/quiz" routerLinkActive="active" ariaCurrentWhenActive="page">Game</a></li>
+    <ul *ngIf="presetCollections">
+      <a routerLink="/mainpage" routerLinkActive="active" ariaCurrentWhenActive="page">Main</a>
+        <a *ngFor="let termCollection of presetCollections" 
+        routerLink="/dictionary/{{termCollection.collectionID}}" 
+        routerLinkActive="active" ariaCurrentWhenActive="page">
+          {{termCollection.name}}
+        </a>
+      
     </ul>
 </nav>
 <router-outlet></router-outlet>
