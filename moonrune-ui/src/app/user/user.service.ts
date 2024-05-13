@@ -15,22 +15,22 @@ export class UserService {
 
   createUser(username: string, password: string) {
     let currUrl = this.url + "/" + username + "/" + password
-    return this.http.post<User[]>(currUrl, this.httpOptions).pipe(catchError(this.handleError<User[]>('createUser', [])));
+    return this.http.post<User>(currUrl, this.httpOptions).pipe(catchError(this.handleError<User>('createUser')));
   }
 
   signIn(username: string, password: string) {
     let currUrl = this.url + "/" + username + "/" + password
-    return this.http.get<User[]>(currUrl).pipe(catchError(this.handleError<User[]>('signIn', [])));
+    return this.http.get<User>(currUrl).pipe(catchError(this.handleError<User>('signIn')));
   }
 
   getUser(username: string) {
     let currUrl = this.url + "/" + username
-    return this.http.get<User[]>(currUrl).pipe(catchError(this.handleError<User[]>('getUser', [])));
+    return this.http.get<User>(currUrl).pipe(catchError(this.handleError<User>('getUser')));
   }
 
   updateBio(username: string, bio: string) {
     let currUrl = this.url + "/" + username + "/" + bio
-    return this.http.post<User[]>(currUrl, this.httpOptions).pipe(catchError(this.handleError<User[]>('updateBio', [])));
+    return this.http.post<User>(currUrl, this.httpOptions).pipe(catchError(this.handleError<User>('updateBio')));
   }
 
   removeUser(username: string) {

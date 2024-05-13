@@ -1,1 +1,2 @@
-<p>main works!</p>
+<p *ngIf="username; else generic">Welcome, {{username}}!</p>
+<ng-template #generic>Welcome!</ng-template>

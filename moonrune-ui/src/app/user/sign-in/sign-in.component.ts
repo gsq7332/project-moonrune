@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { User } from '../user';
+import { Cookie } from 'ng2-cookies';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -15,10 +17,21 @@ export class SignInComponent {
   username: string = ""
   password: string = ""
   user ?: User
+  failedLogin: boolean = false
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private route: Router) {}
 
   signIn() {
-    this.userService.signIn(this.username, this.password)
+    this.userService.signIn(this.username, this.password).subscribe(user => {
+      this.user = user;
+      if (user == undefined) {
+        this.username = ""
+        this.password = ""
+        this.failedLogin = true
+      } else {
+        Cookie.set("username", this.username)
+        this.route.navigate(['/mainpage'])
+      }
+    })  
   }
 }
