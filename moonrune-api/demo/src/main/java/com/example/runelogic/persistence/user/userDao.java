@@ -5,10 +5,13 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -50,62 +53,87 @@ public class userDao {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("");
+            ResultSet resultSet = statement.executeQuery(String.format("""
+            select *
+            from studier
+            where username like "%s"  
+            """, username
+            ));
         ) {
-
+            String databaseUser = resultSet.getString("username");
+            String bio = resultSet.getString("bio");
+            return new User(databaseUser, bio);
         } catch (Exception e) {
-            // TODO: handle exception
+            return null;
         }
-        return null;
     }
 
     public User signIn(String username, String password) {
+        String hashed = passHash(username, password);
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("");
+            ResultSet resultSet = statement.executeQuery(String.format("""
+                select *
+                from studier
+                where username like "%s" and password like "%s" 
+                """, username, hashed
+                ));
         ) {
+            String databaseUser = resultSet.getString("username");
+            String bio = resultSet.getString("bio");
+            return new User(databaseUser, bio);
         } catch (Exception e) {
-            // TODO: handle exception
+            return null;
         }
-        return null;
     }
 
     public User createUser(String username, String password) {
+        String bio = "";
+        String hashed = passHash(username, password);
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("");
         ) {
+            int a = statement.executeUpdate(String.format("""
+                insert into studier
+                values("%s", "%s", "%s")
+                """, username, hashed, bio));
+            return getUser(username);
         } catch (Exception e) {
-            // TODO: handle exception
+            return null;
         }
-        return null;
     }
 
     public User updateBio(String username, String bio) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("");
         ) {
+            int a = statement.executeUpdate(String.format("""
+                    update studier
+                    set bio = "%s"
+                    where username like "%s"
+                    """, bio, username));
+            return getUser(username);
         } catch (Exception e) {
-            // TODO: handle exception
+            return null;
         }
-        return null;
     }
 
-    public Boolean removeUser(String username) {
+    public boolean removeUser(String username) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("");
+            ResultSet resultSet = statement.executeQuery(String.format("""
+                delete from studier
+                where username like "%s"
+            """, username));
         ) {
-            
+            return true;
         } catch (Exception e) {
-            // TODO: handle exception
+            return false;
         }
-        return false;
     }
 
     private void testConnection() {
@@ -114,6 +142,18 @@ public class userDao {
         } catch (Exception exception) {
             System.out.println("user thing not working :( )");
             System.err.println(exception);
+        }
+    }
+
+    private static String passHash(String username, String password) {
+        String userPass = username + password;
+        try {
+            byte[] hash = MessageDigest.getInstance("MD5").digest(userPass.getBytes());
+            String hexString = new BigInteger(1, hash).toString(16);
+            String md5Str = Base64.getEncoder().encodeToString(hexString.getBytes());
+            return md5Str;
+        } catch (Exception e) {
+            return null;
         }
     }
 

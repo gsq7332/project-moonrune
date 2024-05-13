@@ -4,17 +4,14 @@ public class User {
     
     private final String username;
     private String bio;
-    private final String password;
 
-    public User(String username, String password) {
+    public User(String username) {
         this.username = username;
-        this.password = password;
         bio = null;
     }
 
-    public User(String username, String password, String bio) {
+    public User(String username, String bio) {
         this.username = username;
-        this.password = password;
         this.bio = bio;
     }
 
@@ -24,9 +21,5 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
-
-    public boolean authenticate(String pass) {
-        return pass.equals(password);
     }
 }
