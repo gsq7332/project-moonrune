@@ -24,8 +24,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class userDao {
     
     private String userPath;
-    private String username;
-    private String password;
+    private String dataUser;
+    private String dataPassword;
     private String databasePath;
 
     public userDao(@Value("${terms.database}") String database, @Value("${database.user-pass}") String userPath, ObjectMapper objectMapper) throws IOException {
@@ -41,8 +41,8 @@ public class userDao {
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader reader = new BufferedReader(isr);
         ) {
-            username = reader.readLine().strip();
-            password = reader.readLine().strip();
+            dataUser = reader.readLine().strip();
+            dataPassword = reader.readLine().strip();
         } catch (Exception exception) {
 
         }
@@ -51,7 +51,7 @@ public class userDao {
 
     public User getUser(String username) {
         try (
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format("""
             select *
@@ -71,7 +71,7 @@ public class userDao {
     public User signIn(String username, String password) {
         String hashed = passHash(username, password);
         try (
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format("""
                 select *
@@ -92,7 +92,7 @@ public class userDao {
         String bio = "";
         String hashed = passHash(username, password);
         try (
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
         ) {
             int a = statement.executeUpdate(String.format("""
@@ -107,7 +107,7 @@ public class userDao {
 
     public User updateBio(String username, String bio) {
         try (
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
         ) {
             int a = statement.executeUpdate(String.format("""
@@ -123,7 +123,7 @@ public class userDao {
 
     public boolean removeUser(String username) {
         try (
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format("""
                 delete from studier
@@ -137,7 +137,7 @@ public class userDao {
     }
 
     private void testConnection() {
-        try(Connection conn = DriverManager.getConnection(databasePath, username, password);) {
+        try(Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);) {
             System.out.println("user connection works :)");
         } catch (Exception exception) {
             System.out.println("user thing not working :( )");
