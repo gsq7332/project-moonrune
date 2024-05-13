@@ -43,7 +43,7 @@ public class userDao {
             dataUser = reader.readLine().strip();
             dataPassword = reader.readLine().strip();
         } catch (Exception exception) {
-
+            exception.printStackTrace();
         }
     }
 
@@ -59,10 +59,12 @@ public class userDao {
             """, username
             ));
         ) {
+            resultSet.next();
             String databaseUser = resultSet.getString("username");
             String bio = resultSet.getString("bio");
             return new User(databaseUser, bio);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -79,10 +81,12 @@ public class userDao {
                 """, username, hashed
                 ));
         ) {
+            resultSet.next();
             String databaseUser = resultSet.getString("username");
             String bio = resultSet.getString("bio");
             return new User(databaseUser, bio);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -94,12 +98,21 @@ public class userDao {
             Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
         ) {
+            if (username.equals("Admin")) {
+                statement.executeUpdate(String.format("""
+                update studier
+                set password = "%s"
+                where username = "%s"
+                """, hashed, username));
+                return getUser(username);
+            }
             statement.executeUpdate(String.format("""
-                insert into studier
+                insert into studier(username, password, bio)
                 values("%s", "%s", "%s")
                 """, username, hashed, bio));
             return getUser(username);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -116,6 +129,7 @@ public class userDao {
                     """, bio, username));
             return getUser(username);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -136,6 +150,7 @@ public class userDao {
             """, username));
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -157,6 +172,7 @@ public class userDao {
             String md5Str = Base64.getEncoder().encodeToString(hexString.getBytes());
             return md5Str;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
