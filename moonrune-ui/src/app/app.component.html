@@ -8,9 +8,16 @@
       routerLinkActive="active" ariaCurrentWhenActive="page">
         {{termCollection.name}}
       </a>
-      <a routerLink="/sign-in" routerLinkActive="active" ariaCurrentWhenActive="page">Sign In</a>
-      <a routerLink="/sign-up" routerLinkActive="active" ariaCurrentWhenActive="page">Sign Up</a>
     </ul>
+</nav>
+<nav>
+  <app-sign-out></app-sign-out>
+</nav>
+<nav>
+  <ul>
+  <a routerLink="/sign-in" routerLinkActive="active" ariaCurrentWhenActive="page">Sign In</a>
+  <a routerLink="/sign-up" routerLinkActive="active" ariaCurrentWhenActive="page">Sign Up</a>
+  </ul>
 </nav>
 
 <router-outlet></router-outlet>
