@@ -23,14 +23,14 @@ import java.util.LinkedHashMap;
 @Component
 public class termDatabaseDAO extends termDAO {
 
-    private final String userPath = "src/input/user-pass.txt";
+    private String userPath;
     private String username;
     private String password;
-    private Connection connection;
     private String databasePath;
 
-    public termDatabaseDAO(@Value("${terms.database}") String database, ObjectMapper objectMapper) throws IOException {
+    public termDatabaseDAO(@Value("${terms.database}") String database, @Value("${database.user-pass}") String userPath, ObjectMapper objectMapper) throws IOException {
         super();
+        this.userPath = userPath;
         databasePath = database;
         getUsernamePassword();
         //load();
@@ -143,7 +143,7 @@ public class termDatabaseDAO extends termDAO {
 
     public void load() {
         try(Connection conn = DriverManager.getConnection(databasePath, username, password);) {
-            connection = conn;
+            System.out.println("connection works :)");
         } catch (Exception exception) {
             System.out.println("thing not working :( )");
             System.err.println(exception);
