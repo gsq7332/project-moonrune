@@ -52,7 +52,7 @@ public class termDatabaseDAO extends termDAO {
     // function to get the list of admin collections (and properties)
     public TermCollection[] getCollectionsByOwner(String owner) {
         ArrayList<TermCollection> ownedCollections = new ArrayList<>();
-        try {
+        try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
@@ -61,7 +61,7 @@ public class termDatabaseDAO extends termDAO {
                     where collectionOwner like "%s"
                 """
             , owner));
-            
+        ) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("CollectionID");
                 String name = resultSet.getString("CollectionName");
@@ -83,7 +83,7 @@ public class termDatabaseDAO extends termDAO {
     @Override
     public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
         LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
-        try {
+        try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
@@ -100,6 +100,7 @@ public class termDatabaseDAO extends termDAO {
                     )
                 """
             , collectionID));
+        ) {
             
             while (resultSet.next()) {
                 String term = resultSet.getString("name");
@@ -143,9 +144,9 @@ public class termDatabaseDAO extends termDAO {
 
     public void load() {
         try(Connection conn = DriverManager.getConnection(databasePath, username, password);) {
-            System.out.println("connection works :)");
+            System.out.println("term connection works :)");
         } catch (Exception exception) {
-            System.out.println("thing not working :( )");
+            System.out.println("term thing not working :( )");
             System.err.println(exception);
         }
     }

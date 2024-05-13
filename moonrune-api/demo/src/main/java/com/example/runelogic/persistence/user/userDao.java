@@ -47,8 +47,12 @@ public class userDao {
 
 
     public User getUser(String username) {
-        try {
+        try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("");
+        ) {
+
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -56,8 +60,11 @@ public class userDao {
     }
 
     public User signIn(String username, String password) {
-        try {
+        try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("");
+        ) {
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -65,8 +72,11 @@ public class userDao {
     }
 
     public User createUser(String username, String password) {
-        try {
+        try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("");
+        ) {
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -74,8 +84,11 @@ public class userDao {
     }
 
     public User updateBio(String username, String bio) {
-        try {
+        try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("");
+        ) {
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -83,8 +96,12 @@ public class userDao {
     }
 
     public Boolean removeUser(String username) {
-        try {
+        try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("");
+        ) {
+            
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -93,9 +110,9 @@ public class userDao {
 
     private void testConnection() {
         try(Connection conn = DriverManager.getConnection(databasePath, username, password);) {
-            System.out.println("connection works :)");
+            System.out.println("user connection works :)");
         } catch (Exception exception) {
-            System.out.println("thing not working :( )");
+            System.out.println("user thing not working :( )");
             System.err.println(exception);
         }
     }
