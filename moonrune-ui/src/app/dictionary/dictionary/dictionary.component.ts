@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ListEntryComponent } from '../list-view/list-entry/list-entry.component';
 import { TermsListComponent } from '../list-view/terms-list/terms-list.component';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
