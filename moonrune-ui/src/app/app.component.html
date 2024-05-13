@@ -15,9 +15,9 @@
 </nav>
 <nav>
   <ul>
-  <a routerLink="/sign-in" routerLinkActive="active" ariaCurrentWhenActive="page">Sign In</a>
-  <a routerLink="/sign-up" routerLinkActive="active" ariaCurrentWhenActive="page">Sign Up</a>
-  <a routerLink="/users/Admin" routerLinkActive="active" ariaCurrentWhenActive="page">Admin</a>
+  <a *ngIf="!isSignedIn" routerLink="/sign-in" routerLinkActive="active" ariaCurrentWhenActive="page">Sign In</a>
+  <a *ngIf="!isSignedIn" routerLink="/sign-up" routerLinkActive="active" ariaCurrentWhenActive="page">Sign Up</a>
+  <a *ngIf="username" routerLink="/users/{{username}}" routerLinkActive="active" ariaCurrentWhenActive="page">Admin</a>
   </ul>
 </nav>
 

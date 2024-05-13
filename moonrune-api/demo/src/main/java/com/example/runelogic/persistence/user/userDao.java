@@ -53,7 +53,7 @@ public class userDao {
             Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format("""
-            select *
+            select username, bio
             from studier
             where username like "%s"  
             """, username
@@ -73,7 +73,7 @@ public class userDao {
             Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format("""
-                select *
+                select username, bio
                 from studier
                 where username like "%s" and password like "%s" 
                 """, username, hashed
@@ -124,11 +124,16 @@ public class userDao {
         try (
             Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(String.format("""
+        ) {
+            statement.executeUpdate(String.format("""
+                update collection
+                set CollectionOwner = ""
+                where CollectionOwner = "%s"
+            """, username));
+            statement.executeUpdate(String.format("""
                 delete from studier
                 where username like "%s"
             """, username));
-        ) {
             return true;
         } catch (Exception e) {
             return false;

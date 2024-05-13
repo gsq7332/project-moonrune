@@ -4,11 +4,12 @@ import { UserService } from '../user.service';
 import { User } from '../user';
 import { Router } from '@angular/router';
 import { Cookie } from 'ng2-cookies';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgIf],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
