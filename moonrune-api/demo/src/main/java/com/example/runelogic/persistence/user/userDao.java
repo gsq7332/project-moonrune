@@ -14,7 +14,6 @@ import java.sql.Statement;
 import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.example.runelogic.model.User;
@@ -95,7 +94,7 @@ public class userDao {
             Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
         ) {
-            int a = statement.executeUpdate(String.format("""
+            statement.executeUpdate(String.format("""
                 insert into studier
                 values("%s", "%s", "%s")
                 """, username, hashed, bio));
@@ -110,7 +109,7 @@ public class userDao {
             Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
         ) {
-            int a = statement.executeUpdate(String.format("""
+            statement.executeUpdate(String.format("""
                     update studier
                     set bio = "%s"
                     where username like "%s"

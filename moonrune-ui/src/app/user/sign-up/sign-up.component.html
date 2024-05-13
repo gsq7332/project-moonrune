@@ -1,5 +1,11 @@
-<input type="text" [(ngModel)]="username"> 
-<label>Username</label>
-<input type="password" [(ngModel)]="password"> 
-<label>Password</label>
-<button (click)="signUp()"></button>
+<div>
+    <label>Username</label> 
+    <input type="text" [(ngModel)]="username">
+</div>
+
+<div>
+    <label>Password</label> 
+    <input type="password" [(ngModel)]="password"> 
+</div>
+
+<button (click)="signUp()">Sign Up</button>

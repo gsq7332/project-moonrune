@@ -3,7 +3,6 @@ package com.example.runelogic.persistence.term;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Random;
 
 import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.Term;

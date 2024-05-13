@@ -5,11 +5,6 @@ public class User {
     private final String username;
     private String bio;
 
-    public User(String username) {
-        this.username = username;
-        bio = null;
-    }
-
     public User(String username, String bio) {
         this.username = username;
         this.bio = bio;
@@ -21,5 +16,9 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getBio() {
+        return bio;
     }
 }
