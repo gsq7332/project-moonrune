@@ -98,14 +98,6 @@ public class userDao {
             Connection conn = DriverManager.getConnection(databasePath, dataUser, dataPassword);
             Statement statement = conn.createStatement();
         ) {
-            if (username.equals("Admin")) {
-                statement.executeUpdate(String.format("""
-                update studier
-                set password = "%s"
-                where username = "%s"
-                """, hashed, username));
-                return getUser(username);
-            }
             statement.executeUpdate(String.format("""
                 insert into studier(username, password, bio)
                 values("%s", "%s", "%s")
