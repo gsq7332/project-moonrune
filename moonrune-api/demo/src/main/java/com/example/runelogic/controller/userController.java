@@ -20,15 +20,28 @@ public class userController {
         this.dao = dao;
     }
 
-    public ResponseEntity<User> getUser() {
+    public ResponseEntity<User> getUser(String username) {
+        User user = dao.getUser(username);
+        return null;
+    }
+
+    public ResponseEntity<User> signIn(String username, String password) {
+        User user = dao.signIn(username, password);
         return null;
     }
 
     public ResponseEntity<User> createUser(String username, String password) {
+        User user = dao.createUser(username, password);
         return null;
     }
 
-    public ResponseEntity<User> removeUser(String username) {
+    public ResponseEntity<User> updateBio(String username, String bio) {
+        User user = dao.updateBio(username, bio);
+        return null;
+    }
+
+    public ResponseEntity<Boolean> removeUser(String username) {
+        boolean wasThere = dao.removeUser(username);
         return null;
     }
 
