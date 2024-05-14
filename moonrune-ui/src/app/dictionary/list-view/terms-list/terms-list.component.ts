@@ -1,9 +1,9 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ListEntryComponent } from '../list-entry/list-entry.component';
-import { TermServiceService } from '../../../term-service.service';
 import { Term } from '../../../terms/term';
 import { TermDetailsComponent } from '../../../general/term-details/term-details.component';
+import { CollectionService } from '../../../general/collection.service';
 
 @Component({
   selector: 'app-terms-list',
@@ -13,7 +13,7 @@ import { TermDetailsComponent } from '../../../general/term-details/term-details
   styleUrl: './terms-list.component.css'
 })
 export class TermsListComponent {
-  constructor(private termsService: TermServiceService){}
+  constructor(private termsService: CollectionService){}
 
   selectedTerm?: Term;
   @Input() id ?: number

@@ -1,16 +1,13 @@
-import { ApplicationConfig, Injectable } from '@angular/core';
-import { TERMS } from './terms/mock-term';
+import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
-import { Term } from './terms/term';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { TermCollection } from './terms/termcollection';
+import { Term } from '../terms/term';
+import { HttpClient } from '@angular/common/http';
+import { TermCollection } from '../terms/termcollection';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class TermServiceService {
-
+export class CollectionService {
   private url = 'http://localhost:8080/collections'; //link to api
   //httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
   constructor(private http: HttpClient) { }
@@ -34,5 +31,4 @@ export class TermServiceService {
       return of(result as T);
     }
   }
-
 }

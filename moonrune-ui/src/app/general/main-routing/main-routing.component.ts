@@ -2,9 +2,9 @@ import { NgFor, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SignOutComponent } from '../../user/sign-out/sign-out.component';
-import { TermServiceService } from '../../term-service.service';
 import { TermCollection } from '../../terms/termcollection';
 import { Cookie } from 'ng2-cookies';
+import { CollectionService } from '../collection.service';
 
 @Component({
   selector: 'app-main-routing',
@@ -15,7 +15,7 @@ import { Cookie } from 'ng2-cookies';
 })
 export class MainRoutingComponent {
 
-  constructor(private termService: TermServiceService) {}
+  constructor(private termService: CollectionService) {}
   presetCollections ?: TermCollection[]
   isSignedIn: boolean = false;
   username ?: string;

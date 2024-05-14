@@ -1,5 +1,4 @@
 import { Component, Input, Output } from '@angular/core';
-import { GameService } from '../game.service';
 import { EventEmitter } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -35,7 +34,7 @@ export class GameSettingsComponent {
   4 - Kanji (readings)
   */
 
-  constructor(private gameService: GameService) {}
+  constructor() {}
 
   ngOnInit() {
 
