@@ -1,4 +1,4 @@
-
+<app-main-routing [isDictionary]="false"></app-main-routing>
 <li *ngIf="!hasStarted; else game">
     <app-game-settings (startGameEvent)="initializeGame()"
     [(numQuestions)]="numQuestions"

@@ -1,0 +1,12 @@
+<div *ngIf="failedLogin">Failed to log in</div>
+<div>
+    <label>Username</label> 
+    <input type="text" [(ngModel)]="username">
+</div>
+
+<div>
+    <label>Password</label> 
+    <input type="password" [(ngModel)]="password"> 
+</div>
+
+<button (click)="signIn()">Sign In</button>

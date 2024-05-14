@@ -9,14 +9,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Logger;
+// import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 // @Component
 public class termFileDAO extends termDAO {
-    private static final Logger LOG = Logger.getLogger(termFileDAO.class.getName());
+    // private static final Logger LOG = Logger.getLogger(termFileDAO.class.getName());
 
     private enum fileType {
         CYRILLIC, 
@@ -44,7 +43,7 @@ public class termFileDAO extends termDAO {
     }
 
     public void save() {
-        File file = new File(filename);
+        
         
     }
 
