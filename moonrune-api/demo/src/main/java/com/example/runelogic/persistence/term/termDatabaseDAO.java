@@ -1,6 +1,5 @@
 package com.example.runelogic.persistence.term;
 
-import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.Term;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,11 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 
 @Component
 public class termDatabaseDAO {
