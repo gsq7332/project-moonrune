@@ -16,5 +16,6 @@ export class SignOutComponent {
   signOut() {
     Cookie.delete("username");
     this.route.navigate(['/mainpage'])
+    window.location.reload()
   }
 }

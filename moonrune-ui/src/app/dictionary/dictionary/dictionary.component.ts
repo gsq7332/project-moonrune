@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { TermsListComponent } from '../list-view/terms-list/terms-list.component';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
 
 @Component({
   selector: 'app-dictionary',
   standalone: true,
-  imports: [TermsListComponent, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [TermsListComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent],
   templateUrl: './dictionary.component.html',
   styleUrl: './dictionary.component.css'
 })

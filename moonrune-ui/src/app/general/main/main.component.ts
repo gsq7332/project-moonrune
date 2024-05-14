@@ -1,11 +1,12 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { Cookie } from 'ng2-cookies';
+import { MainRoutingComponent } from '../main-routing/main-routing.component';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, MainRoutingComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })

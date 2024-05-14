@@ -4,12 +4,13 @@ import { GameSettingsComponent } from '../game-settings/game-settings.component'
 import { MultipleChoiceComponent } from '../multiple-choice/multiple-choice.component';
 import { GameService } from '../game.service';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
 
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css'
 })

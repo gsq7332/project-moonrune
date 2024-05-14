@@ -3,11 +3,12 @@ import { User } from '../user';
 import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
 
 @Component({
   selector: 'app-user-page',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, MainRoutingComponent],
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.css'
 })
