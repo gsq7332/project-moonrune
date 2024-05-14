@@ -28,13 +28,11 @@ public class termDatabaseDAO {
     private String password;
     private String databasePath;
     private int lastUsedTermID;
-    private int lastUsedCollectionID;
 
     public termDatabaseDAO(@Value("${terms.database}") String database, @Value("${database.user-pass}") String userPath, ObjectMapper objectMapper) throws IOException {
         this.userPath = userPath;
         databasePath = database;
         getUsernamePassword();
-        lastUsedCollectionID = getLastCollectionID();
         lastUsedTermID = getLastTermID();
         //load();
     }
@@ -52,86 +50,8 @@ public class termDatabaseDAO {
         }
     }
 
-    public int getLastCollectionID() {
-        return 0;
-    }
-
     public int getLastTermID() {
         return 0;
-    }
-
-    // function to get the list of admin collections (and properties)
-    public TermCollection[] getCollectionsByOwner(String owner) {
-        ArrayList<TermCollection> ownedCollections = new ArrayList<>();
-        try (
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(String.format(
-                """
-                    select * from collection
-                    where collectionOwner like "%s"
-                """
-            , owner));
-        ) {
-            while (resultSet.next()) {
-                int id = resultSet.getInt("CollectionID");
-                String name = resultSet.getString("CollectionName");
-                String colOwner = resultSet.getString("CollectionOwner"); // here in case something somehow goes wrong
-                int privacyLevel = resultSet.getInt("PrivacyLevel");
-                String description = resultSet.getString("description");
-                TermCollection collection = new TermCollection(id, name, colOwner, privacyLevel, description);
-                ownedCollections.add(collection);
-            }
-        } catch (Exception exception) {
-            System.err.println(exception);
-            System.out.println("thing imploded");
-        }
-        TermCollection[] collectionsArray = new TermCollection[ownedCollections.size()];
-        collectionsArray = ownedCollections.toArray(collectionsArray);
-        return collectionsArray;
-    }
-
-
-    public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
-        LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
-        try (
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(String.format(
-                """
-                    select terms.name, hasMeaning.meaning
-                    from terms inner join hasmeaning
-                    where terms.TermID = hasmeaning.TermID
-                    and terms.TermID in (
-                        select inCollection.TermID
-                        from inCollection
-                        where CollectionID = %d)
-                    and terms.TermID not in (
-                        select * from isDiacritic
-                    )
-                """
-            , collectionID));
-        ) {
-            
-            while (resultSet.next()) {
-                String term = resultSet.getString("name");
-                String meaning = resultSet.getString("meaning");
-                if (terms.keySet().contains(term)) {
-                    Term existing = terms.get(term);
-                    HashSet<String> meanings = new HashSet<>();
-                    meanings.add(meaning);
-                    existing.addMeanings(meanings);
-                } else {
-                    ArrayList<String> meanings = new ArrayList<>();
-                    meanings.add(meaning);
-                    terms.put(term, new Term(term, meanings));
-                }
-            }
-        } catch (Exception exception) {
-            System.err.println(exception);
-            System.out.println("thing imploded");
-        }
-        return terms;
     }
 
     public Term getTerm(int id) {
@@ -180,40 +100,6 @@ public class termDatabaseDAO {
             System.err.println(exception);
         }
         return false;
-    }
-
-    public TermCollection createCollection(String username, String collectionName) {
-        try(
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
-            Statement statement = conn.createStatement();
-            ) {
-                lastUsedCollectionID += 1;
-            System.out.println("term connection works :)");
-        } catch (Exception exception) {
-            System.out.println("term thing not working :( )");
-            System.err.println(exception);
-        }
-        
-        
-        return null;
-    }
-
-
-    public boolean deleteCollection(int collectionID) {
-        try(
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
-            Statement statement = conn.createStatement();
-            ) {
-            System.out.println("term connection works :)");
-        } catch (Exception exception) {
-            System.out.println("term thing not working :( )");
-            System.err.println(exception);
-        }
-        return false;
-    }
-
-    public void save() {
-
     }
 
     public void load() {

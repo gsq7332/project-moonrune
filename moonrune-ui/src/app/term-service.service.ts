@@ -11,7 +11,7 @@ import { TermCollection } from './terms/termcollection';
 
 export class TermServiceService {
 
-  private url = 'http://localhost:8080/terms'; //link to api
+  private url = 'http://localhost:8080/collections'; //link to api
   //httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
   constructor(private http: HttpClient) { }
 
