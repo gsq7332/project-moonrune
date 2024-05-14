@@ -1,7 +1,7 @@
 package com.example.runelogic.persistence.game;
 
 import java.util.HashMap;
-import java.util.logging.Logger;
+// import java.util.logging.Logger;
 
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import com.example.runelogic.model.terms.Term;
 
 @Component
 public class gameDAO {
-    private static final Logger LOG = Logger.getLogger(gameDAO.class.getName());
+    // private static final Logger LOG = Logger.getLogger(gameDAO.class.getName());
     
     private static int sessionID = 0;
 
