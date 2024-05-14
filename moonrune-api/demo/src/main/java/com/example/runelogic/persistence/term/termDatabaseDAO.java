@@ -21,18 +21,21 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 @Component
-public class termDatabaseDAO extends termDAO {
+public class termDatabaseDAO {
 
     private String userPath;
     private String username;
     private String password;
     private String databasePath;
+    private int lastUsedTermID;
+    private int lastUsedCollectionID;
 
     public termDatabaseDAO(@Value("${terms.database}") String database, @Value("${database.user-pass}") String userPath, ObjectMapper objectMapper) throws IOException {
-        super();
         this.userPath = userPath;
         databasePath = database;
         getUsernamePassword();
+        lastUsedCollectionID = getLastCollectionID();
+        lastUsedTermID = getLastTermID();
         //load();
     }
 
@@ -47,6 +50,14 @@ public class termDatabaseDAO extends termDAO {
         } catch (Exception exception) {
 
         }
+    }
+
+    public int getLastCollectionID() {
+        return 0;
+    }
+
+    public int getLastTermID() {
+        return 0;
     }
 
     // function to get the list of admin collections (and properties)
@@ -80,7 +91,7 @@ public class termDatabaseDAO extends termDAO {
         return collectionsArray;
     }
 
-    @Override
+
     public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
         LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
         try (
@@ -123,18 +134,81 @@ public class termDatabaseDAO extends termDAO {
         return terms;
     }
 
-    @Override
+    public Term getTerm(int id) {
+        return null;
+    }
+
+    
     public Term createTerm(String name, ArrayList<String> meanings) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+                lastUsedTermID += 1;
+                System.out.println("term connection works :)");
+        } catch (Exception exception) {
+            System.out.println("term thing not working :( )");
+            System.err.println(exception);
+        }
+        
         return null;
     }
 
-    @Override
-    public Term updateTerm(String name, ArrayList<String> change) {
+    
+    public Term updateTerm(int id, ArrayList<String> change) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+            System.out.println("term connection works :)");
+        } catch (Exception exception) {
+            System.out.println("term thing not working :( )");
+            System.err.println(exception);
+        }
         return null;
     }
 
-    @Override
-    public boolean deleteTerm(String name) {
+    
+    public boolean deleteTerm(int id) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+            System.out.println("term connection works :)");
+        } catch (Exception exception) {
+            System.out.println("term thing not working :( )");
+            System.err.println(exception);
+        }
+        return false;
+    }
+
+    public TermCollection createCollection(String username, String collectionName) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+                lastUsedCollectionID += 1;
+            System.out.println("term connection works :)");
+        } catch (Exception exception) {
+            System.out.println("term thing not working :( )");
+            System.err.println(exception);
+        }
+        
+        
+        return null;
+    }
+
+
+    public boolean deleteCollection(int collectionID) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+            System.out.println("term connection works :)");
+        } catch (Exception exception) {
+            System.out.println("term thing not working :( )");
+            System.err.println(exception);
+        }
         return false;
     }
 
@@ -143,7 +217,10 @@ public class termDatabaseDAO extends termDAO {
     }
 
     public void load() {
-        try(Connection conn = DriverManager.getConnection(databasePath, username, password);) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
             System.out.println("term connection works :)");
         } catch (Exception exception) {
             System.out.println("term thing not working :( )");

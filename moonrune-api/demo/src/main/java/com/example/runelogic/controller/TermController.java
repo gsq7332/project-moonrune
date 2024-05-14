@@ -32,10 +32,10 @@ public class TermController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Term> getTerm(@PathVariable String name) {
-        LOG.info("GET /terms/" + name);
+    public ResponseEntity<Term> getTerm(@PathVariable int id) {
+        LOG.info("GET /terms/" + id);
         try {
-            Term term = termThing.getTerm(name);
+            Term term = termThing.getTerm(id);
             if (term != null)
                 return new ResponseEntity<Term>(term,HttpStatus.OK);
             else
@@ -103,10 +103,10 @@ public class TermController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Term> updateTerm(@RequestBody String name, @RequestBody ArrayList<String> change) {
-        LOG.info("PUT /terms " + name);
+    public ResponseEntity<Term> updateTerm(@RequestBody int id, @RequestBody ArrayList<String> change) {
+        LOG.info("PUT /terms " + id);
         try {
-            Term updated = termThing.updateTerm(name, change);
+            Term updated = termThing.updateTerm(id, change);
             if (updated == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(updated,HttpStatus.OK);
@@ -116,10 +116,10 @@ public class TermController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Term> deleteTerm(@PathVariable String name) {
-        LOG.info("DELETE /terms/" + name);
+    public ResponseEntity<Term> deleteTerm(@PathVariable int id) {
+        LOG.info("DELETE /terms/" + id);
         try {
-            boolean wasPresent = termThing.deleteTerm(name);
+            boolean wasPresent = termThing.deleteTerm(id);
             if (wasPresent)
                 return new ResponseEntity<>(HttpStatus.OK);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -12,7 +12,7 @@
   <ul>
   <a *ngIf="!isSignedIn" routerLink="/sign-in" routerLinkActive="active" ariaCurrentWhenActive="page">Sign In</a>
   <a *ngIf="!isSignedIn" routerLink="/sign-up" routerLinkActive="active" ariaCurrentWhenActive="page">Sign Up</a>
-  <a *ngIf="username" routerLink="/users/{{username}}" routerLinkActive="active" ariaCurrentWhenActive="page">Admin</a>
+  <a *ngIf="username" routerLink="/users/{{username}}" routerLinkActive="active" ariaCurrentWhenActive="page">{{username}}</a>
   <app-sign-out *ngIf="isSignedIn"></app-sign-out>
   </ul>
 </nav>
