@@ -33,9 +33,7 @@ export class MainRoutingComponent {
   }
 
   refreshIfDictionary() {
-    console.log('a')
     if (this.isDictionary == undefined) return
     if (this.isDictionary) window.location.reload()
-    console.log('refreshed')
   }
 }
