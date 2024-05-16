@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { Term } from '../terms/term';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TermCollection } from '../terms/termcollection';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { TermCollection } from '../terms/termcollection';
 })
 export class CollectionService {
   private url = 'http://localhost:8080/collections'; //link to api
-  //httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
+  httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
   constructor(private http: HttpClient) { }
 
   getTerms(collectionID: number): Observable<Term[]> {
@@ -23,6 +23,12 @@ export class CollectionService {
     let currUrl = this.url + "/collections/" + owner;
     return this.http.get<TermCollection[]>(currUrl)
     .pipe(catchError(this.handleError<TermCollection[]>('getCollectionsByOwner', [])));
+  }
+
+  createCollection(owner: string): Observable<number> {
+    let currUrl = this.url + "/create/" + owner;
+    return this.http.post<number>(currUrl, this.httpOptions)
+    .pipe(catchError(this.handleError<number>('getCollectionsByOwner')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

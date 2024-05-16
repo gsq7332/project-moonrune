@@ -19,7 +19,6 @@ export class MainRoutingComponent {
   presetCollections ?: TermCollection[]
   isSignedIn: boolean = false;
   username ?: string;
-  @Input() isDictionary ?: boolean
 
   ngOnInit() {
     this.termService.getCollectionsByOwner("Admin").subscribe(collections => this.presetCollections = collections)
@@ -30,10 +29,5 @@ export class MainRoutingComponent {
   checkSignedIn() {
     this.isSignedIn = Cookie.check("username")
     if (this.isSignedIn) this.username = Cookie.get("username")
-  }
-
-  refreshIfDictionary() {
-    if (this.isDictionary == undefined) return
-    if (this.isDictionary) window.location.reload()
   }
 }

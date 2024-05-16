@@ -1,3 +1,6 @@
-<app-main-routing [isDictionary]="true"></app-main-routing>
+<app-main-routing></app-main-routing>
+<button *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
+<button *ngIf="editMode" (click)="confirmEdit()">Done</button>
+<button *ngIf="!editMode" (click)="startEdit()">Edit</button>
 <li><a routerLink="/quiz/{{this.id}}" routerLinkActive="active" ariaCurrentWhenActive="page">Game</a></li>
 <app-terms-list [id]="id"></app-terms-list>

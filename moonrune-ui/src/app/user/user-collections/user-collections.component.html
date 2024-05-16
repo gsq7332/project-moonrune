@@ -4,4 +4,7 @@
     <button *ngFor="let collection of collections" [routerLink]="['/collection', collection.collectionID]">
         <label>{{collection.name}}</label>
     </button>
+    <button *ngIf="username === visiting && username" (click)="createCollection()">
+        <label>Create Collection</label>
+    </button>
 </div>

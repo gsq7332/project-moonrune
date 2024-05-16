@@ -17,6 +17,8 @@ export class TermsListComponent {
 
   selectedTerm?: Term;
   @Input() id ?: number
+  @Input() editMode ?: boolean
+  
 
   terms: Term[] = [];
 
