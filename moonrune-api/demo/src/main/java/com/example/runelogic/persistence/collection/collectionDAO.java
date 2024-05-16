@@ -13,11 +13,13 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.Term;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Component
 public class collectionDAO {
     private String userPath;
     private String username;
