@@ -1,19 +1,18 @@
 <nav>
     <ul>
-      <a routerLink="/mainpage" routerLinkActive="active" ariaCurrentWhenActive="page">Main</a>
-      <a *ngFor="let termCollection of presetCollections" 
-      routerLink="/collection/{{termCollection.collectionID}}" 
-      routerLinkActive="active" ariaCurrentWhenActive="page">
+      <button [routerLink]="['/mainpage']">Main</button>
+      <button *ngFor="let termCollection of presetCollections" 
+      [routerLink]="['/collection', termCollection.collectionID]" >
         {{termCollection.name}}
-      </a>
+      </button>
     </ul>
 </nav>
 <nav>
   <ul>
-    <a *ngIf="!isSignedIn" routerLink="/sign-in" routerLinkActive="active" ariaCurrentWhenActive="page">Sign In</a>
-    <a *ngIf="!isSignedIn" routerLink="/sign-up" routerLinkActive="active" ariaCurrentWhenActive="page">Sign Up</a>
-    <a *ngIf="username" routerLink="/collections/{{username}}" routerLinkActive="active" ariaCurrentWhenActive="page">My Collections</a>
-    <a *ngIf="username" routerLink="/users/{{username}}" routerLinkActive="active" ariaCurrentWhenActive="page">{{username}}</a>
+    <button *ngIf="!isSignedIn" [routerLink]="['/sign-in']">Sign In</button>
+    <button *ngIf="!isSignedIn" [routerLink]="['/sign-up']">Sign Up</button>
+    <button *ngIf="username" [routerLink]="['/collections', username]">My Collections</button>
+    <button *ngIf="username" [routerLink]="['/users', username]">{{username}}</button>
     <app-sign-out *ngIf="isSignedIn"></app-sign-out>
   </ul>
 </nav>

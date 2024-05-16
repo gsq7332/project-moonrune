@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TermsListComponent } from '../list-view/terms-list/terms-list.component';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-dictionary',
@@ -13,14 +14,16 @@ import { MainRoutingComponent } from '../../general/main-routing/main-routing.co
 export class DictionaryComponent {
   constructor(private route: ActivatedRoute) {}
 
-  id ?: number = Number(this.route.snapshot.paramMap.get('id'))
+  id ?: number
 
-  /*
+
   ngOnInit() {
-    this.route.paramMap.pipe(switchMap(params => {
-      this.id = parseInt(params.get('id')!, 10)
-    }))
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        this.id = Number(params.get('id'));
+        return [];
+      })
+    ).subscribe();
   }
-  //*/
-  
 }
+  

@@ -1,7 +1,7 @@
 <app-main-routing></app-main-routing>
 <div *ngIf="username">
     <label>{{username}}'s collections: </label>
-    <button *ngFor="let collection of collections">
+    <button *ngFor="let collection of collections" [routerLink]="['/collection', collection.collectionID]">
         <label>{{collection.name}}</label>
     </button>
 </div>
