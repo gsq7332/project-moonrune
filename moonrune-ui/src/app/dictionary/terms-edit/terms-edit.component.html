@@ -1,1 +1,10 @@
-<p>terms-edit works!</p>
+<div *ngFor="let term of currentTerms; let j = index">
+    <button (click)="removeTerm(j)"></button>
+    <input type="text" [(ngModel)]="term.term">
+    <div *ngFor="let meaning of term.meanings; let i = index;">
+    <input type="text" [(ngModel)]="term.meanings[i]">
+    <button (click)="removeMeaning(i)"></button>
+    </div>
+</div>
+<button (click)="addTerm()"></button>
+
