@@ -31,7 +31,7 @@ public class collectionDAO {
         this.userPath = userPath;
         databasePath = database;
         getUsernamePassword();
-        lastUsedCollectionID = getLastCollectionID();
+        getLastCollectionID();
         //load();
     }
 
@@ -48,8 +48,20 @@ public class collectionDAO {
         }
     }
 
-    public int getLastCollectionID() {
-        return 0;
+    public void getLastCollectionID() {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("""
+                    select max(CollectionID) as lastUsed
+                    from collection
+                    """);
+            ) {
+                resultSet.next();
+                lastUsedCollectionID = resultSet.getInt("lastUsed");
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
     }
 
     // function to get the list of admin collections (and properties)
@@ -126,12 +138,16 @@ public class collectionDAO {
         return terms;
     }
 
-    public TermCollection createCollection(String username, String collectionName) {
+    public TermCollection createCollection(String studier, String collectionName) {
         try(
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Connection conn = DriverManager.getConnection(databasePath, studier, password);
             Statement statement = conn.createStatement();
             ) {
                 lastUsedCollectionID += 1;
+                statement.executeUpdate(String.format("""
+                    insert into collection("CollectionID", "CollectionName", "Collection Owner", "PrivacyLevel", "description")
+                    values(%d, "%s", "%s", 0, "")
+                """, lastUsedCollectionID, collectionName, studier));
             System.out.println("term connection works :)");
         } catch (Exception exception) {
             System.out.println("term thing not working :( )");

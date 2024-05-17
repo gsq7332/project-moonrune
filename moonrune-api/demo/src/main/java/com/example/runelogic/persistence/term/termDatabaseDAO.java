@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -29,7 +30,7 @@ public class termDatabaseDAO {
         this.userPath = userPath;
         databasePath = database;
         getUsernamePassword();
-        lastUsedTermID = getLastTermID();
+        getLastTermID();
         //load();
     }
 
@@ -46,24 +47,64 @@ public class termDatabaseDAO {
         }
     }
 
-    public int getLastTermID() {
-        return 0;
+    public void getLastTermID() {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("""
+                    select max(TermID) as lastUsed
+                    from terms
+                    """);
+            ) {
+                resultSet.next();
+                lastUsedTermID = resultSet.getInt("lastUsed") + 1;
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
     }
 
     public Term getTerm(int id) {
-        return null;
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format("""
+                select terms.name, hasMeaning.meaning
+                from terms inner join hasmeaning
+                where terms.TermID = hasmeaning.TermID
+                and terms.TermID = %d
+                    """, id));
+            ) {
+                resultSet.next();
+                String name = resultSet.getString("name");
+                ArrayList<String> meaningsList = new ArrayList<>();
+                meaningsList.add(resultSet.getString("meaning"));
+                while (resultSet.next()) {
+                    String meaning = resultSet.getString("meaning");
+                    meaningsList.add(meaning);
+                }
+                return new Term(name, meaningsList);
+            } catch (Exception exception) {
+                System.err.println(exception);
+                return null;
+        }
     }
 
     
-    public Term createTerm(String name, ArrayList<String> meanings) {
+    public Term createTerm(String name, int collection) {
         try(
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
                 lastUsedTermID += 1;
-                System.out.println("term connection works :)");
+                statement.executeUpdate(String.format("""
+                    insert into terms("TermID", "Name")
+                    values("%s", "%s")
+                """, lastUsedTermID, name));
+                statement.executeUpdate(String.format("""
+                    insert into inCollection("TermID", "CollectionID")
+                    values("%s", "%s")
+                """, lastUsedTermID, collection));
         } catch (Exception exception) {
-            System.out.println("term thing not working :( )");
             System.err.println(exception);
         }
         

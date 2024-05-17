@@ -46,10 +46,10 @@ public class TermController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Term> createTerm(@RequestBody String name, @RequestBody ArrayList<String> meanings) {
+    public ResponseEntity<Term> createTerm(@RequestBody String name, @RequestBody int collection) {
         LOG.info("POST /terms " + name);
         try {
-            Term newTerm = termThing.createTerm(name, meanings);
+            Term newTerm = termThing.createTerm(name, collection);
             if (newTerm == null)
             return new ResponseEntity<>(HttpStatus.CONFLICT);
             return new ResponseEntity<>(newTerm,HttpStatus.CREATED);
