@@ -129,6 +129,46 @@ public class termDatabaseDAO {
         }
     }
 
+    public Term addMeaning(int id, String meaning) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format("""
+                select max(localIndex) as lastUsed
+                from HasMeaning
+                where termID = %d
+            """, id))
+            ) {
+            int firstUnused = 1;
+            if (resultSet.isBeforeFirst()) {
+                resultSet.next();
+                firstUnused = resultSet.getInt("lastUsed") + 1;
+            }
+            statement.executeUpdate(String.format("""
+                insert into hasMeaning("TermID", "meaning", "localIndex")
+                values(%d, "%s", %d)
+            """, id, meaning, firstUnused));
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
+        return null;
+    }
+
+    public boolean removeMeanings(int id) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+            statement.executeUpdate(String.format("""
+                delete from hasMeaning
+                where id = %d
+            """, id));
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
+        return false;
+    }
+
     
     public boolean deleteTerm(int id) {
         try(
