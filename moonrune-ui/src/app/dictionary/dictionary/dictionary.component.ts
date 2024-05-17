@@ -4,19 +4,22 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@ang
 import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
 import { switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
+import { TermsEditComponent } from '../terms-edit/terms-edit.component';
+import { CollectionService } from '../../general/collection.service';
 
 @Component({
   selector: 'app-dictionary',
   standalone: true,
-  imports: [TermsListComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent, NgIf],
+  imports: [TermsListComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent, NgIf, TermsEditComponent],
   templateUrl: './dictionary.component.html',
   styleUrl: './dictionary.component.css'
 })
 export class DictionaryComponent {
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private collectionService: CollectionService) {}
 
   id ?: number
   editMode = false;
+  isOwner: boolean = false;
 
 
   ngOnInit() {
@@ -26,18 +29,13 @@ export class DictionaryComponent {
         return [];
       })
     ).subscribe();
+    this.checkOwnership()
   }
 
-  startEdit() {
-    this.editMode = true;
+  checkOwnership() {
+    
   }
 
-  cancelEdit() {
-    this.editMode = false;
-  }
-
-  confirmEdit() {
-    this.editMode = false;
-  }
+  
 }
   

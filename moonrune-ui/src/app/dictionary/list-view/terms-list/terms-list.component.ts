@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, SimpleChanges } from '@angular/core';
 import { ListEntryComponent } from '../list-entry/list-entry.component';
 import { Term } from '../../../terms/term';
 import { TermDetailsComponent } from '../../../general/term-details/term-details.component';

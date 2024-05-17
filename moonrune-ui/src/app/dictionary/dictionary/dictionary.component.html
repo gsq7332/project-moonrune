@@ -1,6 +1,4 @@
 <app-main-routing></app-main-routing>
-<button *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
-<button *ngIf="editMode" (click)="confirmEdit()">Done</button>
-<button *ngIf="!editMode" (click)="startEdit()">Edit</button>
 <li><a routerLink="/quiz/{{this.id}}" routerLinkActive="active" ariaCurrentWhenActive="page">Game</a></li>
-<app-terms-list [id]="id"></app-terms-list>
+<app-terms-edit *ngIf="isOwner" [(editMode)]="editMode"></app-terms-edit>
+<app-terms-list *ngIf="!editMode" [id]="id"></app-terms-list>
