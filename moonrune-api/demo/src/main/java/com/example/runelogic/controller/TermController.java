@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.term.termDatabaseDAO;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,10 +58,10 @@ public class TermController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Term> updateTerm(@RequestBody int id, @RequestBody ArrayList<String> change) {
+    public ResponseEntity<Term> updateTerm(@RequestBody int id, @RequestBody String newName) {
         LOG.info("PUT /terms " + id);
         try {
-            Term updated = termThing.updateTerm(id, change);
+            Term updated = termThing.updateTerm(id, newName);
             if (updated == null)
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(updated,HttpStatus.OK);

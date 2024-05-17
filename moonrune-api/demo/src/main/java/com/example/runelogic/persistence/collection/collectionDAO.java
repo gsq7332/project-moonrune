@@ -153,8 +153,38 @@ public class collectionDAO {
             System.out.println("term thing not working :( )");
             System.err.println(exception);
         }
-        
-        
+        return null;
+    }
+
+    public TermCollection updateCollectionName(int id, String newName) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+            statement.executeQuery(String.format("""
+                update collection
+                set CollectionName = "%s"
+                where CollectionID = %d
+            """, newName, id));
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
+        return null;
+    }
+
+    public TermCollection updateCollecitonDesc(int id, String desc) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+                statement.executeQuery(String.format("""
+                    update collection
+                    set description = "%s"
+                    where CollectionID = %d
+                """, desc, id));
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
         return null;
     }
 
@@ -162,10 +192,31 @@ public class collectionDAO {
         try(
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format("""
+                select TermID
+                from inCollection
+                where CollectionID = %d
+            """, collectionID));
             ) {
-            System.out.println("term connection works :)");
+            statement.executeUpdate(String.format("""
+                delete from inCollection
+                where CollectionID = %d
+            """, collectionID));
+            statement.executeUpdate(String.format("""
+                delete from collection
+                where CollectionID = %d
+            """, collectionID));
+            while (resultSet.next()) {
+                statement.executeUpdate(String.format("""
+                    delete from hasMeaning
+                    where TermID = %d
+                """, resultSet.getInt("TermID")));
+                statement.executeUpdate(String.format("""
+                    delete from terms
+                    where TermID = %d
+                """, resultSet.getInt("TermID")));
+            }
         } catch (Exception exception) {
-            System.out.println("term thing not working :( )");
             System.err.println(exception);
         }
         return false;

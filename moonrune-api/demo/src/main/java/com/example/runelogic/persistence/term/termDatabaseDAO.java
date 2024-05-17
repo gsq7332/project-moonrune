@@ -102,7 +102,7 @@ public class termDatabaseDAO {
                 """, lastUsedTermID, name));
                 statement.executeUpdate(String.format("""
                     insert into inCollection("TermID", "CollectionID")
-                    values("%s", "%s")
+                    values("%s", %d)
                 """, lastUsedTermID, collection));
         } catch (Exception exception) {
             System.err.println(exception);
@@ -112,17 +112,21 @@ public class termDatabaseDAO {
     }
 
     
-    public Term updateTerm(int id, ArrayList<String> change) {
+    public Term updateTerm(int id, String newName) {
         try(
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-            System.out.println("term connection works :)");
+            statement.executeUpdate(String.format("""
+                update terms
+                set Name = "%s"
+                where TermID = %d
+            """, newName, id));
+            return getTerm(id);
         } catch (Exception exception) {
-            System.out.println("term thing not working :( )");
             System.err.println(exception);
+            return null;
         }
-        return null;
     }
 
     
@@ -131,12 +135,15 @@ public class termDatabaseDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-            System.out.println("term connection works :)");
+            statement.executeQuery(String.format("""
+                delete from terms
+                where TermID = %d
+            """, id));
+            return true;
         } catch (Exception exception) {
-            System.out.println("term thing not working :( )");
             System.err.println(exception);
+            return false;
         }
-        return false;
     }
 
     public void load() {
