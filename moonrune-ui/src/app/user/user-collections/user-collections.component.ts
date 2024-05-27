@@ -20,6 +20,7 @@ export class UserCollectionsComponent {
   collections ?: TermCollection[]
   username: string = String(this.route.snapshot.paramMap.get('username'))
   visiting ?: string
+  failed = false
 
   ngOnInit() {
     if (Cookie.check('username')) this.visiting = Cookie.get('username');
@@ -28,7 +29,11 @@ export class UserCollectionsComponent {
 
   createCollection() {
     this.collectionService.createCollection(this.username).subscribe(id => {
-      this.router.navigate(['/collection', id])
+      if (id > 0) {
+        this.router.navigate(['/collection', id])
+      } else {
+        this.failed = true;
+      }
     })
   }
 

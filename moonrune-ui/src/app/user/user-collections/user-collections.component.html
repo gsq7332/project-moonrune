@@ -1,4 +1,5 @@
 <app-main-routing></app-main-routing>
+<div *ngIf="failed">Failed to create collection</div>
 <div *ngIf="username">
     <label>{{username}}'s collections: </label>
     <button *ngFor="let collection of collections" [routerLink]="['/collection', collection.collectionID]">

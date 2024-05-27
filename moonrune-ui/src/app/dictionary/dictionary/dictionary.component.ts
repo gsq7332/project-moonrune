@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { TermsEditComponent } from '../terms-edit/terms-edit.component';
 import { CollectionService } from '../../general/collection.service';
+import { TermCollection } from '../../terms/termcollection';
 
 @Component({
   selector: 'app-dictionary',
@@ -20,7 +21,7 @@ export class DictionaryComponent {
   id ?: number
   editMode = false;
   isOwner: boolean = false;
-
+  collectionInfo ?: TermCollection
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -33,6 +34,10 @@ export class DictionaryComponent {
   }
 
   checkOwnership() {
+    
+  }
+
+  getCollection() {
     
   }
 
