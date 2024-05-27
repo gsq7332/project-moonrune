@@ -140,17 +140,16 @@ public class collectionDAO {
 
     public int createCollection(String studier, String collectionName) {
         try(
-            Connection conn = DriverManager.getConnection(databasePath, studier, password);
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
                 lastUsedCollectionID += 1;
                 statement.executeUpdate(String.format("""
-                    insert into collection("CollectionID", "CollectionName", "Collection Owner", "PrivacyLevel", "description")
+                    insert into collection(CollectionID, CollectionName, CollectionOwner, PrivacyLevel, description)
                     values(%d, "%s", "%s", 0, "")
                 """, lastUsedCollectionID, collectionName, studier));
             return lastUsedCollectionID;
         } catch (Exception exception) {
-            System.out.println("term thing not working :( )");
             System.err.println(exception);
             return -1;
         }
