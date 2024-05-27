@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -62,6 +63,16 @@ public collectionController(collectionDAO termThing) {
             TermCollection[] emptyCollection = new TermCollection[]{};
             if (collection.equals(emptyCollection)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             return new ResponseEntity<>(collection, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("create/{owner}")
+    public ResponseEntity<Integer> createCollection(@PathVariable String owner) {
+        try {
+            int id = termThing.createCollection(owner, String.format("%s's Collection", owner));
+            return new ResponseEntity<>(id, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

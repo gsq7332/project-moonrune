@@ -138,7 +138,7 @@ public class collectionDAO {
         return terms;
     }
 
-    public TermCollection createCollection(String studier, String collectionName) {
+    public int createCollection(String studier, String collectionName) {
         try(
             Connection conn = DriverManager.getConnection(databasePath, studier, password);
             Statement statement = conn.createStatement();
@@ -148,12 +148,12 @@ public class collectionDAO {
                     insert into collection("CollectionID", "CollectionName", "Collection Owner", "PrivacyLevel", "description")
                     values(%d, "%s", "%s", 0, "")
                 """, lastUsedCollectionID, collectionName, studier));
-            System.out.println("term connection works :)");
+            return lastUsedCollectionID;
         } catch (Exception exception) {
             System.out.println("term thing not working :( )");
             System.err.println(exception);
+            return -1;
         }
-        return null;
     }
 
     public TermCollection updateCollectionName(int id, String newName) {
