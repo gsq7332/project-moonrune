@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CyrillicLetter extends Term {
     private String lower;
     public CyrillicLetter(@JsonProperty("term") String term, @JsonProperty("lower") String lower, 
-    @JsonProperty("meanings") ArrayList<String> meanings, int id) {
+    @JsonProperty("meanings") ArrayList<String> meanings, @JsonProperty("id") int id) {
         super(term, meanings, id);
         this.lower = lower;
     }

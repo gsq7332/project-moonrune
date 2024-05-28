@@ -11,7 +11,7 @@ public class Term {
     private final ArrayList<String> meanings;
     private final int id;
 
-    public Term(@JsonProperty("term") String term, @JsonProperty("meanings") ArrayList<String> meanings, int id) {
+    public Term(@JsonProperty("term") String term, @JsonProperty("meanings") ArrayList<String> meanings, @JsonProperty("id") int id) {
         this.term = term;
         this.meanings = meanings;
         this.id = id;

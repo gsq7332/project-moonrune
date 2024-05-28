@@ -18,7 +18,7 @@ public class Kanji extends Term {
     public Kanji(@JsonProperty("term") String term, @JsonProperty("meanings") ArrayList<String> meanings, 
     @JsonProperty("readings") ArrayList<String> readings, @JsonProperty("romaji") ArrayList<String> romaji, 
     @JsonProperty("grade") String grade, @JsonProperty("jlpt") String jlpt, @JsonProperty("rank") int rank, 
-    @JsonProperty("strokes") int strokes, int id) {
+    @JsonProperty("strokes") int strokes, @JsonProperty("id") int id) {
         super(term, meanings, id);
         this.readings = readings;
         this.romaji = romaji;
