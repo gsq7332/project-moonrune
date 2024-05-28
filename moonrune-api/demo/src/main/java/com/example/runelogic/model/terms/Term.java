@@ -9,10 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Term {
     private final String term;
     private final ArrayList<String> meanings;
+    private final int id;
 
-    public Term(@JsonProperty("term") String term, @JsonProperty("meanings") ArrayList<String> meanings) {
+    public Term(@JsonProperty("term") String term, @JsonProperty("meanings") ArrayList<String> meanings, int id) {
         this.term = term;
         this.meanings = meanings;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void addMeanings(HashSet<String> meaning) {

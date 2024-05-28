@@ -68,7 +68,7 @@ public class termDatabaseDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format("""
-                select terms.name, hasMeaning.meaning
+                select terms.name, terms.TermID, hasMeaning.meaning
                 from terms inner join hasmeaning
                 where terms.TermID = hasmeaning.TermID
                 and terms.TermID = %d
@@ -76,13 +76,14 @@ public class termDatabaseDAO {
             ) {
                 resultSet.next();
                 String name = resultSet.getString("name");
+                int termID = resultSet.getInt("TermID");
                 ArrayList<String> meaningsList = new ArrayList<>();
                 meaningsList.add(resultSet.getString("meaning"));
                 while (resultSet.next()) {
                     String meaning = resultSet.getString("meaning");
                     meaningsList.add(meaning);
                 }
-                return new Term(name, meaningsList);
+                return new Term(name, meaningsList, termID);
             } catch (Exception exception) {
                 System.err.println(exception);
                 return null;

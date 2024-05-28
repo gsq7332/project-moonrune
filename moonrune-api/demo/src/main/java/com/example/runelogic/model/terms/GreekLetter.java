@@ -8,8 +8,8 @@ public class GreekLetter extends Term {
     private ArrayList<String> lower;
     private String name;
     public GreekLetter(@JsonProperty("term") String term, @JsonProperty("lower") ArrayList<String> lower, 
-    @JsonProperty("name") String name, @JsonProperty("meanings") ArrayList<String> meanings) {
-        super(term, meanings);
+    @JsonProperty("name") String name, @JsonProperty("meanings") ArrayList<String> meanings, int id) {
+        super(term, meanings, id);
         this.lower = lower;
         this.name = name;
     }

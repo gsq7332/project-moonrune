@@ -128,7 +128,7 @@ public class collectionDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
-                    select terms.name, hasMeaning.meaning
+                    select terms.name, terms.TermID, hasMeaning.meaning
                     from terms inner join hasmeaning
                     where terms.TermID = hasmeaning.TermID
                     and terms.TermID in (
@@ -145,6 +145,7 @@ public class collectionDAO {
             while (resultSet.next()) {
                 String term = resultSet.getString("name");
                 String meaning = resultSet.getString("meaning");
+                int id = resultSet.getInt("TermID");
                 if (terms.keySet().contains(term)) {
                     Term existing = terms.get(term);
                     HashSet<String> meanings = new HashSet<>();
@@ -153,7 +154,7 @@ public class collectionDAO {
                 } else {
                     ArrayList<String> meanings = new ArrayList<>();
                     meanings.add(meaning);
-                    terms.put(term, new Term(term, meanings));
+                    terms.put(term, new Term(term, meanings, id));
                 }
             }
         } catch (Exception exception) {
