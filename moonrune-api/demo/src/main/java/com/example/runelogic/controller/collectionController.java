@@ -79,6 +79,11 @@ public collectionController(collectionDAO termThing) {
         }
     }
 
+    @GetMapping("getCollection/{id}")
+    public ResponseEntity<TermCollection> getCollectionInfo(@PathVariable int id) {
+        return null;
+    }
+
     @PutMapping("rename/{id}/{name}")
     public ResponseEntity<TermCollection> renameCollection(@PathVariable int id, @PathVariable String name) {
         return null;

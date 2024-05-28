@@ -37,8 +37,14 @@ export class DictionaryComponent {
     
   }
 
+  getTerms() {
+    if (this.id == undefined) return;
+    this.collectionService.getTerms(this.id);
+  }
+
   getCollection() {
-    
+    if (this.id == undefined) return;
+    this.collectionService.getCollectionInfo(this.id);
   }
 
   

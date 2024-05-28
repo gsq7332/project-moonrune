@@ -95,6 +95,32 @@ public class collectionDAO {
         return collectionsArray;
     }
 
+    public TermCollection getCollectionInfo(int id) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select * from collection
+                    where collectionID like %d
+                """
+            , id));
+        ) {
+            resultSet.next();
+            int collectionID = resultSet.getInt("CollectionID");
+            String name = resultSet.getString("CollectionName");
+            String colOwner = resultSet.getString("CollectionOwner"); // here in case something somehow goes wrong
+            int privacyLevel = resultSet.getInt("PrivacyLevel");
+            String description = resultSet.getString("description");
+            TermCollection collection = new TermCollection(collectionID, name, colOwner, privacyLevel, description);
+            return collection;
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+            return null;
+        }
+    }
+
 
     public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
         LinkedHashMap<String, Term> terms = new LinkedHashMap<>();

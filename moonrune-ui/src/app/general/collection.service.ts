@@ -31,6 +31,12 @@ export class CollectionService {
     .pipe(catchError(this.handleError<number>('getCollectionsByOwner')));
   }
 
+  getCollectionInfo(id: number): Observable<TermCollection> {
+    let currUrl = this.url + "/getCollection/" + id;
+    return this.http.get<TermCollection>(currUrl)
+    .pipe(catchError(this.handleError<TermCollection>('getCollectionsByOwner')));
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
