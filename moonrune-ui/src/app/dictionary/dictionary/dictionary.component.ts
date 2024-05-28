@@ -30,7 +30,7 @@ export class DictionaryComponent {
         return [];
       })
     ).subscribe();
-    this.checkOwnership()
+    this.getCollection()
   }
 
   checkOwnership() {
@@ -44,7 +44,10 @@ export class DictionaryComponent {
 
   getCollection() {
     if (this.id == undefined) return;
-    this.collectionService.getCollectionInfo(this.id);
+    this.collectionService.getCollectionInfo(this.id).subscribe(collectionInfo => {
+      this.collectionInfo = collectionInfo
+      this.checkOwnership()
+  });
   }
 
   

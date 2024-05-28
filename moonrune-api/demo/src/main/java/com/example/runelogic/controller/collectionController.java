@@ -81,7 +81,13 @@ public collectionController(collectionDAO termThing) {
 
     @GetMapping("getCollection/{id}")
     public ResponseEntity<TermCollection> getCollectionInfo(@PathVariable int id) {
-        return null;
+        try {
+            TermCollection collection = termThing.getCollectionInfo(id);
+            if (collection == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(collection, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("rename/{id}/{name}")

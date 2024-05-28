@@ -102,7 +102,7 @@ public class collectionDAO {
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select * from collection
-                    where collectionID like %d
+                    where CollectionID = %d
                 """
             , id));
         ) {
@@ -116,7 +116,6 @@ public class collectionDAO {
             return collection;
         } catch (Exception exception) {
             System.err.println(exception);
-            System.out.println("thing imploded");
             return null;
         }
     }
