@@ -28,13 +28,19 @@ export class CollectionService {
   createCollection(owner: string): Observable<number> {
     let currUrl = this.url + "/create/" + owner;
     return this.http.post<number>(currUrl, this.httpOptions)
-    .pipe(catchError(this.handleError<number>('getCollectionsByOwner')));
+    .pipe(catchError(this.handleError<number>('createCollection')));
   }
 
   getCollectionInfo(id: number): Observable<TermCollection> {
     let currUrl = this.url + "/getCollection/" + id;
     return this.http.get<TermCollection>(currUrl)
-    .pipe(catchError(this.handleError<TermCollection>('getCollectionsByOwner')));
+    .pipe(catchError(this.handleError<TermCollection>('getCollectionInfo')));
+  }
+
+  checkIfOwner(owner: string, id: number): Observable<boolean> {
+    let currUrl = this.url + "/isOwner/" + owner + "/" + id;
+    return this.http.get<boolean>(currUrl)
+    .pipe(catchError(this.handleError<boolean>('checkIfOwner')));
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

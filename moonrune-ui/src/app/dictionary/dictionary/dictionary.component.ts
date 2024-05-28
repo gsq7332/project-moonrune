@@ -7,6 +7,7 @@ import { NgIf } from '@angular/common';
 import { TermsEditComponent } from '../terms-edit/terms-edit.component';
 import { CollectionService } from '../../general/collection.service';
 import { TermCollection } from '../../terms/termcollection';
+import { Cookie } from 'ng2-cookies';
 
 @Component({
   selector: 'app-dictionary',
@@ -34,7 +35,10 @@ export class DictionaryComponent {
   }
 
   checkOwnership() {
-    
+    if (Cookie.check('username') && this.id != undefined) {
+      let user = Cookie.get('username');
+      this.collectionService.checkIfOwner(user, this.id).subscribe(ownership => this.isOwner = ownership)
+    }
   }
 
   getTerms() {

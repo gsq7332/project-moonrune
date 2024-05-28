@@ -20,8 +20,7 @@ export class TermsEditComponent {
   @Output() editModeChange = new EventEmitter()
 
   addTerm() {
-    let newTerm: Term = {term: "", meanings: []}
-    this.currentTerms?.push(newTerm)
+    
   }
 
   removeTerm(idx: number) {

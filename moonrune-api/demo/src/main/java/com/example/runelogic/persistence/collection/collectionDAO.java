@@ -120,6 +120,25 @@ public class collectionDAO {
         }
     }
 
+    public boolean isOwner(String owner, int collectionID) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select * from collection
+                    where CollectionID = %d
+                    and CollectionOwner like "%s"
+                """
+            , collectionID, owner));  
+        ) {
+            return resultSet.isBeforeFirst();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
         LinkedHashMap<String, Term> terms = new LinkedHashMap<>();

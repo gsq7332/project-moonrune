@@ -69,6 +69,16 @@ public collectionController(collectionDAO termThing) {
         }
     }
 
+    @GetMapping("isOwner/{owner}/{id}")
+    public ResponseEntity<Boolean> checkOwner(@PathVariable String owner, @PathVariable int id) {
+        try {
+            boolean isOwner = termThing.isOwner(owner, id);
+            return new ResponseEntity<>(isOwner, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("create/{owner}")
     public ResponseEntity<Integer> createCollection(@PathVariable String owner) {
         try {
