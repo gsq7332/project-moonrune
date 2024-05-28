@@ -13,7 +13,7 @@ import { CollectionService } from '../../../general/collection.service';
   styleUrl: './terms-list.component.css'
 })
 export class TermsListComponent {
-  constructor(private termsService: CollectionService){}
+  constructor(private collectionService: CollectionService){}
 
   selectedTerm?: Term;
   @Input() id ?: number
@@ -38,7 +38,7 @@ export class TermsListComponent {
 
   getTerms(): void {
     if (this.id == undefined) return;
-    this.termsService.getTerms(this.id).subscribe(terms => this.terms = terms);
+    this.collectionService.getTerms(this.id).subscribe(terms => this.terms = terms);
   }
   
 }

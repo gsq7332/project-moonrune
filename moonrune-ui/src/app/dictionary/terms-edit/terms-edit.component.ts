@@ -4,6 +4,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { find } from 'rxjs';
 import { EventEmitter } from '@angular/core';
+import { CollectionService } from '../../general/collection.service';
 
 @Component({
   selector: 'app-terms-edit',
@@ -19,8 +20,11 @@ export class TermsEditComponent {
   @Input() editMode ?: boolean = false;
   @Output() editModeChange = new EventEmitter()
 
+  constructor(private collectionService: CollectionService) {}
+
   addTerm() {
-    
+    let term: Term = {term: "", meanings: [""], id: 0}
+    this.currentTerms?.push(term)
   }
 
   removeTerm(idx: number) {
