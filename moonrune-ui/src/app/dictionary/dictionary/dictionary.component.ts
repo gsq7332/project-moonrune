@@ -20,7 +20,7 @@ export class DictionaryComponent {
   constructor(private route: ActivatedRoute, private collectionService: CollectionService) {}
 
   id ?: number
-  editMode = false;
+  editMode: boolean = false;
   isOwner: boolean = false;
   collectionInfo ?: TermCollection
 

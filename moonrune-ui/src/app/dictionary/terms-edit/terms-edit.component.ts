@@ -15,7 +15,9 @@ import { TermCollection } from '../../terms/termcollection';
 })
 export class TermsEditComponent {
   currentTerms : Term[] = []
-  collectionInfo ?: TermCollection
+  collectionInfo : TermCollection = {collectionID: 0, owner: "", name: "", description: "", accessLevel: 0}
+  name: String = ""
+  desc: String = ""
   @Input() id ?: number
   @Input() editMode : boolean = false;
   @Output() editModeChange = new EventEmitter<boolean>()
@@ -34,7 +36,11 @@ export class TermsEditComponent {
 
   getCollectionInfo() {
     if (this.id == undefined) return;
-    this.collectionService.getCollectionInfo(this.id).subscribe(collectionInfo => this.collectionInfo = collectionInfo)
+    this.collectionService.getCollectionInfo(this.id).subscribe(collectionInfo => {
+      this.collectionInfo = collectionInfo
+      this.name = collectionInfo.name
+      this.desc = collectionInfo.description
+  })
   }
 
   addTerm() {
@@ -47,11 +53,12 @@ export class TermsEditComponent {
   }
 
   removeTerm(idx: number) {
-    this.currentTerms.splice(idx, idx)    
+    this.currentTerms.splice(idx, idx)
   }
 
   removeMeaning(term: Term, idx: number) {
     term.meanings.splice(idx, idx)
+    if (term.meanings.length == 0) term.meanings = [""]
   }
 
   saveChanges() {
@@ -60,13 +67,16 @@ export class TermsEditComponent {
 
   startEdit() {
     this.editMode = true;
+    this.editModeChange.emit(this.editMode)
   }
 
   cancelEdit() {
     this.editMode = false;
+    this.editModeChange.emit(this.editMode)
   }
 
   confirmEdit() {
     this.editMode = false;
+    this.editModeChange.emit(this.editMode)
   }
 }

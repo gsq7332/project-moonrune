@@ -1,5 +1,8 @@
-<div></div>
-<div></div>
+<div *ngIf="editMode">
+    <input type="text" [(ngModel)]="name">
+    <input type="text" [(ngModel)]="desc"> 
+</div>
+<div *ngIf="editMode"></div>
 <button *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
 <button *ngIf="editMode" (click)="confirmEdit()">Done</button>
 <button *ngIf="!editMode" (click)="startEdit()">Edit</button>
