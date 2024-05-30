@@ -9,7 +9,7 @@
         <button (click)="removeTerm(j)">Remove Term</button>
         <div *ngFor="let meaning of term.meanings; let i = index;">
         <input type="text" [(ngModel)]="term.meanings[i]">
-        <button (click)="removeMeaning(i)">Remove Meaning</button>
+        <button (click)="removeMeaning(term, i)">Remove Meaning</button>
         </div>
         <button (click)="addMeaning(term)">Add Meaning</button>
     </div>

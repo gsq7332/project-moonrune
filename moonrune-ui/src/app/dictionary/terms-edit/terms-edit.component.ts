@@ -47,12 +47,11 @@ export class TermsEditComponent {
   }
 
   removeTerm(idx: number) {
-    if (!this.currentTerms) return;
     this.currentTerms.splice(idx, idx)    
   }
 
-  removeMeaning(idx: number) {
-    
+  removeMeaning(term: Term, idx: number) {
+    term.meanings.splice(idx, idx)
   }
 
   saveChanges() {
