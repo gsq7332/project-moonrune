@@ -17,7 +17,6 @@ export class TermsListComponent {
 
   selectedTerm?: Term;
   @Input() id ?: number
-  @Input() editMode ?: boolean
   
 
   terms: Term[] = [];
@@ -27,7 +26,7 @@ export class TermsListComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id'] || changes['editMode']) {
+    if (changes['id']) {
       this.getTerms();
     }
   }
