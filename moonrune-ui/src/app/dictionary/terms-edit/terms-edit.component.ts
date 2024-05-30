@@ -6,6 +6,8 @@ import { EventEmitter } from '@angular/core';
 import { CollectionService } from '../../general/collection.service';
 import { TermCollection } from '../../terms/termcollection';
 import { TermService } from '../../general/term.service';
+import { Router } from '@angular/router';
+import { Cookie } from 'ng2-cookies';
 
 @Component({
   selector: 'app-terms-edit',
@@ -23,7 +25,7 @@ export class TermsEditComponent {
   @Input() editMode : boolean = false;
   @Output() editModeChange = new EventEmitter<boolean>()
 
-  constructor(private collectionService: CollectionService, private termService: TermService) {}
+  constructor(private collectionService: CollectionService, private termService: TermService, private route: Router) {}
 
   ngOnInit() {
     this.getTerms()
@@ -62,10 +64,13 @@ export class TermsEditComponent {
     if (term.meanings.length == 0) term.meanings = [""]
   }
 
-  saveChanges() {
+  delete() {
     if (this.id == undefined) return;
-    this.termService.updateTerms(this.id, this.currentTerms).subscribe(terms => this.currentTerms = terms)
-    this.collectionService.updateCollectionInfo(this.id, this.name, this.desc).subscribe(collectionInfo => this.collectionInfo = collectionInfo)
+    let username = ""
+    if (Cookie.check('username')) {
+      username = Cookie.get('username')
+      this.collectionService.deleteCollection(this.id).subscribe(_ => this.route.navigate(['/collections', username]))
+    }
   }
 
   startEdit() {
@@ -80,6 +85,9 @@ export class TermsEditComponent {
 
   confirmEdit() {
     this.editMode = false;
+    if (this.id == undefined) return;
+    this.termService.updateTerms(this.id, this.currentTerms).subscribe(terms => this.currentTerms = terms)
+    this.collectionService.updateCollectionInfo(this.id, this.name, this.desc).subscribe(collectionInfo => this.collectionInfo = collectionInfo)
     this.editModeChange.emit(this.editMode)
   }
 }

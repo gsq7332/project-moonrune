@@ -74,6 +74,7 @@ public class collectionDAO {
                 """
                     select * from collection
                     where collectionOwner like "%s"
+                    and PrivacyLevel >= 0
                 """
             , owner));
         ) {
@@ -233,8 +234,20 @@ public class collectionDAO {
     }
 
     public boolean deleteCollection(int collectionID) {
-       
-        return false;
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+                statement.executeQuery(String.format("""
+                    update collection
+                    set PrivacyLevel = -1
+                    where CollectionID = %d
+                """, collectionID));
+                return true;
+        } catch (Exception exception) {
+            System.err.println(exception);
+            return false;
+        }
     }
 
     public void load() {

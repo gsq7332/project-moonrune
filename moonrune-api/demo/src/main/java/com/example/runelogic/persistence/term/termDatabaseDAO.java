@@ -222,17 +222,17 @@ public class termDatabaseDAO {
             for (Term term : terms) {
                 int termID = term.getId();
                 removeMeanings(termID);
-                updateTerm(termID, term.getTerm());
+                if (termID == 0) {
+                    createTerm(term.getTerm(), collectionID);
+                } else {
+                    updateTerm(termID, term.getTerm());
+                }
                 ArrayList<String> meanings = term.getMeanings();
                 for (String meaning : meanings) {
                     addMeaning(termID, meaning);
                 }
                 addToCollection(collectionID, termID);
             }
-            // clear terms from collection
-            // for each term, do the following:
-            // 1. update the term
-            // 2. add the term back into the collection
             return true;
         } catch (Exception e) {
             return false;   

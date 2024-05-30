@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -107,6 +108,16 @@ public collectionController(collectionDAO termThing) {
             termThing.updateCollecitonDesc(id, desc);
             TermCollection collection = termThing.getCollectionInfo(id);
             return new ResponseEntity<>(collection, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Boolean> deleteCollection(@PathVariable int id) {
+        try {
+            boolean wasPresent = termThing.deleteCollection(id);
+            return new ResponseEntity<>(wasPresent, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

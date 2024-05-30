@@ -49,6 +49,12 @@ export class CollectionService {
     .pipe(catchError(this.handleError<TermCollection>('updateCollectionInfo')));
   }
 
+  deleteCollection(collectionID: number): Observable<boolean> {
+    let currUrl = this.url + "/delete/" + collectionID
+    return this.http.delete<boolean>(currUrl)
+    .pipe(catchError(this.handleError<boolean>('deleteCollection')));
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

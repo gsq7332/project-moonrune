@@ -6,6 +6,7 @@
 <button *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
 <button *ngIf="editMode" (click)="confirmEdit()">Done</button>
 <button *ngIf="!editMode" (click)="startEdit()">Edit</button>
+<button (click)="delete()">Delete</button>
 <div *ngIf="editMode">
     <div *ngFor="let term of currentTerms; let j = index">
         <input type="text" [(ngModel)]="term.term">
