@@ -83,7 +83,7 @@ public class TermController {
         }
     }
 
-    @PostMapping("updateTerms/{id}")
+    @PutMapping("updateTerms/{id}")
     public ResponseEntity<Boolean> updateTerms(@PathVariable int id, @RequestBody Term[] terms) {
         try {
             boolean working = termThing.updateTermsInCollection(id, terms);

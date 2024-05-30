@@ -43,6 +43,12 @@ export class CollectionService {
     .pipe(catchError(this.handleError<boolean>('checkIfOwner')));
   }
 
+  updateCollectionInfo(collectionID: number, name: string, description: string): Observable<TermCollection> {
+    let currUrl = this.url + "/setInfo/" + collectionID + "/" + name + "/" + description
+    return this.http.put<TermCollection>(currUrl, this.httpOptions)
+    .pipe(catchError(this.handleError<TermCollection>('updateCollectionInfo')));
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

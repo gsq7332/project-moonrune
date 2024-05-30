@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { CollectionService } from '../../general/collection.service';
 import { TermCollection } from '../../terms/termcollection';
+import { TermService } from '../../general/term.service';
 
 @Component({
   selector: 'app-terms-edit',
@@ -16,13 +17,13 @@ import { TermCollection } from '../../terms/termcollection';
 export class TermsEditComponent {
   currentTerms : Term[] = []
   collectionInfo : TermCollection = {collectionID: 0, owner: "", name: "", description: "", accessLevel: 0}
-  name: String = ""
-  desc: String = ""
+  name: string = ""
+  desc: string = ""
   @Input() id ?: number
   @Input() editMode : boolean = false;
   @Output() editModeChange = new EventEmitter<boolean>()
 
-  constructor(private collectionService: CollectionService) {}
+  constructor(private collectionService: CollectionService, private termService: TermService) {}
 
   ngOnInit() {
     this.getTerms()
@@ -62,7 +63,9 @@ export class TermsEditComponent {
   }
 
   saveChanges() {
-
+    if (this.id == undefined) return;
+    this.termService.updateTerms(this.id, this.currentTerms).subscribe(terms => this.currentTerms = terms)
+    this.collectionService.updateCollectionInfo(this.id, this.name, this.desc).subscribe(collectionInfo => this.collectionInfo = collectionInfo)
   }
 
   startEdit() {

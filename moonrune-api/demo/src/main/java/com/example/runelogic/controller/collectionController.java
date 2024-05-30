@@ -100,7 +100,7 @@ public collectionController(collectionDAO termThing) {
         }
     }
 
-    @PutMapping("rename/{id}/{name}/{desc}")
+    @PutMapping("setInfo/{id}/{name}/{desc}")
     public ResponseEntity<TermCollection> setCollectionInfo(@PathVariable int id, @PathVariable String name, @PathVariable String desc) {
         try {
             termThing.updateCollectionName(id, name);
