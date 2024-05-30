@@ -57,9 +57,8 @@ export class TermsEditComponent {
   }
 
   removeTerm(idx: number) {
-    if (idx == 0)
-      this.currentTerms.shift()
-    this.currentTerms.splice(idx, idx)
+    if (idx == 0) this.currentTerms.shift();
+    else this.currentTerms.splice(idx, idx);
   }
 
   logMeanings(term: Term) {
@@ -73,6 +72,11 @@ export class TermsEditComponent {
       term.meanings.splice(idx, idx)
     }
     if (term.meanings.length == 0) term.meanings = [""]
+  }
+
+
+  trackByIndex(index: number): number {
+    return index;
   }
 
   delete() {
