@@ -171,19 +171,71 @@ public class termDatabaseDAO {
     }
 
     
-    public boolean deleteTerm(int id) {
+    public boolean deleteTerm(int termID, int collectionID) {
         try(
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
             statement.executeQuery(String.format("""
-                delete from terms
+                delete from inCollection
                 where TermID = %d
-            """, id));
+                and CollectionID = %d
+            """, termID, collectionID));
             return true;
         } catch (Exception exception) {
             System.err.println(exception);
             return false;
+        }
+    }
+
+    public void addToCollection(int collectionID, int termID) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+            statement.executeQuery(String.format("""
+                intert into inCollection (CollectionID, TermID)
+                values(%d, %d)
+            """, collectionID, termID));
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
+    }
+
+    public void clearCollection(int collectionID) {
+        try(
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ) {
+            statement.executeQuery(String.format("""
+                delete from inCollection
+                and CollectionID = %d
+            """, collectionID));
+        } catch (Exception exception) {
+            System.err.println(exception);
+        }
+    }
+
+    public boolean updateTermsInCollection(int collectionID, Term[] terms) {
+        try {
+            clearCollection(collectionID);
+            for (Term term : terms) {
+                int termID = term.getId();
+                removeMeanings(termID);
+                updateTerm(termID, term.getTerm());
+                ArrayList<String> meanings = term.getMeanings();
+                for (String meaning : meanings) {
+                    addMeaning(termID, meaning);
+                }
+                addToCollection(collectionID, termID);
+            }
+            // clear terms from collection
+            // for each term, do the following:
+            // 1. update the term
+            // 2. add the term back into the collection
+            return true;
+        } catch (Exception e) {
+            return false;   
         }
     }
 

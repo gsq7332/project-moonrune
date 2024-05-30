@@ -233,36 +233,7 @@ public class collectionDAO {
     }
 
     public boolean deleteCollection(int collectionID) {
-        try(
-            Connection conn = DriverManager.getConnection(databasePath, username, password);
-            Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery(String.format("""
-                select TermID
-                from inCollection
-                where CollectionID = %d
-            """, collectionID));
-            ) {
-            statement.executeUpdate(String.format("""
-                delete from inCollection
-                where CollectionID = %d
-            """, collectionID));
-            statement.executeUpdate(String.format("""
-                delete from collection
-                where CollectionID = %d
-            """, collectionID));
-            while (resultSet.next()) {
-                statement.executeUpdate(String.format("""
-                    delete from hasMeaning
-                    where TermID = %d
-                """, resultSet.getInt("TermID")));
-                statement.executeUpdate(String.format("""
-                    delete from terms
-                    where TermID = %d
-                """, resultSet.getInt("TermID")));
-            }
-        } catch (Exception exception) {
-            System.err.println(exception);
-        }
+       
         return false;
     }
 

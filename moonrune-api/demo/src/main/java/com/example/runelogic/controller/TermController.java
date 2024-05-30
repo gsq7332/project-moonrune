@@ -70,16 +70,26 @@ public class TermController {
         }
     }
 
-    @DeleteMapping("/{name}")
-    public ResponseEntity<Term> deleteTerm(@PathVariable int id) {
-        LOG.info("DELETE /terms/" + id);
+    @DeleteMapping("/{termID}/{collectionID}")
+    public ResponseEntity<Term> deleteTerm(@PathVariable int termID, @PathVariable int collectionID) {
+        LOG.info("DELETE /terms/" + termID + "/" + collectionID);
         try {
-            boolean wasPresent = termThing.deleteTerm(id);
+            boolean wasPresent = termThing.deleteTerm(termID, collectionID);
             if (wasPresent)
                 return new ResponseEntity<>(HttpStatus.OK);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("updateTerms/{id}")
+    public ResponseEntity<Boolean> updateTerms(@PathVariable int id, @RequestBody Term[] terms) {
+        try {
+            boolean working = termThing.updateTermsInCollection(id, terms);
+            return new ResponseEntity<>(working, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     

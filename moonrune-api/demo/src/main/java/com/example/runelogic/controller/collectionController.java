@@ -100,8 +100,15 @@ public collectionController(collectionDAO termThing) {
         }
     }
 
-    @PutMapping("rename/{id}/{name}")
-    public ResponseEntity<TermCollection> renameCollection(@PathVariable int id, @PathVariable String name) {
-        return null;
+    @PutMapping("rename/{id}/{name}/{desc}")
+    public ResponseEntity<TermCollection> setCollectionInfo(@PathVariable int id, @PathVariable String name, @PathVariable String desc) {
+        try {
+            termThing.updateCollectionName(id, name);
+            termThing.updateCollecitonDesc(id, desc);
+            TermCollection collection = termThing.getCollectionInfo(id);
+            return new ResponseEntity<>(collection, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
