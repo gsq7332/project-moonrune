@@ -57,11 +57,21 @@ export class TermsEditComponent {
   }
 
   removeTerm(idx: number) {
+    if (idx == 0)
+      this.currentTerms.shift()
     this.currentTerms.splice(idx, idx)
   }
 
+  logMeanings(term: Term) {
+    console.log(term.meanings)
+  }
+
   removeMeaning(term: Term, idx: number) {
-    term.meanings.splice(idx, idx)
+    if (idx == 0) {
+      term.meanings.shift()
+    } else {
+      term.meanings.splice(idx, idx)
+    }
     if (term.meanings.length == 0) term.meanings = [""]
   }
 
@@ -81,6 +91,8 @@ export class TermsEditComponent {
 
   cancelEdit() {
     this.editMode = false;
+    this.getTerms()
+    this.getCollectionInfo()
     this.editModeChange.emit(this.editMode)
   }
 
@@ -97,6 +109,8 @@ export class TermsEditComponent {
     if (this.id == undefined) return;
     this.collectionService.updateCollectionInfo(this.id, this.name, this.desc).subscribe(collectionInfo => {
       this.collectionInfo = collectionInfo
+      this.getTerms()
+      this.getCollectionInfo()
       this.editModeChange.emit(this.editMode)
       this.updateSignal.emit("")
   })

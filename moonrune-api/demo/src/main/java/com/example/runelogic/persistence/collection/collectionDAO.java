@@ -74,7 +74,7 @@ public class collectionDAO {
                 """
                     select * from collection
                     where collectionOwner like "%s"
-                    and PrivacyLevel >= 0
+                    and PrivacyLevel < 99
                 """
             , owner));
         ) {
@@ -240,7 +240,7 @@ public class collectionDAO {
             ) {
                 statement.executeUpdate(String.format("""
                     update collection
-                    set PrivacyLevel = -1
+                    set PrivacyLevel = 99
                     where CollectionID = %d
                 """, collectionID));
                 return true;
