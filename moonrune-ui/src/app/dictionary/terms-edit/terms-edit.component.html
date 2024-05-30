@@ -1,6 +1,6 @@
 <div *ngIf="editMode">
-    <input type="text" [(ngModel)]="name">
-    <input type="text" [(ngModel)]="desc"> 
+    Name: <input type="text" [(ngModel)]="name"><br>
+    Description: <input type="text" [(ngModel)]="desc"><br>
 </div>
 <div *ngIf="editMode"></div>
 <button *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
