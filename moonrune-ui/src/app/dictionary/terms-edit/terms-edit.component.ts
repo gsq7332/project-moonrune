@@ -24,6 +24,7 @@ export class TermsEditComponent {
   @Input() id ?: number
   @Input() editMode : boolean = false;
   @Output() editModeChange = new EventEmitter<boolean>()
+  @Output() updateSignal = new EventEmitter<string>()
 
   constructor(private collectionService: CollectionService, private termService: TermService, private route: Router) {}
 
@@ -86,8 +87,18 @@ export class TermsEditComponent {
   confirmEdit() {
     this.editMode = false;
     if (this.id == undefined) return;
-    this.termService.updateTerms(this.id, this.currentTerms).subscribe(terms => this.currentTerms = terms)
-    this.collectionService.updateCollectionInfo(this.id, this.name, this.desc).subscribe(collectionInfo => this.collectionInfo = collectionInfo)
-    this.editModeChange.emit(this.editMode)
+    this.termService.updateTerms(this.id, this.currentTerms).subscribe(terms => {
+      this.currentTerms = terms
+      this.updateCollection()
+  })
+  }
+
+  updateCollection() {
+    if (this.id == undefined) return;
+    this.collectionService.updateCollectionInfo(this.id, this.name, this.desc).subscribe(collectionInfo => {
+      this.collectionInfo = collectionInfo
+      this.editModeChange.emit(this.editMode)
+      this.updateSignal.emit("")
+  })
   }
 }

@@ -2,5 +2,5 @@
 <div *ngIf="!editMode">{{collectionInfo?.name}}</div>
 <div *ngIf="!editMode">{{collectionInfo?.description}}</div>
 <li><a routerLink="/quiz/{{this.id}}" routerLinkActive="active" ariaCurrentWhenActive="page">Game</a></li>
-<app-terms-edit *ngIf="isOwner" [(editMode)]="editMode" [id]="id"></app-terms-edit>
+<app-terms-edit *ngIf="isOwner" [(editMode)]="editMode" [id]="id" (updateSignal)="loadData()"></app-terms-edit>
 <app-terms-list *ngIf="!editMode" [id]="id"></app-terms-list>

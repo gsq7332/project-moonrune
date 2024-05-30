@@ -25,6 +25,10 @@ export class DictionaryComponent {
   collectionInfo ?: TermCollection
 
   ngOnInit() {
+    this.loadData()
+  }
+
+  loadData() {
     this.route.paramMap.pipe(
       switchMap(params => {
         this.id = Number(params.get('id'));
