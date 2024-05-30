@@ -36,7 +36,7 @@ public collectionController(collectionDAO termThing) {
             returnTerms = terms.values().toArray(returnTerms);
             if (!terms.isEmpty()) 
                 return new ResponseEntity<>(returnTerms,HttpStatus.OK);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+            return new ResponseEntity<>(returnTerms, HttpStatus.NOT_FOUND); 
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

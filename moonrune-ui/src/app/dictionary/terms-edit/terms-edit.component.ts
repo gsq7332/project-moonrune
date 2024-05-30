@@ -2,9 +2,9 @@ import { Component, Input, Output } from '@angular/core';
 import { Term } from '../../terms/term';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { find } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 import { CollectionService } from '../../general/collection.service';
+import { TermCollection } from '../../terms/termcollection';
 
 @Component({
   selector: 'app-terms-edit',
@@ -14,17 +14,36 @@ import { CollectionService } from '../../general/collection.service';
   styleUrl: './terms-edit.component.css'
 })
 export class TermsEditComponent {
-  originalTerms ?: Term[]
-  currentTerms ?: Term[]
+  currentTerms : Term[] = []
+  collectionInfo ?: TermCollection
   @Input() id ?: number
-  @Input() editMode ?: boolean = false;
-  @Output() editModeChange = new EventEmitter()
+  @Input() editMode : boolean = false;
+  @Output() editModeChange = new EventEmitter<boolean>()
 
   constructor(private collectionService: CollectionService) {}
+
+  ngOnInit() {
+    this.getTerms()
+    this.getCollectionInfo()
+  }
+
+  getTerms() {
+    if (this.id == undefined) return;
+    this.collectionService.getTerms(this.id).subscribe(terms => this.currentTerms = terms)
+  }
+
+  getCollectionInfo() {
+    if (this.id == undefined) return;
+    this.collectionService.getCollectionInfo(this.id).subscribe(collectionInfo => this.collectionInfo = collectionInfo)
+  }
 
   addTerm() {
     let term: Term = {term: "", meanings: [""], id: 0}
     this.currentTerms?.push(term)
+  }
+
+  addMeaning(term: Term) {
+    term.meanings.push("");
   }
 
   removeTerm(idx: number) {
@@ -33,14 +52,11 @@ export class TermsEditComponent {
   }
 
   removeMeaning(idx: number) {
-    if (!this.currentTerms) return;
-    this.currentTerms?.splice(idx, idx)
+    
   }
 
   saveChanges() {
-    for (let term in this.originalTerms) {
-      
-    }
+
   }
 
   startEdit() {
