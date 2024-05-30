@@ -91,20 +91,16 @@ public class termDatabaseDAO {
     }
 
     
-    public Term createTerm(String name, int collection) {
+    public Term createTerm(String name) {
         try(
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
                 lastUsedTermID += 1;
                 statement.executeUpdate(String.format("""
-                    insert into terms("TermID", "Name")
-                    values("%s", "%s")
+                    insert into terms(TermID, Name)
+                    values(%d, "%s")
                 """, lastUsedTermID, name));
-                statement.executeUpdate(String.format("""
-                    insert into inCollection("TermID", "CollectionID")
-                    values("%s", %d)
-                """, lastUsedTermID, collection));
         } catch (Exception exception) {
             System.err.println(exception);
         }
@@ -146,7 +142,7 @@ public class termDatabaseDAO {
                 firstUnused = resultSet.getInt("lastUsed") + 1;
             }
             statement.executeUpdate(String.format("""
-                insert into hasMeaning("TermID", "meaning", "localIndex")
+                insert into hasMeaning(TermID, meaning, localIndex)
                 values(%d, "%s", %d)
             """, id, meaning, firstUnused));
         } catch (Exception exception) {
@@ -162,7 +158,7 @@ public class termDatabaseDAO {
             ) {
             statement.executeUpdate(String.format("""
                 delete from hasMeaning
-                where id = %d
+                where TermID = %d
             """, id));
         } catch (Exception exception) {
             System.err.println(exception);
@@ -176,7 +172,7 @@ public class termDatabaseDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-            statement.executeQuery(String.format("""
+            statement.executeUpdate(String.format("""
                 delete from inCollection
                 where TermID = %d
                 and CollectionID = %d
@@ -193,8 +189,8 @@ public class termDatabaseDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-            statement.executeQuery(String.format("""
-                intert into inCollection (CollectionID, TermID)
+            statement.executeUpdate(String.format("""
+                insert into inCollection (CollectionID, TermID)
                 values(%d, %d)
             """, collectionID, termID));
         } catch (Exception exception) {
@@ -207,9 +203,9 @@ public class termDatabaseDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-            statement.executeQuery(String.format("""
+            statement.executeUpdate(String.format("""
                 delete from inCollection
-                and CollectionID = %d
+                where CollectionID = %d
             """, collectionID));
         } catch (Exception exception) {
             System.err.println(exception);
@@ -223,15 +219,16 @@ public class termDatabaseDAO {
                 int termID = term.getId();
                 removeMeanings(termID);
                 if (termID == 0) {
-                    createTerm(term.getTerm(), collectionID);
+                    createTerm(term.getTerm());
+                    termID = lastUsedTermID;
                 } else {
                     updateTerm(termID, term.getTerm());
                 }
+                addToCollection(collectionID, termID);
                 ArrayList<String> meanings = term.getMeanings();
                 for (String meaning : meanings) {
                     addMeaning(termID, meaning);
                 }
-                addToCollection(collectionID, termID);
             }
             return true;
         } catch (Exception e) {

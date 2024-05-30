@@ -206,7 +206,7 @@ public class collectionDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-            statement.executeQuery(String.format("""
+            statement.executeUpdate(String.format("""
                 update collection
                 set CollectionName = "%s"
                 where CollectionID = %d
@@ -222,7 +222,7 @@ public class collectionDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-                statement.executeQuery(String.format("""
+                statement.executeUpdate(String.format("""
                     update collection
                     set description = "%s"
                     where CollectionID = %d
@@ -238,7 +238,7 @@ public class collectionDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
             ) {
-                statement.executeQuery(String.format("""
+                statement.executeUpdate(String.format("""
                     update collection
                     set PrivacyLevel = -1
                     where CollectionID = %d
