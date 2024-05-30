@@ -35,4 +35,8 @@ export class SignInComponent {
       }
     })  
   }
+
+  goBack() {
+    this.route.navigate(['/mainpage'])
+  }
 }

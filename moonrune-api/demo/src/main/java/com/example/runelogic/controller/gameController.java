@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.runelogic.model.terms.Term;
+import com.example.runelogic.persistence.collection.collectionDAO;
 import com.example.runelogic.persistence.game.gameDAO;
-import com.example.runelogic.persistence.term.termDAO;
 
 import java.util.logging.Logger;
 
@@ -23,10 +23,10 @@ import java.util.logging.Logger;
 public class gameController {
 
     gameDAO dao;
-    termDAO tDao;
+    collectionDAO tDao;
     private static final Logger LOG = Logger.getLogger(gameController.class.getName());
 
-    public gameController(gameDAO dao, termDAO tDao) {
+    public gameController(gameDAO dao, collectionDAO tDao) {
         this.dao = dao;
         this.tDao = tDao;
     }

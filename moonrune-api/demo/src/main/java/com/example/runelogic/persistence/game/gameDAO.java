@@ -40,7 +40,6 @@ public class gameDAO {
 
     public boolean setLegalTerms(int id, Term[] legalTerms) {
         Game game = ongoingGames.get(id);
-        System.out.println(ongoingGames);
         return game.setLegalTerms(legalTerms);
     }
 

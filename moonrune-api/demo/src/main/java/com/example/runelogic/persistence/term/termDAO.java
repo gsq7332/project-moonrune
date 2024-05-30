@@ -31,7 +31,7 @@ public abstract class termDAO {
         boolean isThere = terms.containsKey(name);
         Term newTerm = null;
         if (!isThere) {
-            newTerm = new Term(name, meanings);
+            newTerm = new Term(name, meanings, 0);
             terms.put(name, newTerm);
         }
         return newTerm;
