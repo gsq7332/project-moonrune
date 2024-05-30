@@ -27,7 +27,7 @@ export class TermsListComponent {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id']) {
+    if (changes['id'] || changes['editMode']) {
       this.getTerms();
     }
   }
