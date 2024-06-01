@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.example.runelogic.model.TermCollection;
+import com.example.runelogic.model.terms.CyrillicLetter;
+import com.example.runelogic.model.terms.GreekLetter;
+import com.example.runelogic.model.terms.Kanji;
 import com.example.runelogic.model.terms.Term;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -140,9 +143,14 @@ public class collectionDAO {
         }
     }
 
+    public LinkedHashMap<Integer, Term> getTerms(int collectionID, String filter) {
+        LinkedHashMap<Integer, Term> terms = getMainTermInfo(collectionID, filter);
+        return terms;
+    }
 
-    public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
-        LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
+
+    public LinkedHashMap<Integer, Term> getMainTermInfo(int collectionID, String filter) {
+        LinkedHashMap<Integer, Term> terms = new LinkedHashMap<>();
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -166,15 +174,22 @@ public class collectionDAO {
                 String term = resultSet.getString("name");
                 String meaning = resultSet.getString("meaning");
                 int id = resultSet.getInt("TermID");
-                if (terms.keySet().contains(term)) {
-                    Term existing = terms.get(term);
+                if (terms.keySet().contains(id)) {
+                    Term existing = terms.get(id);
                     HashSet<String> meanings = new HashSet<>();
                     meanings.add(meaning);
                     existing.addMeanings(meanings);
                 } else {
                     ArrayList<String> meanings = new ArrayList<>();
                     meanings.add(meaning);
-                    terms.put(term, new Term(term, meanings, id));
+                    Term newTerm = null;
+                    switch(collectionID) {
+                        case 4 -> {newTerm = new CyrillicLetter(term, "", meanings, id);}
+                        case 5 -> {newTerm = new GreekLetter(term, new ArrayList<>(), "", meanings, id);}
+                        case 6 -> {newTerm = new Kanji(term, meanings, new ArrayList<>(), new ArrayList<>(), "", "", 0, 0, id);}
+                        default -> {newTerm = new Term(term, meanings, id);}
+                    }
+                    terms.put(id, newTerm);
                 }
             }
         } catch (Exception exception) {

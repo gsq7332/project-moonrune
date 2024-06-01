@@ -48,7 +48,7 @@ public class gameController {
     @PutMapping("term/{sessionID}/{collectionID}")
     public ResponseEntity<Boolean> setLegalTerms(@PathVariable int sessionID, @PathVariable int collectionID) {
         LOG.info("PUT /term/" + sessionID + "/" + collectionID);
-        LinkedHashMap<String, Term> terms = tDao.getTerms(collectionID, "");
+        LinkedHashMap<Integer, Term> terms = tDao.getTerms(collectionID, "");
         Term[] legalTerms = new Term[terms.size()];
         legalTerms = terms.values().toArray(legalTerms);
         boolean hasWorked = dao.setLegalTerms(sessionID, legalTerms);
