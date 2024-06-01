@@ -145,6 +145,17 @@ public class collectionDAO {
 
     public LinkedHashMap<Integer, Term> getTerms(int collectionID, String filter) {
         LinkedHashMap<Integer, Term> terms = getMainTermInfo(collectionID, filter);
+        switch(collectionID) {
+            case 5:
+                getNameInfo(collectionID, filter, terms);
+            case 4:
+                getLowerInfo(collectionID, filter, terms);
+                break;
+            case 6:
+                getReadingInfo(collectionID, filter, terms);
+                getOtherKanjiInfo(collectionID, filter, terms);
+                break;
+        }
         return terms;
     }
 
@@ -154,13 +165,23 @@ public class collectionDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
-                    select lower from haslower
+                    select * from haslower
                     where TermID in {
                         select TermID from inCollection
                         where CollectionID = %d
                     }
                 """, collectionID));
         ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String lower = resultSet.getString("lower");
+                Term term = terms.get(termID);
+                if (collectionID == 5) {
+                    ((GreekLetter) term).addLower(lower);
+                } else {
+                    ((CyrillicLetter) term).setLower(lower);
+                }
+            }
         } catch (Exception exception) {
             System.err.println(exception);
             System.out.println("thing imploded");
@@ -173,13 +194,19 @@ public class collectionDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
-                    select lower from hasgreekname
+                    select * from hasgreekname
                     where TermID in {
                         select TermID from inCollection
                         where CollectionID = %d
                     }
                 """, collectionID));
         ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String name = resultSet.getString("GreekName");
+                Term term = terms.get(termID);
+                ((GreekLetter) term).setname(name);
+            }
         } catch (Exception exception) {
             System.err.println(exception);
             System.out.println("thing imploded");
@@ -193,13 +220,21 @@ public class collectionDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
-                    select reading, romaji from haslower
+                    select * from haslower
                     where TermID in {
                         select TermID from inCollection
                         where CollectionID = %d
                     }
                 """, collectionID));
         ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String reading = resultSet.getString("reading");
+                String romaji = resultSet.getString("reading");
+                Term term = terms.get(termID);
+                ((Kanji) term).addReading(reading);
+                ((Kanji) term).addRomaji(romaji);
+            }
         } catch (Exception exception) {
             System.err.println(exception);
             System.out.println("thing imploded");
@@ -212,13 +247,25 @@ public class collectionDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
-                    select Grade, jlpt, kanjiRank, strokes from haslower
+                    select * from haslower
                     where TermID in {
                         select TermID from inCollection
                         where CollectionID = %d
                     } 
                 """, collectionID));
         ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String grade = resultSet.getString("grade");
+                String jlpt = resultSet.getString("jlpt");
+                int ranking = resultSet.getInt("kanjirank");
+                int strokes = resultSet.getInt("strokes");
+                Term term = terms.get(termID);
+                ((Kanji) term).setGrade(grade);
+                ((Kanji) term).setJlpt(jlpt);
+                ((Kanji) term).setRank(ranking);
+                ((Kanji) term).setStrokes(strokes);
+            }
         } catch (Exception exception) {
             System.err.println(exception);
             System.out.println("thing imploded");
