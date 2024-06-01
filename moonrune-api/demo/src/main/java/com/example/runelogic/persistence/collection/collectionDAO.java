@@ -148,6 +148,83 @@ public class collectionDAO {
         return terms;
     }
 
+    public void getLowerInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select lower from haslower
+                    where TermID in {
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    }
+                """, collectionID));
+        ) {
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
+    public void getNameInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select lower from hasgreekname
+                    where TermID in {
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    }
+                """, collectionID));
+        ) {
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
+
+    public void getReadingInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select reading, romaji from haslower
+                    where TermID in {
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    }
+                """, collectionID));
+        ) {
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
+    public void getOtherKanjiInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select Grade, jlpt, kanjiRank, strokes from haslower
+                    where TermID in {
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    } 
+                """, collectionID));
+        ) {
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
 
     public LinkedHashMap<Integer, Term> getMainTermInfo(int collectionID, String filter) {
         LinkedHashMap<Integer, Term> terms = new LinkedHashMap<>();
