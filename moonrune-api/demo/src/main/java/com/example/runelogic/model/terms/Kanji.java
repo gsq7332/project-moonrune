@@ -32,16 +32,40 @@ public class Kanji extends Term {
         readings.addAll(reading);
     }
 
+    public void addReading(String reading) {
+        readings.add(reading);
+    }
+
     public boolean hasReading(String reading) {
         return readings.contains(reading);
     }
 
+    public void addRomaji(String reading) {
+        romaji.add(reading);
+    }
+    
     public ArrayList<String> getReadings() {
         return readings;
     }
 
     public ArrayList<String> getRomaji() {
         return romaji;
+    }
+
+    public void setJlpt(String jlpt) {
+        this.jlpt = jlpt;
+    } 
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void setStrokes(int strokes) {
+        this.strokes = strokes;
     }
 
     public String getJlpt() {
