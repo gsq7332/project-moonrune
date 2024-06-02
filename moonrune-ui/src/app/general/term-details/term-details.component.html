@@ -4,16 +4,16 @@
       <label for="term-meanings">Meanings: {{term.meanings}} </label>
     </div>
     <div *ngIf="isCyrillic">
-      <label>Placeholder Text (Lower) </label>
+      <label>Lowercase: {{cyrillicTerm?.lower}} </label>
     </div>
     <div *ngIf="isGreek">
-      <label>Placeholder Text (Name) </label> <br>
-      <label>Placeholder Text (Lower) </label>
+      <label>Name: {{greekTerm?.name}} </label> <br>
+      <label>Lowercase: {{greekTerm?.lower}} </label>
     </div>
     <div *ngIf="isKanji">
-      <label>Placeholder Text (Readings) </label> <br>
-      <label>Placeholder Text (Romaji) </label> <br>
-      <label>Placeholder Text (Other Properties) </label>
+      <label>Readings: {{kanjiTerm?.readings}} </label> <br>
+      <label>Romaji: {{kanjiTerm?.romaji}} </label> <br>
+      <label>Grade: {{kanjiTerm?.grade}}, JLPT Level: N{{kanjiTerm?.jlpt}}, Number of Strokes: {{kanjiTerm?.strokes}}, Frequency: {{kanjiTerm?.rank}} </label>
     </div>
   
   </span>

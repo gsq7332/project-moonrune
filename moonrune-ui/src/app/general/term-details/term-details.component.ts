@@ -19,6 +19,9 @@ export class TermDetailsComponent {
   isCyrillic : boolean = false;
   isGreek : boolean = false;
   isKanji : boolean = false;
+  cyrillicTerm ?: Cyrillic;
+  greekTerm ?: Greek;
+  kanjiTerm ?: Kanji;
 
   ngOnChanges(changes : SimpleChanges) {
     if (changes['term']) {
@@ -26,10 +29,16 @@ export class TermDetailsComponent {
         this.isCyrillic = ('lower' in this.term) && !('name' in this.term);
         this.isGreek = ('lower' in this.term) && ('name' in this.term);
         this.isKanji = 'readings' in this.term;
+
+        if (this.isCyrillic) {
+          this.cyrillicTerm = this.term as Cyrillic;
+        } else if (this.isGreek) {
+          this.greekTerm = this.term as Greek;
+        } else if (this.isKanji) {
+          this.kanjiTerm = this.term as Kanji;
+        }
       }
     }
   }
-  
-
 
 }

@@ -156,6 +156,7 @@ public class collectionDAO {
                 getOtherKanjiInfo(collectionID, filter, terms);
                 break;
         }
+        System.out.println(terms);
         return terms;
     }
 
@@ -220,7 +221,7 @@ public class collectionDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
-                    select * from haslower
+                    select * from hasreading
                     where TermID in (
                         select TermID from inCollection
                         where CollectionID = %d
@@ -230,7 +231,7 @@ public class collectionDAO {
             while(resultSet.next()) {
                 int termID = resultSet.getInt("TermID");
                 String reading = resultSet.getString("reading");
-                String romaji = resultSet.getString("reading");
+                String romaji = resultSet.getString("romaji");
                 Term term = terms.get(termID);
                 ((Kanji) term).addReading(reading);
                 ((Kanji) term).addRomaji(romaji);
@@ -247,7 +248,7 @@ public class collectionDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
-                    select * from haslower
+                    select * from kanjiproperties
                     where TermID in (
                         select TermID from inCollection
                         where CollectionID = %d
@@ -256,9 +257,9 @@ public class collectionDAO {
         ) {
             while(resultSet.next()) {
                 int termID = resultSet.getInt("TermID");
-                String grade = resultSet.getString("grade");
+                String grade = resultSet.getString("Grade");
                 String jlpt = resultSet.getString("jlpt");
-                int ranking = resultSet.getInt("kanjirank");
+                int ranking = resultSet.getInt("kanjiRank");
                 int strokes = resultSet.getInt("strokes");
                 Term term = terms.get(termID);
                 ((Kanji) term).setGrade(grade);
