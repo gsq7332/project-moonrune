@@ -166,10 +166,10 @@ public class collectionDAO {
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select * from haslower
-                    where TermID in {
+                    where TermID in (
                         select TermID from inCollection
                         where CollectionID = %d
-                    }
+                    )
                 """, collectionID));
         ) {
             while(resultSet.next()) {
@@ -195,10 +195,10 @@ public class collectionDAO {
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select * from hasgreekname
-                    where TermID in {
+                    where TermID in (
                         select TermID from inCollection
                         where CollectionID = %d
-                    }
+                    )
                 """, collectionID));
         ) {
             while(resultSet.next()) {
@@ -221,10 +221,10 @@ public class collectionDAO {
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select * from haslower
-                    where TermID in {
+                    where TermID in (
                         select TermID from inCollection
                         where CollectionID = %d
-                    }
+                    )
                 """, collectionID));
         ) {
             while(resultSet.next()) {
@@ -248,10 +248,10 @@ public class collectionDAO {
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select * from haslower
-                    where TermID in {
+                    where TermID in (
                         select TermID from inCollection
                         where CollectionID = %d
-                    } 
+                    )
                 """, collectionID));
         ) {
             while(resultSet.next()) {

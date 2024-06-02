@@ -1,5 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Term } from '../../terms/term';
+import { Cyrillic } from '../../terms/cyrillic';
+import { Greek } from '../../terms/greek';
+import { Kanji } from '../../terms/kanji';
 import { NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,6 +15,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class TermDetailsComponent {
   @Input() term?: Term;
+  
+  isCyrillic : boolean = false;
+  isGreek : boolean = false;
+  isKanji : boolean = false;
+  test ?: Cyrillic
+  test2 ?: Greek
+  test3 ?: Kanji
+
+  ngOnChanges(changes : SimpleChanges) {
+    if (changes['term']) {
+      console.log(typeof(this.term))
+    }
+  }
+  
 
 
 }

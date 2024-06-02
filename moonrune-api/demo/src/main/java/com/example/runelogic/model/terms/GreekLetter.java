@@ -28,4 +28,9 @@ public class GreekLetter extends Term {
     public void setname(String newName) {
         name = newName;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", lower: " + lower + ", name: " + name;
+    }
 }

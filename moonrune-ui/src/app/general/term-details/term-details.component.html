@@ -3,5 +3,17 @@
     <div>
       <label for="term-meanings">Meanings: {{term.meanings}} </label>
     </div>
+    <div *ngIf="isCyrillic">
+      <label>Placeholder Text (Lower) </label>
+    </div>
+    <div *ngIf="isGreek">
+      <label>Placeholder Text (Name) </label> <br>
+      <label>Placeholder Text (Lower) </label>
+    </div>
+    <div *ngIf="isKanji">
+      <label>Placeholder Text (Readings) </label> <br>
+      <label>Placeholder Text (Romaji) </label> <br>
+      <label>Placeholder Text (Other Properties) </label>
+    </div>
   
   </span>
