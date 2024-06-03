@@ -16,4 +16,21 @@ public class GreekLetter extends Term {
 
     public ArrayList<String> getLower() { return lower; }
     public String getName() { return name; }
+
+    public void resetLower() {
+        lower.clear();
+    }
+
+    public void addLower(String newLower) {
+        lower.add(newLower);
+    }
+
+    public void setname(String newName) {
+        name = newName;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", lower: " + lower + ", name: " + name;
+    }
 }

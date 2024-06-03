@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.example.runelogic.model.TermCollection;
+import com.example.runelogic.model.terms.CyrillicLetter;
+import com.example.runelogic.model.terms.GreekLetter;
+import com.example.runelogic.model.terms.Kanji;
 import com.example.runelogic.model.terms.Term;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -140,9 +143,139 @@ public class collectionDAO {
         }
     }
 
+    public LinkedHashMap<Integer, Term> getTerms(int collectionID, String filter) {
+        LinkedHashMap<Integer, Term> terms = getMainTermInfo(collectionID, filter);
+        switch(collectionID) {
+            case 5:
+                getNameInfo(collectionID, filter, terms);
+            case 4:
+                getLowerInfo(collectionID, filter, terms);
+                break;
+            case 6:
+                getReadingInfo(collectionID, filter, terms);
+                getOtherKanjiInfo(collectionID, filter, terms);
+                break;
+        }
+        System.out.println(terms);
+        return terms;
+    }
 
-    public LinkedHashMap<String, Term> getTerms(int collectionID, String filter) {
-        LinkedHashMap<String, Term> terms = new LinkedHashMap<>();
+    public void getLowerInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select * from haslower
+                    where TermID in (
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    )
+                """, collectionID));
+        ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String lower = resultSet.getString("lower");
+                Term term = terms.get(termID);
+                if (collectionID == 5) {
+                    ((GreekLetter) term).addLower(lower);
+                } else {
+                    ((CyrillicLetter) term).setLower(lower);
+                }
+            }
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
+    public void getNameInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select * from hasgreekname
+                    where TermID in (
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    )
+                """, collectionID));
+        ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String name = resultSet.getString("GreekName");
+                Term term = terms.get(termID);
+                ((GreekLetter) term).setname(name);
+            }
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
+
+    public void getReadingInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select * from hasreading
+                    where TermID in (
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    )
+                """, collectionID));
+        ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String reading = resultSet.getString("reading");
+                String romaji = resultSet.getString("romaji");
+                Term term = terms.get(termID);
+                ((Kanji) term).addReading(reading);
+                ((Kanji) term).addRomaji(romaji);
+            }
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
+    public void getOtherKanjiInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+        try (
+            Connection conn = DriverManager.getConnection(databasePath, username, password);
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(String.format(
+                """
+                    select * from kanjiproperties
+                    where TermID in (
+                        select TermID from inCollection
+                        where CollectionID = %d
+                    )
+                """, collectionID));
+        ) {
+            while(resultSet.next()) {
+                int termID = resultSet.getInt("TermID");
+                String grade = resultSet.getString("Grade");
+                String jlpt = resultSet.getString("jlpt");
+                int ranking = resultSet.getInt("kanjiRank");
+                int strokes = resultSet.getInt("strokes");
+                Term term = terms.get(termID);
+                ((Kanji) term).setGrade(grade);
+                ((Kanji) term).setJlpt(jlpt);
+                ((Kanji) term).setRank(ranking);
+                ((Kanji) term).setStrokes(strokes);
+            }
+        } catch (Exception exception) {
+            System.err.println(exception);
+            System.out.println("thing imploded");
+        }
+    }
+
+
+    public LinkedHashMap<Integer, Term> getMainTermInfo(int collectionID, String filter) {
+        LinkedHashMap<Integer, Term> terms = new LinkedHashMap<>();
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -166,15 +299,22 @@ public class collectionDAO {
                 String term = resultSet.getString("name");
                 String meaning = resultSet.getString("meaning");
                 int id = resultSet.getInt("TermID");
-                if (terms.keySet().contains(term)) {
-                    Term existing = terms.get(term);
+                if (terms.keySet().contains(id)) {
+                    Term existing = terms.get(id);
                     HashSet<String> meanings = new HashSet<>();
                     meanings.add(meaning);
                     existing.addMeanings(meanings);
                 } else {
                     ArrayList<String> meanings = new ArrayList<>();
                     meanings.add(meaning);
-                    terms.put(term, new Term(term, meanings, id));
+                    Term newTerm = null;
+                    switch(collectionID) {
+                        case 4 -> {newTerm = new CyrillicLetter(term, "", meanings, id);}
+                        case 5 -> {newTerm = new GreekLetter(term, new ArrayList<>(), "", meanings, id);}
+                        case 6 -> {newTerm = new Kanji(term, meanings, new ArrayList<>(), new ArrayList<>(), "", "", 0, 0, id);}
+                        default -> {newTerm = new Term(term, meanings, id);}
+                    }
+                    terms.put(id, newTerm);
                 }
             }
         } catch (Exception exception) {

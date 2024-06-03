@@ -13,5 +13,14 @@ public class CyrillicLetter extends Term {
     }
 
     public String getLower() { return lower; }
+
+    public void setLower(String newLower) {
+        lower = newLower;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", lower: " + lower;
+    }
     
 }

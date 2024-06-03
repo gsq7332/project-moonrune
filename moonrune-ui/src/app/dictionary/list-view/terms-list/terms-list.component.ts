@@ -21,10 +21,6 @@ export class TermsListComponent {
 
   terms: Term[] = [];
 
-  ngOnInit(): void {
-    this.getTerms();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['id']) {
       this.getTerms();
@@ -37,7 +33,10 @@ export class TermsListComponent {
 
   getTerms(): void {
     if (this.id == undefined) return;
-    this.collectionService.getTerms(this.id).subscribe(terms => this.terms = terms);
+    this.collectionService.getTerms(this.id).subscribe(terms => {
+      this.terms = terms
+      //console.log(this.terms)
+  });
   }
   
 }
