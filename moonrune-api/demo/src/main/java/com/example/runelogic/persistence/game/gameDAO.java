@@ -27,6 +27,7 @@ public class gameDAO {
 
     public int generateGame(Game game) {
         int sessionID = getSessionID();
+        game.setSessionID(sessionID);
         ongoingGames.put(sessionID, game);
         return sessionID;
     }

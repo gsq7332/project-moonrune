@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Game {
     
-    private final int sessionID;
+    private int sessionID;
     private String correct;
     private int numCorrect;
     private int numAnswered;
@@ -29,7 +29,7 @@ public class Game {
      */
     
     public Game(@JsonProperty("gameProperties") GameProperties gameProperties, 
-    int sessionID, @JsonProperty("collectionID") int collectionID) {
+    @JsonProperty("sessionID") int sessionID, @JsonProperty("collectionID") int collectionID) {
         this.gameProperties = gameProperties;
         this.sessionID = sessionID;
         this.collectionID = collectionID;
@@ -40,6 +40,10 @@ public class Game {
 
     public int getCollectionID() {
         return collectionID;
+    }
+
+    public void setSessionID(int sessionID) {
+        this.sessionID = sessionID;
     }
 
     public void setLegalTerms(Term[] legalTerms) {

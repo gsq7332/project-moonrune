@@ -5,6 +5,8 @@ import { MultipleChoiceComponent } from '../multiple-choice/multiple-choice.comp
 import { GameService } from '../game.service';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
+import { GameProperties } from '../game-properties';
+import { Game } from '../game';
 
 
 @Component({
@@ -47,10 +49,31 @@ export class GameComponent {
   }
 
   startGame() {
+    let properties: GameProperties = {
+      numQuestions: this.numQuestions, 
+      numAnswers: this.numAnswers,
+      questionType: this.questionType,
+      answerType: this.answerType
+    }
+    let game: Game = {
+      gameProperties: properties,
+      sessionID: this.sessionID,
+      collectionID: this.collectionID
+    }
+    this.gameService.createGame(game).subscribe(id => {
+      this.sessionID = id;
+      if (this.sessionID > 0) {
+        this.hasStarted = true;
+      } else {
+        this.endGame();
+      }
+    });
+    /*
     this.gameService.startGame(this.numQuestions, this.numAnswers).subscribe(id => {
       this.sessionID = id
       this.setQuestion()
     });
+    */
   }
 
   setQuestion() {

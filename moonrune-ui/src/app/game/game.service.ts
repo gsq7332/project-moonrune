@@ -1,6 +1,7 @@
 import { ApplicationConfig, Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 import { Term } from '../terms/term';
+import { Game } from './game';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -15,6 +16,11 @@ export class GameService {
 
   checkStarted(): Observable<boolean> {
     return of(this.hasStarted);
+  }
+
+  createGame(game: Game) {
+    let currUrl = this.url + "/generateGame";
+    return this.http.post<number>(currUrl, game).pipe(catchError(this.handleError<number>('createGame')));
   }
   
   startGame(numQuestions: number, numAnswers: number): Observable<number> {
