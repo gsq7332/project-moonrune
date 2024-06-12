@@ -1,6 +1,6 @@
 export interface filters {
     matching: string,
-    isDiacritic: boolean,
+    isDiacritic: number,
     grades: string[],
     jlpt: string[],
     strokes: number[],
