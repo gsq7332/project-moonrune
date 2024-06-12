@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.runelogic.model.Game;
+import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.collection.collectionDAO;
 import com.example.runelogic.persistence.game.gameDAO;
 
+import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 @RestController
@@ -32,6 +34,10 @@ public class gameController {
     @PostMapping("generateGame") 
     public ResponseEntity<Integer> createGameRevamped(@RequestBody Game game) {
         LOG.info("POST /generateGame");
+        LinkedHashMap<Integer, Term> terms = tDao.getTerms(game.getCollectionID(), null);
+        Term[] returnTerms = new Term[terms.size()];
+        returnTerms = terms.values().toArray(returnTerms);
+        game.setLegalTerms(returnTerms);
         int sessionID = dao.generateGame(game);
         return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
     }
