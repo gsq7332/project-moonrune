@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.runelogic.model.Filters;
 import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.collection.collectionDAO;
@@ -32,7 +34,7 @@ public collectionController(collectionDAO termThing) {
     public ResponseEntity<Term[]> getTerms(@PathVariable int collectionID) {
         LOG.info("GET /terms");
         try {
-            LinkedHashMap<Integer, Term> terms = termThing.getTerms(collectionID, "");
+            LinkedHashMap<Integer, Term> terms = termThing.getTerms(collectionID, null);
             Term[] returnTerms = new Term[terms.size()];
             returnTerms = terms.values().toArray(returnTerms);
             if (!terms.isEmpty()) 
@@ -43,9 +45,9 @@ public collectionController(collectionDAO termThing) {
         }
     }
 
-    @GetMapping("get/{collectionID}/{filter}")
-    public ResponseEntity<Term[]> getTerms(@PathVariable int collectionID, @PathVariable String filter) {
-        LOG.info("GET /terms/?name="+filter);
+    @GetMapping("get/{collectionID}")
+    public ResponseEntity<Term[]> getTerms(@PathVariable int collectionID, @RequestBody Filters filter) {
+        LOG.info("GET /terms/");
         try {
             LinkedHashMap<Integer, Term> terms = termThing.getTerms(collectionID, filter);
             Term[] returnTerms = new Term[terms.size()];

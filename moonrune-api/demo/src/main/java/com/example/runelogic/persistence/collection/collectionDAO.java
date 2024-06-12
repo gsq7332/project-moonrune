@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.example.runelogic.model.Filters;
 import com.example.runelogic.model.TermCollection;
 import com.example.runelogic.model.terms.CyrillicLetter;
 import com.example.runelogic.model.terms.GreekLetter;
@@ -143,7 +144,7 @@ public class collectionDAO {
         }
     }
 
-    public LinkedHashMap<Integer, Term> getTerms(int collectionID, String filter) {
+    public LinkedHashMap<Integer, Term> getTerms(int collectionID, Filters filter) {
         LinkedHashMap<Integer, Term> terms = getMainTermInfo(collectionID, filter);
         switch(collectionID) {
             case 5:
@@ -160,7 +161,7 @@ public class collectionDAO {
         return terms;
     }
 
-    public void getLowerInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+    public void getLowerInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -189,7 +190,7 @@ public class collectionDAO {
         }
     }
 
-    public void getNameInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+    public void getNameInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -215,7 +216,7 @@ public class collectionDAO {
     }
 
 
-    public void getReadingInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+    public void getReadingInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -242,7 +243,7 @@ public class collectionDAO {
         }
     }
 
-    public void getOtherKanjiInfo(int collectionID, String filter, LinkedHashMap<Integer, Term> terms) {
+    public void getOtherKanjiInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -274,7 +275,7 @@ public class collectionDAO {
     }
 
 
-    public LinkedHashMap<Integer, Term> getMainTermInfo(int collectionID, String filter) {
+    public LinkedHashMap<Integer, Term> getMainTermInfo(int collectionID, Filters filter) {
         LinkedHashMap<Integer, Term> terms = new LinkedHashMap<>();
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
