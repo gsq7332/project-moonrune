@@ -18,8 +18,13 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
                 select termID from hasReading
                 where reading like "%%s%"
                 or romaji like "%%s%"
+                ) union (
+                select termID from hasLower
+                where lower like "%%s%"
                 )
-                """, matching, matching, matching, matching);
+                select termID from hasGreekName
+                where greekname like "%%s%"
+                """, matching, matching, matching, matching, matching, matching);
     }
 
     public String getDiacriticQuery() {
@@ -70,14 +75,15 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
         String part1 = "";
         String part2 = "";
         if (strokes[0] > 0) {
-            part1 = String.format("where strokes > %d", strokes[0]);
+            part1 = String.format("where strokes >= %d", strokes[0]);
             if (strokes[1] > 0) {
                 part2 = "and ";
             } 
         }
         if (strokes[1] > 0) {
-            part2.concat(String.format("where strokes < %d", strokes[1]));
+            part2.concat(String.format("where strokes <= %d", strokes[1]));
         }
+        if (part1.equals(part2)) return "";
         return String.format("""
                 and termID in (
                 select termID from kanjiProperties
@@ -90,15 +96,16 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
     public String getFrequencyQuery() {
         String part1 = "";
         String part2 = "";
-        if (strokes[0] > 0) {
-            part1 = String.format("where kanjiRank > %d", frequency[0]);
-            if (strokes[1] > 0) {
+        if (frequency[0] > 0) {
+            part1 = String.format("where kanjiRank >= %d", frequency[0]);
+            if (frequency[1] > 0) {
                 part2 = "and ";
             } 
         }
-        if (strokes[1] > 0) {
-            part2.concat(String.format("where kanjiRank < %d", frequency[1]));
+        if (frequency[1] > 0) {
+            part2.concat(String.format("where kanjiRank <= %d", frequency[1]));
         }
+        if (part1.equals(part2)) return "";
         return String.format("""
                 and termID in (
                 select termID from kanjiProperties
