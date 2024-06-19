@@ -148,20 +148,20 @@ public class collectionDAO {
         LinkedHashMap<Integer, Term> terms = getMainTermInfo(collectionID, filter);
         switch(collectionID) {
             case 5:
-                getNameInfo(collectionID, filter, terms);
+                getNameInfo(collectionID, terms);
             case 4:
-                getLowerInfo(collectionID, filter, terms);
+                getLowerInfo(collectionID, terms);
                 break;
             case 6:
-                getReadingInfo(collectionID, filter, terms);
-                getOtherKanjiInfo(collectionID, filter, terms);
+                getReadingInfo(collectionID, terms);
+                getOtherKanjiInfo(collectionID, terms);
                 break;
         }
         System.out.println(terms);
         return terms;
     }
 
-    public void getLowerInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
+    public void getLowerInfo(int collectionID, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -171,11 +171,12 @@ public class collectionDAO {
                     where TermID in (
                         select TermID from inCollection
                         where CollectionID = %d
-                    )
+                    ) 
                 """, collectionID));
         ) {
             while(resultSet.next()) {
                 int termID = resultSet.getInt("TermID");
+                if (!terms.keySet().contains(termID)) continue;
                 String lower = resultSet.getString("lower");
                 Term term = terms.get(termID);
                 if (collectionID == 5) {
@@ -190,7 +191,7 @@ public class collectionDAO {
         }
     }
 
-    public void getNameInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
+    public void getNameInfo(int collectionID, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -205,6 +206,7 @@ public class collectionDAO {
         ) {
             while(resultSet.next()) {
                 int termID = resultSet.getInt("TermID");
+                if (!terms.keySet().contains(termID)) continue;
                 String name = resultSet.getString("GreekName");
                 Term term = terms.get(termID);
                 ((GreekLetter) term).setname(name);
@@ -216,7 +218,7 @@ public class collectionDAO {
     }
 
 
-    public void getReadingInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
+    public void getReadingInfo(int collectionID, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -231,6 +233,7 @@ public class collectionDAO {
         ) {
             while(resultSet.next()) {
                 int termID = resultSet.getInt("TermID");
+                if (!terms.keySet().contains(termID)) continue;
                 String reading = resultSet.getString("reading");
                 String romaji = resultSet.getString("romaji");
                 Term term = terms.get(termID);
@@ -243,7 +246,7 @@ public class collectionDAO {
         }
     }
 
-    public void getOtherKanjiInfo(int collectionID, Filters filter, LinkedHashMap<Integer, Term> terms) {
+    public void getOtherKanjiInfo(int collectionID, LinkedHashMap<Integer, Term> terms) {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
@@ -258,6 +261,7 @@ public class collectionDAO {
         ) {
             while(resultSet.next()) {
                 int termID = resultSet.getInt("TermID");
+                if (!terms.keySet().contains(termID)) continue;
                 String grade = resultSet.getString("Grade");
                 String jlpt = resultSet.getString("jlpt");
                 int ranking = resultSet.getInt("kanjiRank");
@@ -280,6 +284,22 @@ public class collectionDAO {
         try (
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
+        ) {
+            String matchingQuery = filter.getMatchingQuery();
+            String diacriticQuery = "";
+            if (collectionID < 3) {
+                diacriticQuery = filter.getDiacriticQuery();
+            } 
+            String gradeQuery = "";
+            String jlptQuery = "";
+            String strokeQuery = "";
+            String frequencyQuery = "";
+            if (collectionID == 6) {
+                gradeQuery = filter.getGradeQuery();
+                jlptQuery = filter.getJlptQuery();
+                strokeQuery = filter.getStrokeQuery();
+                frequencyQuery = filter.getFrequencyQuery();
+            }
             ResultSet resultSet = statement.executeQuery(String.format(
                 """
                     select terms.name, terms.TermID, hasMeaning.meaning
@@ -288,14 +308,17 @@ public class collectionDAO {
                     and terms.TermID in (
                         select inCollection.TermID
                         from inCollection
-                        where CollectionID = %d)
-                    and terms.TermID not in (
-                        select * from isDiacritic
-                    )
+                        where CollectionID = %d
+                        )
+                    %s
+                    %s
+                    %s
+                    %s
+                    %s
+                    %s
                 """
-            , collectionID));
-        ) {
-            
+            , collectionID, matchingQuery, diacriticQuery, gradeQuery, jlptQuery, strokeQuery, frequencyQuery));
+
             while (resultSet.next()) {
                 String term = resultSet.getString("name");
                 String meaning = resultSet.getString("meaning");

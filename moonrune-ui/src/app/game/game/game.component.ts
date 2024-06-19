@@ -7,6 +7,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@ang
 import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
 import { GameProperties } from '../game-properties';
 import { Game } from '../game';
+import { filters } from '../../terms/filters';
 
 
 @Component({
@@ -55,10 +56,19 @@ export class GameComponent {
       questionType: this.questionType,
       answerType: this.answerType
     }
+    let gameFilters: filters = {
+      matching: "",
+      isDiacritic: 0,
+      grades: [],
+      jlpt: [],
+      strokes: [0, 0],
+      frequnecy: [0, 0]
+    }
     let game: Game = {
       gameProperties: properties,
       sessionID: this.sessionID,
-      collectionID: this.collectionID
+      collectionID: this.collectionID,
+      filters: gameFilters
     }
     this.gameService.createGame(game).subscribe(id => {
       this.sessionID = id;

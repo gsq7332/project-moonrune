@@ -29,7 +29,8 @@ public class Game {
      */
     
     public Game(@JsonProperty("gameProperties") GameProperties gameProperties, 
-    @JsonProperty("sessionID") int sessionID, @JsonProperty("collectionID") int collectionID) {
+    @JsonProperty("sessionID") int sessionID, @JsonProperty("collectionID") int collectionID, 
+    @JsonProperty("filters") Filters filters) {
         this.gameProperties = gameProperties;
         this.sessionID = sessionID;
         this.collectionID = collectionID;
