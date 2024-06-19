@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './game-settings.component.css'
 })
 export class GameSettingsComponent {
-  @Input() collection ?: string;
   @Input() numQuestions ?: number;
   @Input() numAnswers ?: number;
   @Input() isDiacritic ?: boolean;

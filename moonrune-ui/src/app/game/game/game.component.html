@@ -7,6 +7,8 @@
     [(questionType)]="questionType"
     [(answerType)]="answerType"
     [currentLevel]="settingLevel"></app-game-settings>
+    Other Filters:
+    <app-filtering [collectionID]="collectionID" [isGame]="true"></app-filtering>
 </li>
 <ng-template #game>
     <app-multiple-choice [sessionID]="sessionID" (endGameEvent)="endGame()"></app-multiple-choice>

@@ -8,11 +8,13 @@ import { TermsEditComponent } from '../terms-edit/terms-edit.component';
 import { CollectionService } from '../../general/collection.service';
 import { TermCollection } from '../../terms/termcollection';
 import { Cookie } from 'ng2-cookies';
+import { FilteringComponent } from '../../general/filtering/filtering.component';
 
 @Component({
   selector: 'app-dictionary',
   standalone: true,
-  imports: [TermsListComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent, NgIf, TermsEditComponent],
+  imports: [TermsListComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent, 
+    NgIf, TermsEditComponent, FilteringComponent],
   templateUrl: './dictionary.component.html',
   styleUrl: './dictionary.component.css'
 })

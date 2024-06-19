@@ -1,0 +1,10 @@
+<div *ngIf="!isGame">
+    <app-search-bar [(searchTerm)]="matching"></app-search-bar>
+</div>
+<div *ngIf="collectionID == 1 || collectionID == 2">
+    [insert diacritic here]
+</div>
+<div *ngIf="collectionID == 6">
+    [insert kanji filters here]
+</div>
+

@@ -8,12 +8,14 @@ import { MainRoutingComponent } from '../../general/main-routing/main-routing.co
 import { GameProperties } from '../game-properties';
 import { Game } from '../game';
 import { filters } from '../../terms/filters';
+import { FilteringComponent } from '../../general/filtering/filtering.component';
 
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent],
+  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, RouterOutlet, RouterLink, 
+    RouterLinkActive, MainRoutingComponent, FilteringComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css'
 })
