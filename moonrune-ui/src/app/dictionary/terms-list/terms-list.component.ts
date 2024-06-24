@@ -1,10 +1,9 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { Term } from '../../terms/term';
 import { TermDetailsComponent } from '../../general/term-details/term-details.component';
 import { CollectionService } from '../../general/collection.service';
 import { filters } from '../../terms/filters';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-terms-list',
@@ -24,7 +23,7 @@ export class TermsListComponent {
   terms: Term[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id']) {
+    if (changes['id'] || changes['filter']) {
       this.getTerms();
     }
   }

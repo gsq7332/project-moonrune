@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TermsListComponent } from '../terms-list/terms-list.component';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
-import { filter, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { TermsEditComponent } from '../terms-edit/terms-edit.component';
 import { CollectionService } from '../../general/collection.service';
@@ -25,6 +25,7 @@ export class DictionaryComponent {
   id ?: number
   editMode: boolean = false;
   isOwner: boolean = false;
+  hideFilterMenu : boolean = false;
   collectionInfo ?: TermCollection
   collectionFilter : filters = {
     matching: "",
@@ -34,6 +35,7 @@ export class DictionaryComponent {
       strokes: [0, 0],
       frequnecy: [0, 0]
   }
+  appliedFilter : filters = this.collectionFilter;
 
   ngOnInit() {
     this.loadData()
@@ -69,6 +71,17 @@ export class DictionaryComponent {
   });
   }
 
+  applyFilters() {
+    this.appliedFilter = this.collectionFilter;
+  }
+
+  showFilters() {
+    this.hideFilterMenu = false;
+  }
+ 
+  hideFilters() {
+    this.hideFilterMenu = true;
+  }
   
 }
   
