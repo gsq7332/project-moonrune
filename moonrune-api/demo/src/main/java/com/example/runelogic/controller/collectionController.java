@@ -45,7 +45,7 @@ public collectionController(collectionDAO termThing) {
         }
     }
 
-    @GetMapping("get/{collectionID}")
+    @PostMapping("get/{collectionID}")
     public ResponseEntity<Term[]> getTerms(@PathVariable int collectionID, @RequestBody Filters filter) {
         LOG.info("GET /terms/");
         try {

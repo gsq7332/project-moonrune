@@ -1,5 +1,5 @@
 <app-main-routing></app-main-routing>
-<app-filtering [collectionID]="id"></app-filtering>
+<app-filtering [collectionID]="id" [(filter)]="collectionFilter"></app-filtering>
 <div *ngIf="!editMode">{{collectionInfo?.name}}</div>
 <div *ngIf="!editMode">{{collectionInfo?.description}}</div>
 <li><a routerLink="/quiz/{{this.id}}" routerLinkActive="active" ariaCurrentWhenActive="page">Game</a></li>
