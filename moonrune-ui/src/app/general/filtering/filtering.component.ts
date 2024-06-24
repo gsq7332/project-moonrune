@@ -22,7 +22,7 @@ export class FilteringComponent {
       grades: [],
       jlpt: [],
       strokes: [0, 0],
-      frequnecy: [0, 0]
+      frequency: [0, 0]
   }
   @Output() filterChange = new EventEmitter<filters>()
 

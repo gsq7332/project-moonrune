@@ -4,5 +4,5 @@ export interface filters {
     grades: string[],
     jlpt: string[],
     strokes: number[],
-    frequnecy: number[]
+    frequency: number[]
 }

@@ -41,7 +41,7 @@ export class GameComponent {
       grades: [],
       jlpt: [],
       strokes: [0, 0],
-      frequnecy: [0, 0]
+      frequency: [0, 0]
   }
   EMPTY = -1
   settingLevel = 0

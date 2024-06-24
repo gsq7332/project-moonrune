@@ -25,7 +25,7 @@ export class DictionaryComponent {
   id ?: number
   editMode: boolean = false;
   isOwner: boolean = false;
-  hideFilterMenu : boolean = false;
+  hideFilterMenu : boolean = true;
   collectionInfo ?: TermCollection
   collectionFilter : filters = {
     matching: "",
@@ -33,9 +33,9 @@ export class DictionaryComponent {
       grades: [],
       jlpt: [],
       strokes: [0, 0],
-      frequnecy: [0, 0]
+      frequency: [0, 0]
   }
-  appliedFilter : filters = this.collectionFilter;
+  filter : filters = this.collectionFilter;
 
   ngOnInit() {
     this.loadData()
@@ -58,11 +58,6 @@ export class DictionaryComponent {
     }
   }
 
-  getTerms() {
-    if (this.id == undefined) return;
-    this.collectionService.getTermsWithFilter(this.id, this.collectionFilter);
-  }
-
   getCollection() {
     if (this.id == undefined) return;
     this.collectionService.getCollectionInfo(this.id).subscribe(collectionInfo => {
@@ -72,7 +67,7 @@ export class DictionaryComponent {
   }
 
   applyFilters() {
-    this.appliedFilter = this.collectionFilter;
+    this.filter = this.collectionFilter;
   }
 
   showFilters() {

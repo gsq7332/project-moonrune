@@ -6,41 +6,47 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
 @JsonProperty("grades") String[] grades, @JsonProperty("jlpt") String[] jlpt, @JsonProperty("strokes") int[] strokes, 
 @JsonProperty("frequency") int[] frequency) {
 
-    public String getMatchingQuery() {
-        return String.format("""
-                and termID in ((
-                select termID from term
-                where name like "%%s%"
-                ) union (
-                select termID from hasMeaning
-                where meaning like "%%s%"
-                ) union (
-                select termID from hasReading
-                where reading like "%%s%"
-                or romaji like "%%s%"
-                ) union (
-                select termID from hasLower
-                where lower like "%%s%"
-                )
-                select termID from hasGreekName
-                where greekname like "%%s%"
-                """, matching, matching, matching, matching, matching, matching);
+    public String getMatchingQuery(int collectionID) {
+        if (matching.equals("")) return "";
+        if (collectionID != 6) {
+            return String.format("""
+            and (terms.name like "%%s%"
+            or hasMeaning.meaning like "%%s%")  
+            """
+            ,matching, matching);
+        }
+        return String.format(""" 
+            and (terms.name like "%%s%"
+            or hasMeaning.meaning like "%%s%"
+            or terms.termID in
+            ((
+            select hasReading.termID from hasReading
+            where reading like "%%s%"
+            or romaji like "%%s%"
+            ) union (
+            select hasLower.termID from hasLower
+            where lower like "%%s%"
+            ) union (
+            select hasGreekName.termID from hasGreekName
+            where greekname like "%%s%"
+            )))
+            """, matching, matching, matching, matching, matching, matching);
     }
 
     public String getDiacriticQuery() {
         switch (isDiacritic) {
             case 0:
-                return """
-                        and termID not in (
-                        select termID from isDiacritic
-                        )
-                        """;
+                return """ 
+                    and terms.termID not in (
+                    select isDiacritic.termID from isDiacritic
+                    )
+                    """;
             case 2:
                 return """
-                        and termID in (
-                        select termID from isDiacritic
-                        )
-                        """;
+                    and terms.termID in (
+                    select isDiacritic.termID from isDiacritic
+                    )
+                    """;
         }
         return "";
     }
@@ -49,11 +55,12 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
         String gradeString = "";
         for (int i = 0; i < grades.length; i++) {
             gradeString.concat(grades[i]);
-            if (i != grades.length - 1) gradeString.concat(", ");
+            if (i != grades.length - 1) gradeString.concat("\", \"");
         }
+        if (gradeString.isBlank()) return "";
         return String.format("""
-                and termID in (
-                select termID from kanjiProperties
+                and terms.termID in (
+                select kanjiProperties.termID from kanjiProperties
                 where grade in (%s))
                 """, gradeString);
     }
@@ -62,11 +69,12 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
         String jlptString = "";
         for (int i = 0; i < jlpt.length; i++) {
             jlptString.concat(jlpt[i]);
-            if (i != jlpt.length - 1) jlptString.concat(", ");
+            if (i != jlpt.length - 1) jlptString.concat("\", \"");
         }
+        if (jlptString.isBlank()) return "";
         return String.format("""
-                and termID in (
-                select termID from kanjiProperties
+                and terms.termID in (
+                select kanjiProperties.termID from kanjiProperties
                 where jlpt in (%s))
                 """, jlptString);
     }
@@ -85,8 +93,8 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
         }
         if (part1.equals(part2)) return "";
         return String.format("""
-                and termID in (
-                select termID from kanjiProperties
+                and terms.termID in (
+                select kanjiProperties.termID from kanjiProperties
                 %s
                 %s
                 )
@@ -107,8 +115,8 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
         }
         if (part1.equals(part2)) return "";
         return String.format("""
-                and termID in (
-                select termID from kanjiProperties
+                and terms.termID in (
+                select kanjiProperties.termID from kanjiProperties
                 %s
                 %s
                 )

@@ -285,7 +285,7 @@ public class collectionDAO {
             Connection conn = DriverManager.getConnection(databasePath, username, password);
             Statement statement = conn.createStatement();
         ) {
-            String matchingQuery = filter.getMatchingQuery();
+            String matchingQuery = filter.getMatchingQuery(collectionID);
             String diacriticQuery = "";
             if (collectionID < 3) {
                 diacriticQuery = filter.getDiacriticQuery();
@@ -343,6 +343,7 @@ public class collectionDAO {
             }
         } catch (Exception exception) {
             System.err.println(exception);
+            exception.printStackTrace();
             System.out.println("thing imploded");
         }
         return terms;

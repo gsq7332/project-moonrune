@@ -1,5 +1,5 @@
 <div *ngIf="!isGame">
-    [insert matching]
+    Search: 
     <input type="text" [(ngModel)]="filter.matching" (ngModelChange)="sendFilters()"> 
 
 </div>
@@ -32,8 +32,8 @@
     </div>
     <div>
         Frequency (set to 0 to disable)
-        <input type="number" [(ngModel)]="filter.frequnecy[0]" (ngModelChange)="sendFilters()"> - 
-        <input type="number" [(ngModel)]="filter.frequnecy[1]" (ngModelChange)="sendFilters()">
+        <input type="number" [(ngModel)]="filter.frequency[0]" (ngModelChange)="sendFilters()"> - 
+        <input type="number" [(ngModel)]="filter.frequency[1]" (ngModelChange)="sendFilters()">
     </div>
     <div>
 
