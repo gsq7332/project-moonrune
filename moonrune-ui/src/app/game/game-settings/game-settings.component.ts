@@ -13,12 +13,10 @@ import { FormsModule } from '@angular/forms';
 export class GameSettingsComponent {
   @Input() numQuestions ?: number;
   @Input() numAnswers ?: number;
-  @Input() isDiacritic ?: boolean;
   @Input() questionType ?: string;
   @Input() answerType ?: string;
   @Output() questionTypeChange = new EventEmitter<string>()
   @Output() answerTypeChange = new EventEmitter<string>()
-  @Output() isDiacriticChange = new EventEmitter<boolean>()
   @Output() numQuestionsChange = new EventEmitter<number>()
   @Output() numAnswersChange = new EventEmitter<number>()
 
@@ -45,10 +43,6 @@ export class GameSettingsComponent {
 
   changeNumAnswers() {
     this.numAnswersChange.emit(this.numAnswers)
-  }
-
-  changeIsDiacritic() {
-    this.isDiacriticChange.emit(this.isDiacritic)
   }
 
   changeQuestionType() {

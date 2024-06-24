@@ -29,14 +29,23 @@ export class GameComponent {
   sessionID: number = 0;
   isValid: boolean = false;
   collectionID: number = Number(this.route.snapshot.paramMap.get('id'))
-  questionType: string = "meanings"
-  answerType: string = "term"
-  isDiacritic: boolean = false
-  numQuestions = 10
-  numAnswers = 4
+  properties : GameProperties = {
+      numQuestions: 10, 
+      numAnswers: 4,
+      questionType: "term",
+      answerType: "meanings"
+  }
+  gameFilters : filters = {
+    matching: "",
+      isDiacritic: 0,
+      grades: [],
+      jlpt: [],
+      strokes: [0, 0],
+      frequnecy: [0, 0]
+  }
   EMPTY = -1
   settingLevel = 0
-
+  
   
   ngOnInit(): void {
     this.hasStarted = this.setToSettings();
@@ -52,25 +61,11 @@ export class GameComponent {
   }
 
   startGame() {
-    let properties: GameProperties = {
-      numQuestions: this.numQuestions, 
-      numAnswers: this.numAnswers,
-      questionType: this.questionType,
-      answerType: this.answerType
-    }
-    let gameFilters: filters = {
-      matching: "",
-      isDiacritic: 0,
-      grades: [],
-      jlpt: [],
-      strokes: [0, 0],
-      frequnecy: [0, 0]
-    }
     let game: Game = {
-      gameProperties: properties,
+      gameProperties: this.properties,
       sessionID: this.sessionID,
       collectionID: this.collectionID,
-      filters: gameFilters
+      filters: this.gameFilters
     }
     this.gameService.createGame(game).subscribe(id => {
       this.sessionID = id;
@@ -80,27 +75,6 @@ export class GameComponent {
         this.endGame();
       }
     });
-    /*
-    this.gameService.startGame(this.numQuestions, this.numAnswers).subscribe(id => {
-      this.sessionID = id
-      this.setQuestion()
-    });
-    */
-  }
-
-  setQuestion() {
-    this.gameService.setQuestion(this.sessionID, this.questionType, this.answerType).subscribe(valid => {
-      this.isValid = valid
-      if (!this.isValid) {
-        this.endGame()
-        return;
-      }
-      this.setTerms()
-    })
-  }
-
-  setTerms() {
-    this.gameService.setTerms(this.sessionID, this.collectionID).subscribe(valid => this.hasStarted = valid)
   }
 
   endGame(): void {

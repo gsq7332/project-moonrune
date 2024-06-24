@@ -1,14 +1,13 @@
 <app-main-routing></app-main-routing>
 <li *ngIf="!hasStarted; else game">
     <app-game-settings (startGameEvent)="initializeGame()"
-    [(numQuestions)]="numQuestions"
-    [(numAnswers)]="numAnswers"
-    [(isDiacritic)]="isDiacritic"
-    [(questionType)]="questionType"
-    [(answerType)]="answerType"
+    [(numQuestions)]="properties.numQuestions"
+    [(numAnswers)]="properties.numAnswers"
+    [(questionType)]="properties.questionType"
+    [(answerType)]="properties.answerType"
     [currentLevel]="settingLevel"></app-game-settings>
     Other Filters:
-    <app-filtering [collectionID]="collectionID" [isGame]="true"></app-filtering>
+    <app-filtering [collectionID]="collectionID" [isGame]="true" [(filter)]="gameFilters"></app-filtering>
 </li>
 <ng-template #game>
     <app-multiple-choice [sessionID]="sessionID" (endGameEvent)="endGame()"></app-multiple-choice>
