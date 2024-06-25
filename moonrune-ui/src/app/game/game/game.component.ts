@@ -26,7 +26,7 @@ export class GameComponent {
 
   hasStarted = false;
   hasEnded = false;
-  sessionID: number = 0;
+  sessionID: number = -1;
   isValid: boolean = false;
   collectionID: number = Number(this.route.snapshot.paramMap.get('id'))
   properties : GameProperties = {
@@ -44,7 +44,6 @@ export class GameComponent {
       frequency: [0, 0]
   }
   EMPTY = -1
-  settingLevel = 0
   
   
   ngOnInit(): void {
@@ -61,15 +60,17 @@ export class GameComponent {
   }
 
   startGame() {
+    console.log(this.gameFilters)
     let game: Game = {
       gameProperties: this.properties,
       sessionID: this.sessionID,
       collectionID: this.collectionID,
       filters: this.gameFilters
     }
+    console.log(game)
     this.gameService.createGame(game).subscribe(id => {
       this.sessionID = id;
-      if (this.sessionID > 0) {
+      if (this.sessionID >= 0) {
         this.hasStarted = true;
       } else {
         this.endGame();

@@ -34,7 +34,7 @@ public class gameController {
     @PostMapping("generateGame") 
     public ResponseEntity<Integer> createGameRevamped(@RequestBody Game game) {
         LOG.info("POST /generateGame");
-        LinkedHashMap<Integer, Term> terms = tDao.getTerms(game.getCollectionID(), null);
+        LinkedHashMap<Integer, Term> terms = tDao.getTerms(game.getCollectionID(), game.getFilters());
         Term[] returnTerms = new Term[terms.size()];
         returnTerms = terms.values().toArray(returnTerms);
         game.setLegalTerms(returnTerms);

@@ -19,6 +19,7 @@ public class Game {
     private GameProperties gameProperties;
     private final int collectionID;
     private Term[] legalTerms;
+    private Filters filters;
     /*
      * Legal types for question/answer type:
      * term
@@ -37,6 +38,11 @@ public class Game {
         correct = "";
         numCorrect = 0;
         numAnswered = 0;
+        this.filters = filters;
+    }
+
+    public Filters getFilters() {
+        return filters;
     }
 
     public int getCollectionID() {

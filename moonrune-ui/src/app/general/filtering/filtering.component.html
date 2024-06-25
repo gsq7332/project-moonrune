@@ -4,13 +4,15 @@
 
 </div>
 <div *ngIf="collectionID == 1 || collectionID == 2">
+    <form class="diacritic">
     <label> Diacritics </label>
-    <input  type="radio" name="extra" value=0 [(ngModel)]="filter.isDiacritic" 
+    <input type="radio" name="0" value="0" [(ngModel)]="filter.isDiacritic" 
     (ngModelChange)="sendFilters()"> Disable Diacritics
-    <input  type="radio" name="extra" value=1 [(ngModel)]="filter.isDiacritic" 
+    <input  type="radio" name="1" value="1" [(ngModel)]="filter.isDiacritic" 
     (ngModelChange)="sendFilters()"> Enable Diacritics
-    <input  type="radio" name="extra" value=2 [(ngModel)]="filter.isDiacritic" 
+    <input  type="radio" name="2" value="2" [(ngModel)]="filter.isDiacritic" 
     (ngModelChange)="sendFilters()"> Only Diacritics
+    </form>
 </div>
 <div *ngIf="collectionID == 6">
     <div>

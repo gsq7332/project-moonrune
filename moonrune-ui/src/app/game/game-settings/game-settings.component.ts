@@ -21,7 +21,7 @@ export class GameSettingsComponent {
   @Output() numAnswersChange = new EventEmitter<number>()
 
   @Output() startGameEvent = new EventEmitter();
-  @Input() currentLevel ?: number;
+  @Input() collectionID ?: number;
   /*
   level representations:
   0 - Default/Regular (used for user generated terms + Hangul)
