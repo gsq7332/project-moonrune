@@ -1,6 +1,15 @@
 <app-main-routing></app-main-routing>
+<div *ngIf="hideFilterMenu">
+    <button (click)="showFilters()">Show Filters</button>
+</div>
+<div *ngIf="!hideFilterMenu">
+    <app-filtering [collectionID]="id" [(filter)]="collectionFilter"></app-filtering>
+    <button (click)="applyFilters()">Confirm</button>
+    <button (click)="hideFilters()">Hide Filters</button>
+</div>
 <div *ngIf="!editMode">{{collectionInfo?.name}}</div>
 <div *ngIf="!editMode">{{collectionInfo?.description}}</div>
 <li><a routerLink="/quiz/{{this.id}}" routerLinkActive="active" ariaCurrentWhenActive="page">Game</a></li>
 <app-terms-edit *ngIf="isOwner" [(editMode)]="editMode" [id]="id" (updateSignal)="loadData()"></app-terms-edit>
-<app-terms-list *ngIf="!editMode" [id]="id"></app-terms-list>
+
+<app-terms-list *ngIf="!editMode" [id]="id" [filter]="filter"></app-terms-list>

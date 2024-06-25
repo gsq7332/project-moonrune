@@ -6,7 +6,6 @@ import java.util.HashMap;
 import org.springframework.stereotype.Component;
 
 import com.example.runelogic.model.Game;
-import com.example.runelogic.model.terms.Term;
 
 @Component
 public class gameDAO {
@@ -26,21 +25,11 @@ public class gameDAO {
         return currSession;
     }
 
-    public int createGame(int numQuestions, int numAnswers) {
+    public int generateGame(Game game) {
         int sessionID = getSessionID();
-        Game game = new Game(numQuestions, numAnswers, sessionID);
+        game.setSessionID(sessionID);
         ongoingGames.put(sessionID, game);
         return sessionID;
-    }
-
-    public boolean setQuestionAnswer(int id, String questionType, String answerType) {
-        Game game = ongoingGames.get(id);
-        return game.setQuestionAnswer(questionType, answerType);
-    }
-
-    public boolean setLegalTerms(int id, Term[] legalTerms) {
-        Game game = ongoingGames.get(id);
-        return game.setLegalTerms(legalTerms);
     }
 
     public String[] generateAnswers(int id) {

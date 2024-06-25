@@ -1,0 +1,53 @@
+<div *ngIf="!isGame">
+    Search: 
+    <input type="text" [(ngModel)]="filter.matching" (ngModelChange)="sendFilters()"> 
+
+</div>
+<div *ngIf="collectionID == 1 || collectionID == 2">
+    <form class="diacritic">
+    <label> Diacritics </label>
+    <input type="radio" name="0" value="0" [(ngModel)]="filter.isDiacritic" 
+    (ngModelChange)="sendFilters()"> Disable Diacritics
+    <input  type="radio" name="1" value="1" [(ngModel)]="filter.isDiacritic" 
+    (ngModelChange)="sendFilters()"> Enable Diacritics
+    <input  type="radio" name="2" value="2" [(ngModel)]="filter.isDiacritic" 
+    (ngModelChange)="sendFilters()"> Only Diacritics
+    </form>
+</div>
+<div *ngIf="collectionID == 6">
+    <div>
+        Grades
+        <li>
+            <input *ngFor="let i of LEGAL_GRADES; let idx = index" 
+            type="checkbox" 
+            name="grade" 
+            value={{i}} 
+            [(ngModel)]="gradeValues[idx]"
+            (ngModelChange)="updateGrades()"> 
+        </li>
+    </div>
+    <div>
+        JLPT
+        <li>
+            <input *ngFor="let i of LEGAL_JLPT; let idx = index" 
+            type="checkbox" 
+            name="grade" 
+            value="{{jlptValues[idx]}}"
+            [(ngModel)]="jlptValues[idx]"
+            (ngModelChange)="updateJlpt()"> 
+        </li>
+    </div>
+    <div>
+        Strokes (set to 0 to disable)
+        <input type="number" [(ngModel)]="filter.strokes[0]" (ngModelChange)="sendFilters()"> - 
+        <input type="number" [(ngModel)]="filter.strokes[1]" (ngModelChange)="sendFilters()">
+    </div>
+    <div>
+        Frequency (set to 0 to disable)
+        <input type="number" [(ngModel)]="filter.frequency[0]" (ngModelChange)="sendFilters()"> - 
+        <input type="number" [(ngModel)]="filter.frequency[1]" (ngModelChange)="sendFilters()">
+    </div>
+    <div>
+
+    </div>
+</div>

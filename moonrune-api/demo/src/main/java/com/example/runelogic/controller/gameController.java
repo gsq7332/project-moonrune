@@ -1,21 +1,21 @@
 package com.example.runelogic.controller;
 
-import java.util.LinkedHashMap;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.runelogic.model.Game;
 import com.example.runelogic.model.terms.Term;
 import com.example.runelogic.persistence.collection.collectionDAO;
 import com.example.runelogic.persistence.game.gameDAO;
 
+import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 @RestController
@@ -31,29 +31,15 @@ public class gameController {
         this.tDao = tDao;
     }
 
-    @PostMapping("create/{numQuestions}/{numAnswers}")
-    public ResponseEntity<Integer> createGame(@PathVariable int numQuestions, @PathVariable int numAnswers) {
-        LOG.info("POST /create/" + numQuestions + "/" + numAnswers);
-        int sessionID = dao.createGame(numQuestions, numAnswers);
+    @PostMapping("generateGame") 
+    public ResponseEntity<Integer> createGameRevamped(@RequestBody Game game) {
+        LOG.info("POST /generateGame");
+        LinkedHashMap<Integer, Term> terms = tDao.getTerms(game.getCollectionID(), game.getFilters());
+        Term[] returnTerms = new Term[terms.size()];
+        returnTerms = terms.values().toArray(returnTerms);
+        game.setLegalTerms(returnTerms);
+        int sessionID = dao.generateGame(game);
         return new ResponseEntity<>(sessionID, HttpStatus.CREATED);
-    } 
-
-    @PutMapping("question/{sessionID}/{questionType}/{answerType}")
-    public ResponseEntity<Boolean> setQuestionType(@PathVariable int sessionID, @PathVariable String questionType, @PathVariable String answerType) {
-        LOG.info("PUT /question/" + sessionID + "/" + questionType + "/" + answerType);
-        boolean hasWorked = dao.setQuestionAnswer(sessionID, questionType, answerType);
-        return new ResponseEntity<>(hasWorked, HttpStatus.OK);
-    }
-
-    @PutMapping("term/{sessionID}/{collectionID}")
-    public ResponseEntity<Boolean> setLegalTerms(@PathVariable int sessionID, @PathVariable int collectionID) {
-        LOG.info("PUT /term/" + sessionID + "/" + collectionID);
-        LinkedHashMap<Integer, Term> terms = tDao.getTerms(collectionID, "");
-        Term[] legalTerms = new Term[terms.size()];
-        legalTerms = terms.values().toArray(legalTerms);
-        boolean hasWorked = dao.setLegalTerms(sessionID, legalTerms);
-        System.out.println(hasWorked);
-        return new ResponseEntity<>(hasWorked, HttpStatus.OK);
     }
 
     @GetMapping("generate/{sessionID}")

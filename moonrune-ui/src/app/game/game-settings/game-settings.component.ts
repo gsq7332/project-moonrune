@@ -11,20 +11,17 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './game-settings.component.css'
 })
 export class GameSettingsComponent {
-  @Input() collection ?: string;
   @Input() numQuestions ?: number;
   @Input() numAnswers ?: number;
-  @Input() isDiacritic ?: boolean;
   @Input() questionType ?: string;
   @Input() answerType ?: string;
   @Output() questionTypeChange = new EventEmitter<string>()
   @Output() answerTypeChange = new EventEmitter<string>()
-  @Output() isDiacriticChange = new EventEmitter<boolean>()
   @Output() numQuestionsChange = new EventEmitter<number>()
   @Output() numAnswersChange = new EventEmitter<number>()
 
   @Output() startGameEvent = new EventEmitter();
-  @Input() currentLevel ?: number;
+  @Input() collectionID ?: number;
   /*
   level representations:
   0 - Default/Regular (used for user generated terms + Hangul)
@@ -46,10 +43,6 @@ export class GameSettingsComponent {
 
   changeNumAnswers() {
     this.numAnswersChange.emit(this.numAnswers)
-  }
-
-  changeIsDiacritic() {
-    this.isDiacriticChange.emit(this.isDiacritic)
   }
 
   changeQuestionType() {

@@ -8,17 +8,18 @@ import com.example.runelogic.model.terms.GreekLetter;
 import com.example.runelogic.model.terms.Kanji;
 import com.example.runelogic.model.terms.Term;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Game {
     
-    private final int numQuestions;
-    private final int numAnswers;
-    private final int sessionID;
+    private int sessionID;
     private String correct;
     private int numCorrect;
     private int numAnswered;
+    private GameProperties gameProperties;
+    private final int collectionID;
     private Term[] legalTerms;
-    private String questionType = "";
-    private String answerType = "";
+    private Filters filters;
     /*
      * Legal types for question/answer type:
      * term
@@ -28,28 +29,36 @@ public class Game {
      * kanji
      */
     
-    public Game(int numQuestions, int numAnswers, int sessionID) {
-        this.numQuestions = numQuestions;
-        this.numAnswers = numAnswers;
+    public Game(@JsonProperty("gameProperties") GameProperties gameProperties, 
+    @JsonProperty("sessionID") int sessionID, @JsonProperty("collectionID") int collectionID, 
+    @JsonProperty("filters") Filters filters) {
+        this.gameProperties = gameProperties;
         this.sessionID = sessionID;
+        this.collectionID = collectionID;
         correct = "";
         numCorrect = 0;
         numAnswered = 0;
+        this.filters = filters;
     }
 
-    public boolean setQuestionAnswer(String questionType, String answerType) {
-        this.questionType = questionType;
-        this.answerType = answerType;
-        // System.out.println(String.format("%s, %s", questionType, answerType));
-        return !questionType.equals(answerType);
+    public Filters getFilters() {
+        return filters;
     }
 
-    public boolean setLegalTerms(Term[] legalTerms) {
+    public int getCollectionID() {
+        return collectionID;
+    }
+
+    public void setSessionID(int sessionID) {
+        this.sessionID = sessionID;
+    }
+
+    public void setLegalTerms(Term[] legalTerms) {
         this.legalTerms = legalTerms;
-        return legalTerms.length >= numAnswers;
     }
 
     public String[] generateTerms() {
+        int numAnswers = gameProperties.numAnswers();
         String[] terms = new String[numAnswers+1];
         Term[] inUse = new Term[numAnswers];
         Random random = new Random();
@@ -86,9 +95,9 @@ public class Game {
         String comparison = "";
         String returnString = "";
         if (question) {
-            comparison = questionType;
+            comparison = gameProperties.questionType();
         } else {
-            comparison = answerType;
+            comparison = gameProperties.answerType();
         }
         switch (comparison) {
             case "term" -> {
@@ -140,9 +149,9 @@ public class Game {
         boolean doesOverlap = false;
         String comparison = "";
         if (question) {
-            comparison = questionType;
+            comparison = gameProperties.questionType();
         } else {
-            comparison = answerType;
+            comparison = gameProperties.answerType();
         }
         switch (comparison) {
             case "term" -> {
@@ -199,10 +208,11 @@ public class Game {
     }
 
     public int getNumAnswers() {
-        return numAnswers;
+        return gameProperties.numAnswers();
     }
 
     public boolean isOver() {
+        int numQuestions = gameProperties.numQuestions();
         return (numQuestions > 0 && numAnswered >= numQuestions);
     }
 
@@ -231,8 +241,7 @@ public class Game {
     }
 
     public int getNumQuestions() {
-        return numQuestions;
+        return gameProperties.numQuestions();
     }
-    
 
 }

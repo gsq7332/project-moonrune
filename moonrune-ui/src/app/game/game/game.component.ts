@@ -5,12 +5,17 @@ import { MultipleChoiceComponent } from '../multiple-choice/multiple-choice.comp
 import { GameService } from '../game.service';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
+import { GameProperties } from '../game-properties';
+import { Game } from '../game';
+import { filters } from '../../terms/filters';
+import { FilteringComponent } from '../../general/filtering/filtering.component';
 
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent],
+  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, RouterOutlet, RouterLink, 
+    RouterLinkActive, MainRoutingComponent, FilteringComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css'
 })
@@ -21,17 +26,25 @@ export class GameComponent {
 
   hasStarted = false;
   hasEnded = false;
-  sessionID: number = 0;
+  sessionID: number = -1;
   isValid: boolean = false;
   collectionID: number = Number(this.route.snapshot.paramMap.get('id'))
-  questionType: string = "meanings"
-  answerType: string = "term"
-  isDiacritic: boolean = false
-  numQuestions = 10
-  numAnswers = 4
+  properties : GameProperties = {
+      numQuestions: 10, 
+      numAnswers: 4,
+      questionType: "term",
+      answerType: "meanings"
+  }
+  gameFilters : filters = {
+    matching: "",
+      isDiacritic: 0,
+      grades: [],
+      jlpt: [],
+      strokes: [0, 0],
+      frequency: [0, 0]
+  }
   EMPTY = -1
-  settingLevel = 0
-
+  
   
   ngOnInit(): void {
     this.hasStarted = this.setToSettings();
@@ -47,25 +60,22 @@ export class GameComponent {
   }
 
   startGame() {
-    this.gameService.startGame(this.numQuestions, this.numAnswers).subscribe(id => {
-      this.sessionID = id
-      this.setQuestion()
-    });
-  }
-
-  setQuestion() {
-    this.gameService.setQuestion(this.sessionID, this.questionType, this.answerType).subscribe(valid => {
-      this.isValid = valid
-      if (!this.isValid) {
-        this.endGame()
-        return;
+    console.log(this.gameFilters)
+    let game: Game = {
+      gameProperties: this.properties,
+      sessionID: this.sessionID,
+      collectionID: this.collectionID,
+      filters: this.gameFilters
+    }
+    console.log(game)
+    this.gameService.createGame(game).subscribe(id => {
+      this.sessionID = id;
+      if (this.sessionID >= 0) {
+        this.hasStarted = true;
+      } else {
+        this.endGame();
       }
-      this.setTerms()
-    })
-  }
-
-  setTerms() {
-    this.gameService.setTerms(this.sessionID, this.collectionID).subscribe(valid => this.hasStarted = valid)
+    });
   }
 
   endGame(): void {

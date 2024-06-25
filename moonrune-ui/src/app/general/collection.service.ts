@@ -3,6 +3,7 @@ import { Observable, catchError, of } from 'rxjs';
 import { Term } from '../terms/term';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TermCollection } from '../terms/termcollection';
+import { filters } from '../terms/filters';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,13 @@ export class CollectionService {
   getTerms(collectionID: number): Observable<Term[]> {
     let currUrl = this.url + "/get/" + collectionID;
     return this.http.get<Term[]>(currUrl)
+    .pipe(catchError(this.handleError<Term[]>('getTerms', [])));
+    //*/
+  }
+
+  getTermsWithFilter(collectionID: number, filter: filters): Observable<Term[]> {
+    let currUrl = this.url + "/get/" + collectionID;
+    return this.http.post<Term[]>(currUrl, filter)
     .pipe(catchError(this.handleError<Term[]>('getTerms', [])));
     //*/
   }
