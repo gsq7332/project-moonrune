@@ -1,0 +1,14 @@
+nav {
+    background-color: #1153be;
+}
+ul {
+    align-content: right;
+}
+
+button {
+    background-color: #1153be;
+    border: none;
+    color: #eee;
+    font-size: 16px;
+    text-align: center;
+}

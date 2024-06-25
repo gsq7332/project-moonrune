@@ -1,18 +1,16 @@
 <nav>
-    <ul>
+    <ul class="collections">
       <button [routerLink]="['/mainpage']">Main</button>
       <button *ngFor="let termCollection of presetCollections" 
       [routerLink]="['/collection', termCollection.collectionID]" >
         {{termCollection.name}}
       </button>
     </ul>
-</nav>
-<nav>
-  <ul>
-    <button *ngIf="!isSignedIn" [routerLink]="['/sign-in']">Sign In</button>
-    <button *ngIf="!isSignedIn" [routerLink]="['/sign-up']">Sign Up</button>
-    <button *ngIf="username" [routerLink]="['/collections', username]">My Collections</button>
-    <button *ngIf="username" [routerLink]="['/users', username]">{{username}}</button>
-    <app-sign-out *ngIf="isSignedIn"></app-sign-out>
-  </ul>
+    <ul class="sign-in">
+      <button *ngIf="!isSignedIn" [routerLink]="['/sign-in']">Sign In</button>
+      <button *ngIf="!isSignedIn" [routerLink]="['/sign-up']">Sign Up</button>
+      <button *ngIf="username" [routerLink]="['/collections', username]">My Collections</button>
+      <button *ngIf="username" [routerLink]="['/users', username]">{{username}}</button>
+      <app-sign-out *ngIf="isSignedIn"></app-sign-out>
+    </ul>
 </nav>
