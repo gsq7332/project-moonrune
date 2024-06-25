@@ -7,30 +7,31 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
 @JsonProperty("frequency") int[] frequency) {
 
     public String getMatchingQuery(int collectionID) {
+        String matchingInsert = "%" + matching + "%";
         if (matching.equals("")) return "";
         if (collectionID != 6) {
             return String.format("""
-            and (terms.name like "%%s%"
-            or hasMeaning.meaning like "%%s%")  
+            and (terms.name like "%s"
+            or hasMeaning.meaning like "%s")  
             """
-            ,matching, matching);
+            ,matchingInsert, matchingInsert);
         }
         return String.format(""" 
-            and (terms.name like "%%s%"
-            or hasMeaning.meaning like "%%s%"
+            and (terms.name like "%s"
+            or hasMeaning.meaning like "%s"
             or terms.termID in
             ((
             select hasReading.termID from hasReading
-            where reading like "%%s%"
-            or romaji like "%%s%"
+            where reading like "%s"
+            or romaji like "%s"
             ) union (
             select hasLower.termID from hasLower
-            where lower like "%%s%"
+            where lower like "%s"
             ) union (
             select hasGreekName.termID from hasGreekName
-            where greekname like "%%s%"
+            where greekname like "%s"
             )))
-            """, matching, matching, matching, matching, matching, matching);
+            """, matchingInsert, matchingInsert, matchingInsert, matchingInsert, matchingInsert, matching);
     }
 
     public String getDiacriticQuery() {
@@ -57,6 +58,7 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
             gradeString.concat(grades[i]);
             if (i != grades.length - 1) gradeString.concat("\", \"");
         }
+        System.out.println(gradeString);
         if (gradeString.isBlank()) return "";
         return String.format("""
                 and terms.termID in (
@@ -85,7 +87,7 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
         if (strokes[0] > 0) {
             part1 = String.format("where strokes >= %d", strokes[0]);
             if (strokes[1] > 0) {
-                part2 = "and ";
+                part2 = " and ";
             } 
         }
         if (strokes[1] > 0) {
@@ -107,7 +109,7 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
         if (frequency[0] > 0) {
             part1 = String.format("where kanjiRank >= %d", frequency[0]);
             if (frequency[1] > 0) {
-                part2 = "and ";
+                part2 = " and ";
             } 
         }
         if (frequency[1] > 0) {
