@@ -35,7 +35,14 @@ export class DictionaryComponent {
       strokes: [0, 0],
       frequency: [0, 0]
   }
-  filter : filters = this.collectionFilter;
+  filter : filters = {
+    matching: "",
+      isDiacritic: 0,
+      grades: [],
+      jlpt: [],
+      strokes: [0, 0],
+      frequency: [0, 0]
+  };
 
   ngOnInit() {
     this.loadData()
@@ -67,7 +74,14 @@ export class DictionaryComponent {
   }
 
   applyFilters() {
-    this.filter = this.collectionFilter;
+    this.filter = {
+      matching: this.collectionFilter.matching,
+      isDiacritic: this.collectionFilter.isDiacritic,
+      grades: this.collectionFilter.grades,
+      jlpt: this.collectionFilter.jlpt,
+      strokes: this.collectionFilter.strokes,
+      frequency: this.collectionFilter.frequency
+    }
   }
 
   showFilters() {
