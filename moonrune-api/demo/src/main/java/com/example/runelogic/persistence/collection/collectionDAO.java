@@ -36,7 +36,6 @@ public class collectionDAO {
         databasePath = database;
         getUsernamePassword();
         getLastCollectionID();
-        //load();
     }
 
     private void getUsernamePassword() {
@@ -157,7 +156,6 @@ public class collectionDAO {
                 getOtherKanjiInfo(collectionID, terms);
                 break;
         }
-        System.out.println(terms);
         return terms;
     }
 

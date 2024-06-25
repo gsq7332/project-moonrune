@@ -37,13 +37,11 @@ export class TermsListComponent {
       if (this.filter == undefined) {
       this.collectionService.getTerms(this.id).subscribe(terms => {
         this.terms = terms
-        //console.log(this.terms)
     });
     }
     else {
       this.collectionService.getTermsWithFilter(this.id, this.filter).subscribe(terms => {
         this.terms = terms
-        //console.log(this.terms)
     });
     }
   }

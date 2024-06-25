@@ -31,7 +31,7 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
             select hasGreekName.termID from hasGreekName
             where greekname like "%s"
             )))
-            """, matchingInsert, matchingInsert, matchingInsert, matchingInsert, matchingInsert, matching);
+            """, matchingInsert, matchingInsert, matchingInsert, matchingInsert, matchingInsert, matchingInsert);
     }
 
     public String getDiacriticQuery() {
@@ -55,10 +55,11 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
     public String getGradeQuery() {
         String gradeString = "";
         for (int i = 0; i < grades.length; i++) {
-            gradeString.concat(grades[i]);
-            if (i != grades.length - 1) gradeString.concat("\", \"");
+            gradeString = gradeString + "\"";
+            gradeString = gradeString + grades[i];
+            if (i != grades.length - 1) gradeString = gradeString + "\", ";
+            else gradeString = gradeString + "\"";
         }
-        System.out.println(gradeString);
         if (gradeString.isBlank()) return "";
         return String.format("""
                 and terms.termID in (
@@ -70,8 +71,10 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
     public String getJlptQuery() {
         String jlptString = "";
         for (int i = 0; i < jlpt.length; i++) {
-            jlptString.concat(jlpt[i]);
-            if (i != jlpt.length - 1) jlptString.concat("\", \"");
+            jlptString = jlptString + "\"";
+            jlptString = jlptString + jlpt[i];
+            if (i != jlpt.length - 1) jlptString = jlptString + "\", ";
+            else jlptString = jlptString + "\"";
         }
         if (jlptString.isBlank()) return "";
         return String.format("""
@@ -82,16 +85,17 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
     }
 
     public String getStrokeQuery() {
+        System.out.println(strokes[0]);
+        System.out.println(strokes[1]);
         String part1 = "";
         String part2 = "";
         if (strokes[0] > 0) {
             part1 = String.format("where strokes >= %d", strokes[0]);
             if (strokes[1] > 0) {
-                part2 = " and ";
+                part2 = String.format("and strokes <= %d", strokes[1]);
             } 
-        }
-        if (strokes[1] > 0) {
-            part2.concat(String.format("where strokes <= %d", strokes[1]));
+        } else if (strokes[1] > 0) {
+            part2 = String.format("where strokes <= %d", strokes[1]);
         }
         if (part1.equals(part2)) return "";
         return String.format("""
@@ -104,16 +108,17 @@ public record Filters(@JsonProperty("matching") String matching, @JsonProperty("
     }
 
     public String getFrequencyQuery() {
+        System.out.println(frequency[0]);
+        System.out.println(frequency[1]);
         String part1 = "";
         String part2 = "";
         if (frequency[0] > 0) {
             part1 = String.format("where kanjiRank >= %d", frequency[0]);
             if (frequency[1] > 0) {
-                part2 = " and ";
+                part2 = String.format("and kanjiRank <= %d", frequency[1]);
             } 
-        }
-        if (frequency[1] > 0) {
-            part2.concat(String.format("where kanjiRank <= %d", frequency[1]));
+        } else if (frequency[1] > 0) {
+            part2 = String.format("where kanjiRank <= %d", frequency[1]);
         }
         if (part1.equals(part2)) return "";
         return String.format("""

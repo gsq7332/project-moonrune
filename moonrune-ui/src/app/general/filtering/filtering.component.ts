@@ -38,10 +38,10 @@ export class FilteringComponent {
   }
 
   updateJlpt() {
-    this.filter.grades = []
+    this.filter.jlpt = []
     for (let i = 0; i < this.jlptValues.length; i++) {
       if (this.jlptValues[i])
-      this.filter.grades.push(this.LEGAL_JLPT[i])
+      this.filter.jlpt.push(this.LEGAL_JLPT[i])
     }
     this.sendFilters()
   }
