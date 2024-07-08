@@ -12,3 +12,11 @@ button {
     font-size: 16px;
     text-align: center;
 }
+
+button:hover {
+    color: aquamarine;
+}
+
+button:disabled {
+    color:gray;
+}
