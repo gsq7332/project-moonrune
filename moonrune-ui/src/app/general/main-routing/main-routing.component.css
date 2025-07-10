@@ -1,8 +1,16 @@
+
 nav {
     background-color: #1153be;
 }
+
+h1 {
+    font-family: sans-serif;
+    color: #eee;
+}
+
 ul {
     align-content: right;
+    background-color: #1153be;
 }
 
 button {

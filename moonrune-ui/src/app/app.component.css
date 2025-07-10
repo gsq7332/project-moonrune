@@ -1,8 +1,12 @@
 /* Application-wide Styles */
 h1 {
-    color: #369;
+    color: #ffffff;
+    background-color: #1153be;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 250%;
+  }
+  html {
+    background-color: #1153be;
   }
   h2, h3 {
     color: #444;
@@ -10,6 +14,7 @@ h1 {
     font-weight: lighter;
   }
   body {
+    background-color: #1153be;
     margin: 2em;
   }
   body, input[type="text"], button {

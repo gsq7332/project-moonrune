@@ -9,11 +9,13 @@ import { CollectionService } from '../collection.service';
 @Component({
   selector: 'app-main-routing',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, NgFor, NgIf, SignOutComponent, AsyncPipe],
+  imports: [RouterLink, NgFor, NgIf, SignOutComponent],
   templateUrl: './main-routing.component.html',
   styleUrl: './main-routing.component.css'
 })
 export class MainRoutingComponent {
+
+  title='Project Moonrune'
 
   constructor(private termService: CollectionService) {}
   presetCollections ?: TermCollection[]
