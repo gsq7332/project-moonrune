@@ -1,4 +1,8 @@
 label {
-    border: none;
+    
     text-align: left;
+}
+
+span {
+    border: 5px;
 }

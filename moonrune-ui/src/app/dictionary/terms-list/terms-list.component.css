@@ -3,9 +3,7 @@ button {
   text-align: left;
   background-color: transparent;
   font-family:Arial, Helvetica, sans-serif;
+  border-color: black;
 }
 
-span {
-  border: 5px;
-}
 

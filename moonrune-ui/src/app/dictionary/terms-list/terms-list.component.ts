@@ -29,7 +29,8 @@ export class TermsListComponent {
   }
 
   onSelect(term: Term): void {
-    this.selectedTerm = term;
+    if (this.selectedTerm != term) this.selectedTerm = term;
+    else this.selectedTerm = undefined;
   }
 
   getTerms(): void {
