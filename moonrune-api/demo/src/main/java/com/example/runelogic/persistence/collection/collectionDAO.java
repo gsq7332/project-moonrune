@@ -144,6 +144,7 @@ public class collectionDAO {
     }
 
     public LinkedHashMap<Integer, Term> getTerms(int collectionID, Filters filter) {
+        if (filter == null) filter = new Filters("", 1, null, null, null, null);
         LinkedHashMap<Integer, Term> terms = getMainTermInfo(collectionID, filter);
         switch(collectionID) {
             case 5:

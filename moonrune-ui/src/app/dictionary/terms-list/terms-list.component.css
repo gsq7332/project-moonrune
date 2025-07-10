@@ -1,7 +1,11 @@
 button {
-  border: none;
+  border: 5px;
   text-align: left;
   background-color: transparent;
   font-family:Arial, Helvetica, sans-serif;
+}
+
+span {
+  border: 5px;
 }
 

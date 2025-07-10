@@ -14,7 +14,7 @@ import { filters } from '../../terms/filters';
 @Component({
   selector: 'app-dictionary',
   standalone: true,
-  imports: [TermsListComponent, RouterOutlet, RouterLink, RouterLinkActive, MainRoutingComponent, 
+  imports: [TermsListComponent, RouterLink, RouterLinkActive, MainRoutingComponent, 
     NgIf, TermsEditComponent, FilteringComponent],
   templateUrl: './dictionary.component.html',
   styleUrl: './dictionary.component.css'

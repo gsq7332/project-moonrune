@@ -29,13 +29,16 @@ export class TermsEditComponent {
   constructor(private collectionService: CollectionService, private termService: TermService, private route: Router) {}
 
   ngOnInit() {
-    this.getTerms()
     this.getCollectionInfo()
+    this.getTerms()
   }
 
   getTerms() {
     if (this.id == undefined) return;
-    this.collectionService.getTerms(this.id).subscribe(terms => this.currentTerms = terms)
+    this.collectionService.getTerms(this.id).subscribe(terms => {
+      this.currentTerms = terms
+      console.log(terms)
+  })
   }
 
   getCollectionInfo() {
