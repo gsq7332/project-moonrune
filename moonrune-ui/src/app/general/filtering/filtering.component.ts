@@ -7,7 +7,7 @@ import { filters } from '../../terms/filters';
 @Component({
   selector: 'app-filtering',
   standalone: true,
-  imports: [SearchBarComponent, NgIf, FormsModule, NgFor],
+  imports: [NgIf, FormsModule, NgFor],
   templateUrl: './filtering.component.html',
   styleUrl: './filtering.component.css'
 })

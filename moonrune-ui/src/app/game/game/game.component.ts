@@ -14,8 +14,7 @@ import { FilteringComponent } from '../../general/filtering/filtering.component'
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, RouterOutlet, RouterLink, 
-    RouterLinkActive, MainRoutingComponent, FilteringComponent],
+  imports: [NgIf, GameSettingsComponent, MultipleChoiceComponent, MainRoutingComponent, FilteringComponent],
   templateUrl: './game.component.html',
   styleUrl: './game.component.css'
 })

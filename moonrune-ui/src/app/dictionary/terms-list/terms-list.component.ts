@@ -1,9 +1,10 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, SimpleChanges } from '@angular/core';
 import { Term } from '../../terms/term';
 import { TermDetailsComponent } from '../../general/term-details/term-details.component';
 import { CollectionService } from '../../general/collection.service';
 import { filters } from '../../terms/filters';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-terms-list',
@@ -18,13 +19,15 @@ export class TermsListComponent {
   selectedTerm?: Term;
   @Input() id ?: number
   @Input() filter ?: filters
+  @Output() idChange = new EventEmitter<number | undefined>()
   
 
   terms: Term[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id'] || changes['filter']) {
+    if (changes['id']) {
       this.getTerms();
+      this.idChange.emit(this.id)
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { TermsListComponent } from '../terms-list/terms-list.component';
 import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MainRoutingComponent } from '../../general/main-routing/main-routing.component';
